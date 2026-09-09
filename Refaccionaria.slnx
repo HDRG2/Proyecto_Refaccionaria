@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Refaccionaria.Frontend/">
+    <Project Path="Refaccionaria.Frontend/Refaccionaria.csproj" />
+  </Folder>
+  <Project Path="Refaccionaria.Backend/Refaccionaria.Backend.csproj" />
+</Solution>
