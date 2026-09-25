@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Bosch"
+  },
+  {
+    "Id": 2,
+    "Nombre": "Brembo"
+  },
+  {
+    "Id": 3,
+    "Nombre": "NGK"
+  },
+  {
+    "Id": 4,
+    "Nombre": "Mobil"
+  },
+  {
+    "Id": 5,
+    "Nombre": "Castrol"
+  },
+  {
+    "Id": 6,
+    "Nombre": "Fram"
+  },
+  {
+    "Id": 7,
+    "Nombre": "Gonher"
+  },
+  {
+    "Id": 8,
+    "Nombre": "Monroe"
+  },
+  {
+    "Id": 9,
+    "Nombre": "Denso"
+  },
+  {
+    "Id": 10,
+    "Nombre": "LTH"
+  }
+]

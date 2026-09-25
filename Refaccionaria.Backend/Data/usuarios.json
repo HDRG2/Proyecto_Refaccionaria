@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "NombreUsuario": "admin",
+    "Password": "1234",
+    "Rol": "Administrador",
+    "Nombre": "Administrador",
+    "Telefono": "",
+    "Activo": true
+  },
+  {
+    "Id": 2,
+    "NombreUsuario": "Jose2001",
+    "Password": "12345",
+    "Rol": "Vendedor",
+    "Nombre": "Jos\u00E9 Remires",
+    "Telefono": "8125646932",
+    "Activo": true
+  }
+]
