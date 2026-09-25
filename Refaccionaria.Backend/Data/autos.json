@@ -1,0 +1,72 @@
+[
+  {
+    "Id": 1,
+    "Marca": "Nissan",
+    "Modelo": "Sentra",
+    "AnioInicio": 2013,
+    "AnioFin": 2019
+  },
+  {
+    "Id": 2,
+    "Marca": "Nissan",
+    "Modelo": "Versa",
+    "AnioInicio": 2012,
+    "AnioFin": 2019
+  },
+  {
+    "Id": 3,
+    "Marca": "Nissan",
+    "Modelo": "March",
+    "AnioInicio": 2011,
+    "AnioFin": 2020
+  },
+  {
+    "Id": 4,
+    "Marca": "Chevrolet",
+    "Modelo": "Aveo",
+    "AnioInicio": 2018,
+    "AnioFin": 2024
+  },
+  {
+    "Id": 5,
+    "Marca": "Chevrolet",
+    "Modelo": "Spark",
+    "AnioInicio": 2016,
+    "AnioFin": 2021
+  },
+  {
+    "Id": 6,
+    "Marca": "Volkswagen",
+    "Modelo": "Jetta",
+    "AnioInicio": 2011,
+    "AnioFin": 2018
+  },
+  {
+    "Id": 7,
+    "Marca": "Volkswagen",
+    "Modelo": "Vento",
+    "AnioInicio": 2014,
+    "AnioFin": 2022
+  },
+  {
+    "Id": 8,
+    "Marca": "Toyota",
+    "Modelo": "Corolla",
+    "AnioInicio": 2014,
+    "AnioFin": 2019
+  },
+  {
+    "Id": 9,
+    "Marca": "Toyota",
+    "Modelo": "Yaris",
+    "AnioInicio": 2016,
+    "AnioFin": 2020
+  },
+  {
+    "Id": 10,
+    "Marca": "Honda",
+    "Modelo": "Civic",
+    "AnioInicio": 2012,
+    "AnioFin": 2015
+  }
+]

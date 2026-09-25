@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Codigo": "FA-001",
+    "Nombre": "Filtro de Aceite",
+    "MarcaId": 1,
+    "CategoriaId": 2,
+    "Precio": 185.00,
+    "Stock": 62,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": []
+  }
+]

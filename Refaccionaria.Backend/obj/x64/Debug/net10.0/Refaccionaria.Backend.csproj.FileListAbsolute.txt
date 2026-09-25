@@ -1,0 +1,13 @@
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\bin\x64\Debug\net10.0\Refaccionaria.Backend.deps.json
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\bin\x64\Debug\net10.0\Refaccionaria.Backend.dll
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\bin\x64\Debug\net10.0\Refaccionaria.Backend.pdb
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.AssemblyInfoInputs.cache
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.AssemblyInfo.cs
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.csproj.CoreCompileInputs.cache
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.sourcelink.json
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.dll
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\refint\Refaccionaria.Backend.dll
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccionaria.Backend.pdb
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\ref\Refaccionaria.Backend.dll
+C:\Users\PC\OneDrive\Refaccionaria\Refaccionaria.Backend\obj\x64\Debug\net10.0\Refaccio.0AFBED3C.Up2Date
