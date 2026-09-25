@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+<!-- ========================================================= -->
+        <!-- COLORES PRINCIPALES -->
+        <!-- ========================================================= -->
+
+        <SolidColorBrush x:Key="RojoRefaccionaria" Color="#B71C1C"/>
+        <SolidColorBrush x:Key="RojoOscuro" Color="#7F1010"/>
+        <SolidColorBrush x:Key="RojoClaro" Color="#D32F2F"/>
+        <SolidColorBrush x:Key="AmarilloRefaccionaria" Color="#FFC107"/>
+        <SolidColorBrush x:Key="AmarilloClaro" Color="#FFF3CD"/>
+
+        <SolidColorBrush x:Key="GrisMuyOscuro" Color="#202020"/>
+        <SolidColorBrush x:Key="GrisOscuro" Color="#2B2B2B"/>
+        <SolidColorBrush x:Key="GrisMedio" Color="#555555"/>
+        <SolidColorBrush x:Key="GrisTexto" Color="#777777"/>
+        <SolidColorBrush x:Key="GrisFondo" Color="#F1F1F1"/>
+        <SolidColorBrush x:Key="Blanco" Color="#FFFFFF"/>
+
+        <SolidColorBrush x:Key="RojoStock" Color="#D32F2F"/>
+
+        <!-- ========================================================= -->
+        <!-- COLORES PARA LISTAS -->
+        <!-- ========================================================= -->
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver"
+                         Color="#F7F7F7"/>
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundPressed"
+                         Color="#EEEEEE"/>
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundSelected"
+                         Color="#FFF3CD"/>
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver"
+                         Color="#FFE69A"/>
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed"
+                         Color="#FFD96A"/>
+
+        <SolidColorBrush x:Key="ListViewItemForegroundSelected"
+                         Color="#222222"/>
+
+        <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver"
+                         Color="#222222"/>
+
+        <SolidColorBrush x:Key="ListViewItemSelectionIndicatorBrush"
+                         Color="#FFC107"/>
+
+
+        <!-- ========================================================= -->
+        <!-- BOTÓN DEL MENÚ -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="BotonMenuAdmin"
+               TargetType="RadioButton">
+
+            <Setter Property="Foreground" Value="#D6D6D6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="18,13"/>
+            <Setter Property="Margin" Value="0,3,0,3"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Grid>
+
+                            <Border
+                                x:Name="Fondo"
+                                CornerRadius="7"
+                                Background="Transparent">
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border
+                                        x:Name="Indicador"
+                                        Grid.Column="0"
+                                        Background="Transparent"
+                                        CornerRadius="3"/>
+
+                                    <ContentPresenter
+                                        Grid.Column="1"
+                                        Margin="13,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"/>
+
+                                </Grid>
+
+                            </Border>
+
+                            <VisualStateManager.VisualStateGroups>
+
+                                <VisualStateGroup x:Name="CommonStates">
+
+                                    <VisualState x:Name="Normal"/>
+
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames
+                                                Storyboard.TargetName="Fondo"
+                                                Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame
+                                                    KeyTime="0"
+                                                    Value="#353535"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames
+                                                Storyboard.TargetName="Fondo"
+                                                Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame
+                                                    KeyTime="0"
+                                                    Value="#454545"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+
+                                <VisualStateGroup x:Name="CheckStates">
+
+                                    <VisualState x:Name="Unchecked"/>
+
+                                    <VisualState x:Name="Checked">
+
+                                        <Storyboard>
+
+                                            <ObjectAnimationUsingKeyFrames
+                                                Storyboard.TargetName="Fondo"
+                                                Storyboard.TargetProperty="Background">
+
+                                                <DiscreteObjectKeyFrame
+                                                    KeyTime="0"
+                                                    Value="#3A3030"/>
+
+                                            </ObjectAnimationUsingKeyFrames>
+
+                                            <ObjectAnimationUsingKeyFrames
+                                                Storyboard.TargetName="Indicador"
+                                                Storyboard.TargetProperty="Background">
+
+                                                <DiscreteObjectKeyFrame
+                                                    KeyTime="0"
+                                                    Value="#FFC107"/>
+
+                                            </ObjectAnimationUsingKeyFrames>
+
+                                        </Storyboard>
+
+                                    </VisualState>
+
+                                </VisualStateGroup>
+
+                            </VisualStateManager.VisualStateGroups>
+
+                        </Grid>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- BOTÓN AMARILLO -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="BotonAmarillo"
+               TargetType="Button">
+
+            <Setter Property="Background"
+                    Value="{StaticResource AmarilloRefaccionaria}"/>
+
+            <Setter Property="Foreground"
+                    Value="#202020"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Padding"
+                    Value="18,10"/>
+
+            <Setter Property="CornerRadius"
+                    Value="6"/>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- BOTÓN ROJO -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="BotonRojo"
+               TargetType="Button">
+
+            <Setter Property="Background"
+                    Value="{StaticResource RojoRefaccionaria}"/>
+
+            <Setter Property="Foreground"
+                    Value="White"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Padding"
+                    Value="16,9"/>
+
+            <Setter Property="CornerRadius"
+                    Value="6"/>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- TARJETA DE PRODUCTO -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="TarjetaRefaccion"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="White"/>
+
+            <Setter Property="CornerRadius"
+                    Value="8"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#D8D8D8"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="Padding"
+                    Value="18"/>
+
+            <Setter Property="Margin"
+                    Value="0,0,14,14"/>
+
+            <Setter Property="Width"
+                    Value="280"/>
+
+            <Setter Property="MinHeight"
+                    Value="215"/>
+
+        </Style>
+
+
+        <!-- ========================================================= -->
+        <!-- TARJETAS DE RESUMEN -->
+        <!-- ========================================================= -->
+
+        <Style x:Key="TarjetaResumen"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="White"/>
+
+            <Setter Property="CornerRadius"
+                    Value="8"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#DDDDDD"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="Padding"
+                    Value="18"/>
+
+            <Setter Property="Margin"
+                    Value="0,0,12,0"/>
+
+        </Style>
+
+</ResourceDictionary>

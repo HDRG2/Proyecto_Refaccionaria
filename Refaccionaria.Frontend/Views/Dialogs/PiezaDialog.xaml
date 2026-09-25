@@ -1,0 +1,123 @@
+<ContentDialog
+    x:Class="Refaccionaria.Frontend.Views.Dialogs.PiezaDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Refaccionaria.Frontend.Views.Dialogs"
+    xmlns:models="using:Refaccionaria.Frontend.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="NUEVA PIEZA"
+    PrimaryButtonText="Registrar"
+    CloseButtonText="Cancelar"
+    DefaultButton="Primary"
+    Background="#E8E6E1"
+    BorderBrush="#262626"
+    BorderThickness="0,0,0,8">
+
+    <ScrollViewer MaxHeight="560">
+        <StackPanel Spacing="14"
+                Padding="4,10">
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="Código"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+                <TextBox x:Name="CodigoBox"
+                        PlaceholderText="ej. FIL-0142"
+                        Height="46"/>
+            </StackPanel>
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="Nombre de la pieza"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+                <TextBox x:Name="NombreBox"
+                        PlaceholderText="ej. Filtro de aceite"
+                        Height="46"/>
+            </StackPanel>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                        Spacing="4">
+                    <TextBlock Text="Tipo"
+                            FontWeight="Bold"
+                            FontSize="13"/>
+                    <ComboBox x:Name="CategoriaCombo"
+                            DisplayMemberPath="Nombre"
+                              HorizontalAlignment="Stretch"
+                            Height="46"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                        Spacing="4">
+                    <TextBlock Text="Marca"
+                            FontWeight="Bold"
+                            FontSize="13"/>
+                    <ComboBox x:Name="MarcaCombo"
+                            DisplayMemberPath="Nombre"
+                              HorizontalAlignment="Stretch"
+                            Height="46"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid ColumnSpacing="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                        Spacing="4">
+                    <TextBlock Text="Precio (MXN)"
+                            FontWeight="Bold"
+                            FontSize="13"/>
+                    <NumberBox x:Name="PrecioBox"
+                            SpinButtonPlacementMode="Compact"
+                            Minimum="0"
+                            Height="46"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                        Spacing="4">
+                    <TextBlock Text="Existencia"
+                            FontWeight="Bold"
+                            FontSize="13"/>
+                    <NumberBox x:Name="StockBox"
+                            SpinButtonPlacementMode="Compact"
+                            Minimum="0"
+                            Height="46"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="4">
+                <TextBlock Text="Autos compatibles"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+                <ListView x:Name="AutosListView"
+                        SelectionMode="Multiple"
+                        Height="150"
+                          BorderBrush="#B7B4AC"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ModeloAuto">
+                            <TextBlock Text="{x:Bind DescripcionCompleta}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBlock Text="Selecciona uno o varios (Ctrl+clic para varios)."
+                           FontSize="12"
+                        Foreground="#6B6B6B"
+                        TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <InfoBar x:Name="ErrorBar"
+                    Severity="Error"
+                    IsOpen="False"
+                    Title="Revisa este campo"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>
