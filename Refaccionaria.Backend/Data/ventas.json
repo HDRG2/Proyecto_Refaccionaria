@@ -1,0 +1,273 @@
+[
+  {
+    "Id": 1,
+    "Folio": "V-20260923-132426181",
+    "Fecha": "2026-09-23T13:24:26.184618-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 600,
+    "Cambio": 170.80,
+    "Total": 429.20,
+    "Lineas": [
+      {
+        "Subtotal": 370.00,
+        "Id": 1,
+        "VentaId": 1,
+        "RefaccionId": 1,
+        "Cantidad": 2,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 5,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Folio": "V-20260923-171854167",
+    "Fecha": "2026-09-23T17:18:54.1702041-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 700,
+    "Cambio": 56.20,
+    "Total": 643.80,
+    "Lineas": [
+      {
+        "Subtotal": 555.00,
+        "Id": 2,
+        "VentaId": 2,
+        "RefaccionId": 1,
+        "Cantidad": 3,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Folio": "V-20260923-181237374",
+    "Fecha": "2026-09-23T18:12:37.3774622-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 3000,
+    "Cambio": 854.00,
+    "Total": 2146.00,
+    "Lineas": [
+      {
+        "Subtotal": 1850.00,
+        "Id": 3,
+        "VentaId": 3,
+        "RefaccionId": 1,
+        "Cantidad": 10,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "Folio": "V-20260923-195623020",
+    "Fecha": "2026-09-23T19:56:23.023675-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 2500,
+    "Cambio": 997.80,
+    "Total": 1502.20,
+    "Lineas": [
+      {
+        "Subtotal": 1295.00,
+        "Id": 4,
+        "VentaId": 4,
+        "RefaccionId": 1,
+        "Cantidad": 7,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "Folio": "V-20260923-201607689",
+    "Fecha": "2026-09-23T20:16:07.6922047-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 429.20,
+    "Cambio": 0,
+    "Total": 429.20,
+    "Lineas": [
+      {
+        "Subtotal": 370.00,
+        "Id": 5,
+        "VentaId": 5,
+        "RefaccionId": 1,
+        "Cantidad": 2,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Folio": "V-20260924-154001042",
+    "Fecha": "2026-09-24T15:40:01.0425536-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 645,
+    "Cambio": 1.20,
+    "Total": 643.80,
+    "Lineas": [
+      {
+        "Subtotal": 555.00,
+        "Id": 6,
+        "VentaId": 6,
+        "RefaccionId": 1,
+        "Cantidad": 3,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 67,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "Id": 7,
+    "Folio": "V-20260924-234923166",
+    "Fecha": "2026-09-24T23:49:23.1696394-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 450,
+    "Cambio": 20.80,
+    "Total": 429.20,
+    "Lineas": []
+  },
+  {
+    "Id": 8,
+    "Folio": "V-20260924-235021408",
+    "Fecha": "2026-09-24T23:50:21.408979-06:00",
+    "UsuarioId": 0,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 450,
+    "Cambio": 20.80,
+    "Total": 429.20,
+    "Lineas": [
+      {
+        "Subtotal": 370.00,
+        "Id": 7,
+        "VentaId": 8,
+        "RefaccionId": 1,
+        "Cantidad": 2,
+        "PrecioUnitario": 185.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FA-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 1,
+          "CategoriaId": 2,
+          "Precio": 185.00,
+          "Stock": 64,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  }
+]

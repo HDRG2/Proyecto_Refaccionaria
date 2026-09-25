@@ -1,0 +1,58 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Aceites y lubricantes"
+  },
+  {
+    "Id": 2,
+    "Nombre": "Filtros"
+  },
+  {
+    "Id": 3,
+    "Nombre": "Frenos"
+  },
+  {
+    "Id": 4,
+    "Nombre": "Suspensión"
+  },
+  {
+    "Id": 5,
+    "Nombre": "Dirección"
+  },
+  {
+    "Id": 6,
+    "Nombre": "Motor"
+  },
+  {
+    "Id": 7,
+    "Nombre": "Transmisión"
+  },
+  {
+    "Id": 8,
+    "Nombre": "Sistema eléctrico"
+  },
+  {
+    "Id": 9,
+    "Nombre": "Enfriamiento"
+  },
+  {
+    "Id": 10,
+    "Nombre": "Encendido"
+  },
+  {
+    "Id": 11,
+    "Nombre": "Escape"
+  },
+  {
+    "Id": 12,
+    "Nombre": "Iluminación"
+  },
+  {
+    "Id": 13,
+    "Nombre": "Carrocería"
+  },
+  {
+    "Id": 14,
+    "Nombre": "Accesorios"
+  }
+]
