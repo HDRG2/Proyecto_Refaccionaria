@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================= COLORES ================= -->
+    <SolidColorBrush x:Key="Amarillo"     Color="#FFC107"/>
+    <SolidColorBrush x:Key="FondoOscuro"  Color="#1C1C1C"/>
+    <SolidColorBrush x:Key="FondoBarra"   Color="#232323"/>
+    <SolidColorBrush x:Key="FondoPanel"   Color="#2A2A2A"/>
+    <SolidColorBrush x:Key="Linea"        Color="#3D3D3D"/>
+    <SolidColorBrush x:Key="Contenido"    Color="#E7E5E0"/>
+    <SolidColorBrush x:Key="TextoClaro"   Color="#F3F3F3"/>
+    <SolidColorBrush x:Key="TextoTenue"   Color="#A3A3A3"/>
+    <SolidColorBrush x:Key="TextoOscuro"  Color="#1C1C1C"/>
+    <SolidColorBrush x:Key="TextoGris"    Color="#6B6B6B"/>
+    <SolidColorBrush x:Key="Rojo"         Color="#C62828"/>
+    <SolidColorBrush x:Key="Verde"        Color="#2E7D32"/>
+    <SolidColorBrush x:Key="Naranja"      Color="#E08A00"/>
+
+    <FontFamily x:Key="FuenteTitulos">Bahnschrift, Segoe UI</FontFamily>
+
+    <!-- ================= TEXTOS ================= -->
+    <Style x:Key="Titulo" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FuenteTitulos}"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource TextoOscuro}"/>
+    </Style>
+
+    <Style x:Key="Subtitulo" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource TextoGris}"/>
+        <Setter Property="Margin" Value="0,4,0,0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="EncabezadoLateral" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FuenteTitulos}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource Amarillo}"/>
+    </Style>
+
+    <Style x:Key="Etiqueta" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource Amarillo}"/>
+        <Setter Property="Margin" Value="0,12,0,5"/>
+    </Style>
+
+    <!-- ================= BOTONES ================= -->
+    <!-- Botón principal amarillo. Los demás botones heredan de este. -->
+    <Style x:Key="BotonPrimario" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource Amarillo}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextoOscuro}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="18,9"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fondo"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6"
+                            Padding="{TemplateBinding Padding}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Opacity" Value="0.85"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Opacity" Value="0.65"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Opacity" Value="0.4"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Solo contorno amarillo (fondos oscuros) -->
+    <Style x:Key="BotonContorno" TargetType="Button" BasedOn="{StaticResource BotonPrimario}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource Amarillo}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Amarillo}"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+    </Style>
+
+    <!-- Gris (Cancelar) para fondos oscuros -->
+    <Style x:Key="BotonSecundario" TargetType="Button" BasedOn="{StaticResource BotonPrimario}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource TextoClaro}"/>
+        <Setter Property="BorderBrush" Value="#5A5A5A"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <!-- "Editar" para tarjetas y tablas -->
+    <Style x:Key="BotonEditar" TargetType="Button" BasedOn="{StaticResource BotonPrimario}">
+        <Setter Property="Background" Value="{StaticResource FondoOscuro}"/>
+        <Setter Property="Foreground" Value="{StaticResource Amarillo}"/>
+        <Setter Property="Padding" Value="12,5"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="0,0,6,0"/>
+    </Style>
+
+    <!-- "Eliminar" / "Quitar filtros" (rojo) -->
+    <Style x:Key="BotonPeligro" TargetType="Button" BasedOn="{StaticResource BotonPrimario}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource Rojo}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Rojo}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="12,5"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+    <!-- Opciones del menú lateral (funcionan como pestañas) -->
+    <Style x:Key="BotonMenu" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="{StaticResource TextoTenue}"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="Height" Value="56"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+        <Setter Property="GroupName" Value="Menu"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="Fondo" CornerRadius="8" Background="Transparent" Padding="18,0">
+                        <VisualStateManager.VisualStateGroups>
+                            <!-- CheckStates va después para que "seleccionado" gane sobre "hover" -->
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="#303030"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoClaro}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="#303030"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoClaro}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoOscuro}"/>
+                                        <Setter Target="Contenido.FontWeight" Value="SemiBold"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="Contenido"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Botón "Filtros": queda amarillo mientras el panel está abierto -->
+    <Style x:Key="BotonFiltros" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{StaticResource FondoOscuro}"/>
+        <Setter Property="Foreground" Value="{StaticResource Amarillo}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="18,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="Fondo" CornerRadius="6"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Opacity" Value="0.85"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Opacity" Value="0.65"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoOscuro}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="CheckedPointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Fondo.Opacity" Value="0.85"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoOscuro}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="CheckedPressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Fondo.Opacity" Value="0.65"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource TextoOscuro}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="CheckedDisabled"/>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="Contenido"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Opciones de "Tipo de pieza" (chips). Se usa como ItemContainerStyle de un GridView. -->
+    <Style x:Key="ChipTipo" TargetType="GridViewItem">
+        <Setter Property="Foreground" Value="{StaticResource TextoOscuro}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewItem">
+                    <Border x:Name="Fondo" CornerRadius="16" Padding="16,6" Margin="0,0,8,8"
+                            Background="White" BorderBrush="#CFCBC3" BorderThickness="1">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.BorderBrush" Value="{StaticResource Amarillo}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.BorderBrush" Value="{StaticResource Amarillo}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource FondoOscuro}"/>
+                                        <Setter Target="Fondo.BorderBrush" Value="{StaticResource FondoOscuro}"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.FontWeight" Value="SemiBold"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PointerOverSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource FondoOscuro}"/>
+                                        <Setter Target="Fondo.BorderBrush" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.FontWeight" Value="SemiBold"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PressedSelected">
+                                    <VisualState.Setters>
+                                        <Setter Target="Fondo.Background" Value="{StaticResource FondoOscuro}"/>
+                                        <Setter Target="Fondo.BorderBrush" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource Amarillo}"/>
+                                        <Setter Target="Contenido.FontWeight" Value="SemiBold"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="Contenido"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Interruptor de encendido/apagado (CheckBox con otra apariencia) -->
+    <Style x:Key="Interruptor" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource TextoGris}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="Pista.Background" Value="{StaticResource Verde}"/>
+                                        <Setter Target="Bolita.HorizontalAlignment" Value="Right"/>
+                                        <Setter Target="Bolita.Margin" Value="0,0,3,0"/>
+                                        <Setter Target="Contenido.Foreground" Value="{StaticResource Verde}"/>
+                                        <Setter Target="Contenido.FontWeight" Value="SemiBold"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Width="42" Height="22">
+                            <Border x:Name="Pista" CornerRadius="11" Background="#C9C6BF"/>
+                            <Ellipse x:Name="Bolita" Width="16" Height="16" Fill="White"
+                                     HorizontalAlignment="Left" Margin="3,0,0,0"/>
+                        </Grid>
+                        <ContentPresenter x:Name="Contenido"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= CAMPOS ================= -->
+    <!-- Los colores de fondo/foco de estos campos se fijan en PanelAdmin.xaml,
+         dentro del formulario (Border.Resources), porque en WinUI el fondo
+         de un TextBox en foco sale de recursos del tema, no de la propiedad Background. -->
+    <Style x:Key="CampoOscuro" TargetType="TextBox">
+        <Setter Property="Padding" Value="8,7"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <Style x:Key="CampoClave" TargetType="PasswordBox">
+        <Setter Property="Padding" Value="8,7"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <Style x:Key="Lista" TargetType="ComboBox">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
+    <!-- ================= TARJETAS ================= -->
+    <Style x:Key="Tarjeta" TargetType="Border">
+        <Setter Property="Width" Value="270"/>
+        <Setter Property="Margin" Value="0,0,16,16"/>
+        <Setter Property="Padding" Value="18"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#DAD7D0"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <Style x:Key="TarjetaDato" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource FondoOscuro}"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="20,16"/>
+        <Setter Property="Margin" Value="0,0,14,0"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Amarillo}"/>
+        <Setter Property="BorderThickness" Value="4,0,0,0"/>
+    </Style>
+
+    <!-- Rayita amarilla a la izquierda de cada dato del panel lateral -->
+    <Style x:Key="DatoLateral" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource Amarillo}"/>
+        <Setter Property="BorderThickness" Value="3,0,0,0"/>
+        <Setter Property="Padding" Value="10,0,0,0"/>
+        <Setter Property="Margin" Value="0,0,8,14"/>
+    </Style>
+
+    <!-- ================= TABLAS (ListView) ================= -->
+    <!-- Cada renglón ocupa todo el ancho para que las columnas cuadren con el encabezado -->
+    <Style x:Key="FilaTabla" TargetType="ListViewItem" BasedOn="{StaticResource DefaultListViewItemStyle}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="MinHeight" Value="44"/>
+    </Style>
+
+</ResourceDictionary>
