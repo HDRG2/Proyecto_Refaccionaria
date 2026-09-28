@@ -14,35 +14,43 @@ namespace Refaccionaria.Frontend.Views;
 public sealed partial class PanelAdmin : Page
 {
     private readonly List<int> autosCompatiblesSeleccionados = new();
-
     private void AutoCompatible_Checked(
-     object sender,
-     RoutedEventArgs e)
+    object sender,
+    RoutedEventArgs e)
     {
+
         if (sender is not CheckBox check)
             return;
 
-        if (check.Tag is not int autoId)
+        if (check.DataContext is not ModeloAuto auto)
             return;
 
-        if (!autosCompatiblesSeleccionados.Contains(autoId))
+        if (!autosCompatiblesSeleccionados.Contains(auto.Id))
         {
-            autosCompatiblesSeleccionados.Add(autoId);
+            autosCompatiblesSeleccionados.Add(auto.Id);
         }
-    }
 
+        ChkFormUniversal.IsChecked = false;
+        ChkFormUniversal.IsEnabled = false;
+    }
 
     private void AutoCompatible_Unchecked(
         object sender,
         RoutedEventArgs e)
     {
+
         if (sender is not CheckBox check)
             return;
 
-        if (check.Tag is not int autoId)
+        if (check.DataContext is not ModeloAuto auto)
             return;
 
-        autosCompatiblesSeleccionados.Remove(autoId);
+        autosCompatiblesSeleccionados.Remove(auto.Id);
+
+        if (autosCompatiblesSeleccionados.Count == 0)
+        {
+            ChkFormUniversal.IsEnabled = true;
+        }
     }
 
     // =========================================================
@@ -53,6 +61,7 @@ public sealed partial class PanelAdmin : Page
     object sender,
     RoutedEventArgs e)
     {
+
         bool esUniversal =
             ChkFormUniversal.IsChecked == true;
 

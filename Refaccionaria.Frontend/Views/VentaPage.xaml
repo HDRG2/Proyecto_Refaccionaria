@@ -18,371 +18,396 @@
             </ResourceDictionary.MergedDictionaries>
 
 
-        <conv:StockBajoABrushConverter
-            x:Key="BajoStockAColorConverter"/>
+            <conv:StockBajoABrushConverter
+                x:Key="BajoStockAColorConverter"/>
 
-        <conv:TextoVacioAVisibilidadConverter
-            x:Key="TextoVacioAVisibilidadConverter"/>
+            <conv:TextoVacioAVisibilidadConverter
+                x:Key="TextoVacioAVisibilidadConverter"/>
 
 
-        <!-- =====================================================
+            <!-- =====================================================
              TARJETA DEL PRODUCTO
              ===================================================== -->
 
-        <DataTemplate x:Key="TarjetaProducto">
+            <DataTemplate x:Key="TarjetaProducto">
 
-            <Border
-                Width="290"
-                MinHeight="345"
-                Margin="0,0,18,18"
-                Background="White"
-                BorderBrush="#E0E0E0"
-                BorderThickness="1"
-                CornerRadius="9"
-                Padding="20">
+                <Border
+                    Width="290"
+                    MinHeight="385"
+                    Margin="0,0,18,18"
+                    Background="White"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    CornerRadius="9"
+                    Padding="20">
 
-                <Border.Shadow>
+                    <Border.Shadow>
 
-                    <ThemeShadow/>
+                        <ThemeShadow/>
 
-                </Border.Shadow>
+                    </Border.Shadow>
 
-                <Grid>
+                    <Grid>
 
-                    <Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
 
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="62"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
 
-                    </Grid.RowDefinitions>
+                        </Grid.RowDefinitions>
 
 
-                    <!-- CÓDIGO Y CATEGORÍA -->
+                        <!-- CÓDIGO Y CATEGORÍA -->
 
-                    <Grid Grid.Row="0">
+                        <Grid Grid.Row="0">
+
+                            <TextBlock
+                                Text="{Binding Codigo}"
+                                FontSize="11"
+                                Foreground="#888888"
+                                VerticalAlignment="Center"/>
+
+
+                            <!-- CATEGORÍA AMARILLA -->
+
+                            <Border
+                                HorizontalAlignment="Right"
+                                Background="{StaticResource Amarillo}"
+                                CornerRadius="14"
+                                Padding="12,4">
+
+                                <TextBlock
+                                    Text="{Binding CategoriaNombre}"
+                                    FontSize="11"
+                                    FontWeight="Bold"
+                                    Foreground="#202020"/>
+
+                            </Border>
+
+                        </Grid>
+
+
+                        <!-- NOMBRE -->
 
                         <TextBlock
-                            Text="{Binding Codigo}"
-                            FontSize="11"
-                            Foreground="#888888"
+                            Grid.Row="1"
+                            Text="{Binding Nombre}"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Foreground="#202020"
+                            TextWrapping="Wrap"
+                            MaxLines="2"
+                            TextTrimming="CharacterEllipsis"
                             VerticalAlignment="Center"/>
 
 
-                        <!-- CATEGORÍA AMARILLA -->
+                        <!-- MARCA -->
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Text="{Binding MarcaNombre}"
+                            FontSize="14"
+                            Foreground="#606060"
+                            Margin="0,4,0,0"/>
+
+
+                        <!-- COMPATIBILIDAD -->
+
+                        <StackPanel
+                            Grid.Row="3"
+                            Margin="0,7,0,0">
+
+                            <TextBlock
+                                Text="AUTOS COMPATIBLES"
+                                FontSize="9"
+                                FontWeight="SemiBold"
+                                Foreground="#999999"
+                                Margin="0,0,0,4"/>
+
+                            <ItemsControl
+                                ItemsSource="{Binding AutosDescripciones}">
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <TextBlock
+                                            Text="{Binding}"
+                                            FontSize="11"
+                                            Foreground="#606060"
+                                            TextTrimming="CharacterEllipsis"
+                                            Margin="0,1,0,1"/>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+
+                        </StackPanel>
+
+
+                        <!-- SEPARADOR -->
 
                         <Border
-                            HorizontalAlignment="Right"
-                            Background="{StaticResource Amarillo}"
-                            CornerRadius="14"
-                            Padding="12,4">
-
-                            <TextBlock
-                                Text="{Binding CategoriaNombre}"
-                                FontSize="11"
-                                FontWeight="Bold"
-                                Foreground="#202020"/>
-
-                        </Border>
-
-                    </Grid>
+                            Grid.Row="4"
+                            Height="1"
+                            Background="#E0E0E0"
+                            Margin="0,18,0,18"/>
 
 
-                    <!-- NOMBRE -->
+                        <!-- PRECIO Y EXISTENCIA -->
 
-                    <TextBlock
-                        Grid.Row="1"
-                        Text="{Binding Nombre}"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        Foreground="#202020"
-                        TextWrapping="Wrap"
-                        Margin="0,16,0,0"/>
+                        <Grid Grid.Row="5">
 
+                            <Grid.ColumnDefinitions>
 
-                    <!-- MARCA -->
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
 
-                    <TextBlock
-                        Grid.Row="2"
-                        Text="{Binding MarcaNombre}"
-                        FontSize="14"
-                        Foreground="#606060"
-                        Margin="0,4,0,0"/>
+                            </Grid.ColumnDefinitions>
 
 
-                    <!-- COMPATIBILIDAD -->
+                            <StackPanel
+                                Grid.Column="0">
 
-                    <TextBlock
-                        Grid.Row="3"
-                        Text="{Binding CompatibilidadTexto}"
-                        FontSize="13"
-                        Foreground="#777777"
-                        TextWrapping="Wrap"
-                        Margin="0,8,0,0"/>
+                                <TextBlock
+                                    Text="PRECIO"
+                                    FontSize="10"
+                                    Foreground="#999999"/>
 
+                                <TextBlock
+                                    Text="{Binding PrecioTexto}"
+                                    FontSize="23"
+                                    FontWeight="Bold"
+                                    Foreground="{StaticResource Rojo}"
+                                    Margin="0,3,0,0"/>
 
-                    <!-- SEPARADOR -->
-
-                    <Border
-                        Grid.Row="4"
-                        Height="1"
-                        Background="#E0E0E0"
-                        Margin="0,18,0,18"/>
+                            </StackPanel>
 
 
-                    <!-- PRECIO Y EXISTENCIA -->
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right">
 
-                    <Grid Grid.Row="5">
+                                <TextBlock
+                                    Text="EXISTENCIA"
+                                    FontSize="10"
+                                    Foreground="#999999"
+                                    HorizontalAlignment="Right"/>
 
-                        <Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="{Binding ExistenciaTexto}"
+                                    FontSize="15"
+                                    FontWeight="Bold"
+                                    Foreground="#202020"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,5,0,0"/>
 
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            </StackPanel>
 
-                        </Grid.ColumnDefinitions>
-
-
-                        <StackPanel
-                            Grid.Column="0">
-
-                            <TextBlock
-                                Text="PRECIO"
-                                FontSize="10"
-                                Foreground="#999999"/>
-
-                            <TextBlock
-                                Text="{Binding PrecioTexto}"
-                                FontSize="23"
-                                FontWeight="Bold"
-                                Foreground="{StaticResource Rojo}"
-                                Margin="0,3,0,0"/>
-
-                        </StackPanel>
+                        </Grid>
 
 
-                        <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right">
+                        <!-- AGREGAR -->
 
-                            <TextBlock
-                                Text="EXISTENCIA"
-                                FontSize="10"
-                                Foreground="#999999"
-                                HorizontalAlignment="Right"/>
+                        <Button
+                            Grid.Row="6"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,22,0,0"
+                            Padding="14,12"
+                            Style="{StaticResource BotonPrimario}"
+                            Click="Agregar_Click">
 
-                            <TextBlock
-                                Text="{Binding ExistenciaTexto}"
-                                FontSize="15"
-                                FontWeight="Bold"
-                                Foreground="#202020"
-                                HorizontalAlignment="Right"
-                                Margin="0,5,0,0"/>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
 
-                        </StackPanel>
+                                <TextBlock
+                                    Text="&#x1F6D2;"
+                                    FontSize="17"
+                                    Margin="0,0,9,0"/>
+
+                                <TextBlock
+                                    Text="Agregar"
+                                    FontSize="14"
+                                    FontWeight="Bold"/>
+
+                            </StackPanel>
+
+                        </Button>
 
                     </Grid>
 
+                </Border>
 
-                    <!-- AGREGAR -->
-
-                    <Button
-                        Grid.Row="6"
-                        HorizontalAlignment="Stretch"
-                        Margin="0,22,0,0"
-                        Padding="14,12"
-                        Style="{StaticResource BotonPrimario}"
-                        Click="Agregar_Click">
-
-                        <StackPanel
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-
-                            <TextBlock
-                                Text="&#x1F6D2;"
-                                FontSize="17"
-                                Margin="0,0,9,0"/>
-
-                            <TextBlock
-                                Text="Agregar"
-                                FontSize="14"
-                                FontWeight="Bold"/>
-
-                        </StackPanel>
-
-                    </Button>
-
-                </Grid>
-
-            </Border>
-
-        </DataTemplate>
+            </DataTemplate>
 
 
-        <!-- =====================================================
+            <!-- =====================================================
              RENGLÓN DEL TICKET
              ===================================================== -->
 
-        <DataTemplate x:Key="RenglonTicket">
+            <DataTemplate x:Key="RenglonTicket">
 
-            <Border
-                Background="{StaticResource Campo}"
-                BorderBrush="{StaticResource BordeSuave}"
-                BorderThickness="1"
-                CornerRadius="6"
-                Margin="0,0,0,10">
+                <Border
+                    Background="{StaticResource Campo}"
+                    BorderBrush="{StaticResource BordeSuave}"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Margin="0,0,0,10">
 
-                <Grid>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <!-- LÍNEA ROJA IZQUIERDA -->
-
-                    <Border
-                        Grid.Column="0"
-                        Background="{StaticResource Rojo}"
-                        CornerRadius="6,0,0,6"/>
-
-
-                    <!-- CONTENIDO -->
-
-                    <Grid
-                        Grid.Column="1"
-                        Margin="14,12,12,12">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <Grid>
 
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
 
-                        <!-- NOMBRE DEL PRODUCTO -->
+                        <!-- LÍNEA ROJA IZQUIERDA -->
 
-                        <TextBlock
-                            Grid.Row="0"
+                        <Border
                             Grid.Column="0"
-                            Text="{Binding Refaccion.Nombre}"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Foreground="White"
-                            TextWrapping="Wrap"
-                            Margin="0,0,10,0"/>
+                            Background="{StaticResource Rojo}"
+                            CornerRadius="6,0,0,6"/>
 
 
-                        <!-- QUITAR -->
+                        <!-- CONTENIDO -->
 
-                        <Button
-                            Grid.Row="0"
+                        <Grid
                             Grid.Column="1"
-                            Content="✕"
-                            Style="{StaticResource BotonQuitar}"
-                            VerticalAlignment="Top"
-                            ToolTipService.ToolTip="Quitar del ticket"
-                            Click="Quitar_Click"/>
+                            Margin="14,12,12,12">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
 
-                        <!-- CÓDIGO Y PRECIO -->
-
-                        <StackPanel
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Orientation="Horizontal"
-                            Margin="0,5,0,0">
-
-                            <TextBlock
-                                Text="{Binding Refaccion.Codigo}"
-                                FontSize="11"
-                                Foreground="{StaticResource GrisTexto}"/>
+                            <!-- NOMBRE DEL PRODUCTO -->
 
                             <TextBlock
-                                Text="  •  "
-                                FontSize="11"
-                                Foreground="#707070"/>
-
-                            <TextBlock
-                                Text="{Binding PrecioUnitarioTexto}"
-                                FontSize="11"
-                                Foreground="{StaticResource GrisTexto}"/>
-
-                        </StackPanel>
-
-
-                        <!-- CANTIDAD -->
-
-                        <StackPanel
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Orientation="Horizontal"
-                            Margin="0,12,0,0">
-
-                            <Button
-                                Content="-"
-                                Style="{StaticResource BotonCantidad}"
-                                Click="Menos_Click"/>
-
-                            <TextBlock
-                                Text="{Binding Cantidad}"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="{Binding Refaccion.Nombre}"
                                 FontSize="14"
-                                FontWeight="SemiBold"
-                                Foreground="White"
-                                Width="38"
-                                TextAlignment="Center"
-                                VerticalAlignment="Center"/>
-
-                            <Button
-                                Content="+"
-                                Style="{StaticResource BotonCantidad}"
-                                Click="Mas_Click"/>
-
-                        </StackPanel>
-
-
-                        <!-- SUBTOTAL DEL PRODUCTO -->
-
-                        <StackPanel
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="10,12,0,0">
-
-                            <TextBlock
-                                Text="SUBTOTAL"
-                                FontSize="9"
-                                Foreground="{StaticResource GrisTexto}"
-                                HorizontalAlignment="Right"/>
-
-                            <TextBlock
-                                Text="{Binding ImporteTexto}"
-                                FontSize="15"
                                 FontWeight="Bold"
                                 Foreground="White"
-                                HorizontalAlignment="Right"
-                                Margin="0,2,0,0"/>
+                                TextWrapping="Wrap"
+                                Margin="0,0,10,0"/>
 
-                        </StackPanel>
+
+                            <!-- QUITAR -->
+
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Content="✕"
+                                Style="{StaticResource BotonQuitar}"
+                                VerticalAlignment="Top"
+                                ToolTipService.ToolTip="Quitar del ticket"
+                                Click="Quitar_Click"/>
+
+
+                            <!-- CÓDIGO Y PRECIO -->
+
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Horizontal"
+                                Margin="0,5,0,0">
+
+                                <TextBlock
+                                    Text="{Binding Refaccion.Codigo}"
+                                    FontSize="11"
+                                    Foreground="{StaticResource GrisTexto}"/>
+
+                                <TextBlock
+                                    Text="  •  "
+                                    FontSize="11"
+                                    Foreground="#707070"/>
+
+                                <TextBlock
+                                    Text="{Binding PrecioUnitarioTexto}"
+                                    FontSize="11"
+                                    Foreground="{StaticResource GrisTexto}"/>
+
+                            </StackPanel>
+
+
+                            <!-- CANTIDAD -->
+
+                            <StackPanel
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Orientation="Horizontal"
+                                Margin="0,12,0,0">
+
+                                <Button
+                                    Content="-"
+                                    Style="{StaticResource BotonCantidad}"
+                                    Click="Menos_Click"/>
+
+                                <TextBlock
+                                    Text="{Binding Cantidad}"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="White"
+                                    Width="38"
+                                    TextAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                                <Button
+                                    Content="+"
+                                    Style="{StaticResource BotonCantidad}"
+                                    Click="Mas_Click"/>
+
+                            </StackPanel>
+
+
+                            <!-- SUBTOTAL DEL PRODUCTO -->
+
+                            <StackPanel
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="10,12,0,0">
+
+                                <TextBlock
+                                    Text="SUBTOTAL"
+                                    FontSize="9"
+                                    Foreground="{StaticResource GrisTexto}"
+                                    HorizontalAlignment="Right"/>
+
+                                <TextBlock
+                                    Text="{Binding ImporteTexto}"
+                                    FontSize="15"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,2,0,0"/>
+
+                            </StackPanel>
+
+                        </Grid>
 
                     </Grid>
 
-                </Grid>
+                </Border>
 
-            </Border>
-
-        </DataTemplate>
+            </DataTemplate>
 
 
         </ResourceDictionary>
@@ -894,8 +919,6 @@
                         </ComboBox>
 
                     </Grid>
-
-
                     <!-- MARCA MODELO QUITAR -->
 
                     <Grid Margin="0,14,0,0">
@@ -904,11 +927,13 @@
 
                             <ColumnDefinition Width="190"/>
                             <ColumnDefinition Width="190"/>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
 
                         </Grid.ColumnDefinitions>
 
+                        <!-- MARCA -->
                         <ComboBox
                             x:Name="CmbMarca"
                             Grid.Column="0"
@@ -916,6 +941,7 @@
                             Height="42"
                             SelectionChanged="Marca_Changed"/>
 
+                        <!-- MODELO -->
                         <ComboBox
                             x:Name="CmbModelo"
                             Grid.Column="1"
@@ -924,8 +950,18 @@
                             Margin="10,0,0,0"
                             SelectionChanged="Filtro_Changed"/>
 
+                        <!-- AÑO -->
+                        <ComboBox
+                            x:Name="CmbAnio"
+                            Grid.Column="2"
+                            Style="{StaticResource Lista}"
+                            Height="42"
+                            Margin="10,0,0,0"
+                            SelectionChanged="Filtro_Changed"/>
+
+                        <!-- QUITAR FILTROS -->
                         <Button
-                            Grid.Column="3"
+                            Grid.Column="4"
                             Content="Quitar filtros"
                             Style="{StaticResource BotonPrimario}"
                             Padding="18,10"
