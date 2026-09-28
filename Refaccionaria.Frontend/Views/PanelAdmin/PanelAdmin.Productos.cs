@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Refaccionaria.Frontend.Models;
+using Windows.Networking.NetworkOperators;
 
 namespace Refaccionaria.Frontend.Views;
 
@@ -90,6 +91,7 @@ public sealed partial class PanelAdmin : Page
         // -----------------------------------------------------
 
         ChkFormUniversal.IsChecked = false;
+        ChkFormUniversal.IsEnabled = true;
 
 
         // -----------------------------------------------------
@@ -126,77 +128,118 @@ public sealed partial class PanelAdmin : Page
         }
     }
 
-    private void AbrirProductoParaEditar(Refaccion refaccion)
+    private void AbrirProductoParaEditar(
+    Refaccion refaccion)
     {
-        // Guardamos qué producto estamos editando
         refaccionEditando = refaccion;
 
         modoFormulario = "EditarProducto";
 
-        // Mostrar formulario de producto
-        Formulario.Visibility = Visibility.Visible;
-        CamposProducto.Visibility = Visibility.Visible;
+        // -----------------------------------------------------
+        // MOSTRAR FORMULARIO
+        // -----------------------------------------------------
+
         CamposEmpleado.Visibility = Visibility.Collapsed;
+        CamposProducto.Visibility = Visibility.Visible;
+        Formulario.Visibility = Visibility.Visible;
 
-        TxtTituloFormulario.Text = "Editar producto";
+        TxtTituloFormulario.Text =
+            "Editar producto";
 
-        // Ahora sí mostramos el botón eliminar
-        BtnEliminarProducto.Visibility = Visibility.Visible;
+        BtnEliminarProducto.Visibility =
+            Visibility.Visible;
 
-        // =====================================================
-        // CARGAR LOS DATOS ACTUALES
-        // =====================================================
 
-        TxtFormNombre.Text = refaccion.Nombre;
-        TxtFormCodigo.Text = refaccion.Codigo;
-        TxtFormPrecio.Text = refaccion.Precio.ToString();
-        TxtFormStock.Text = refaccion.Stock.ToString();
+        // -----------------------------------------------------
+        // DATOS
+        // -----------------------------------------------------
 
-        // =====================================================
+        TxtFormNombre.Text =
+            refaccion.Nombre;
+
+        TxtFormCodigo.Text =
+            refaccion.Codigo;
+
+        TxtFormPrecio.Text =
+            refaccion.Precio.ToString();
+
+        TxtFormStock.Text =
+            refaccion.Stock.ToString();
+
+
+        // -----------------------------------------------------
         // CATEGORÍA
-        // =====================================================
+        // -----------------------------------------------------
 
         CmbFormCategoria.SelectedItem =
             categorias.FirstOrDefault(
                 c => c.Id == refaccion.CategoriaId
             );
 
-        // =====================================================
+
+        // -----------------------------------------------------
         // MARCA
-        // =====================================================
+        // -----------------------------------------------------
 
         CmbFormMarca.SelectedItem =
             marcas.FirstOrDefault(
                 m => m.Id == refaccion.MarcaId
             );
 
-        // =====================================================
-        // UNIVERSAL
-        // =====================================================
 
-        ChkFormUniversal.IsChecked =
-            refaccion.EsUniversal;
+        // -----------------------------------------------------
+        // LIMPIAR SELECCIÓN ANTERIOR
+        // -----------------------------------------------------
 
         autosCompatiblesSeleccionados.Clear();
 
-        LstFormAutos.IsEnabled =
-            !refaccion.EsUniversal;
+        foreach (ModeloAuto auto in autos)
+        {
+            auto.Seleccionado = false;
+        }
 
-        // =====================================================
-        // AUTOS COMPATIBLES
-        // =====================================================
+        LstFormAutos.IsEnabled = true;
+
+        ChkFormUniversal.IsChecked = false;
+        ChkFormUniversal.IsEnabled = true;
+
+        // -----------------------------------------------------
+        // CARGAR AUTOS GUARDADOS
+        // -----------------------------------------------------
 
         if (!refaccion.EsUniversal &&
             refaccion.AutosCompatibles != null)
         {
-            foreach (int autoId in refaccion.AutosCompatibles)
+            foreach (ModeloAuto auto in autos)
             {
-                if (!autosCompatiblesSeleccionados.Contains(autoId))
+                bool estaSeleccionado =
+                    refaccion.AutosCompatibles.Contains(auto.Id);
+                auto.Seleccionado = estaSeleccionado;
+
+                if (estaSeleccionado)
                 {
-                    autosCompatiblesSeleccionados.Add(autoId);
+                    autosCompatiblesSeleccionados.Add(auto.Id);
                 }
             }
         }
+        // -----------------------------------------------------
+        // UNIVERSAL
+        // -----------------------------------------------------
+
+        ChkFormUniversal.IsChecked =
+            refaccion.EsUniversal;
+
+        ChkFormUniversal.IsEnabled =
+            autosCompatiblesSeleccionados.Count == 0;
+
+
+        // -----------------------------------------------------
+        // LISTA DE AUTOS
+        // -----------------------------------------------------
+
+        LstFormAutos.IsEnabled =
+            !refaccion.EsUniversal;
+
     }
 
     // =========================================================

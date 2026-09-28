@@ -1001,7 +1001,8 @@
                                                 FontSize="11"
                                                 Foreground="#888888"
                                                 TextWrapping="Wrap"
-                                                MaxHeight="34"
+                                                TextTrimming="CharacterEllipsis"
+                                                Height="34"
                                                 Margin="0,5,0,0"/>
 
 
@@ -1792,27 +1793,26 @@
                         Visibility="Collapsed">
 
                         <Grid.RowDefinitions>
-
                             <RowDefinition Height="Auto"/>
-
                             <RowDefinition Height="Auto"/>
-
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-
                         </Grid.RowDefinitions>
 
 
-                        <!-- ENCABEZADO DE REPORTES -->
+                        <!-- ================================================= -->
+                        <!-- ENCABEZADO -->
+                        <!-- ================================================= -->
+
                         <Grid
                             Grid.Row="0"
-                            Margin="0,0,0,20">
+                            Margin="0,0,0,18">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- TÍTULO Y DESCRIPCIÓN -->
                             <StackPanel
                                 Grid.Column="0"
                                 VerticalAlignment="Center">
@@ -1830,7 +1830,7 @@
 
                             </StackPanel>
 
-                            <!-- BOTÓN DESCARGAR REPORTE -->
+
                             <Button
                                 Grid.Column="1"
                                 Content="↓  DESCARGAR REPORTE"
@@ -1845,21 +1845,151 @@
                         </Grid>
 
 
+                        <!-- ================================================= -->
+                        <!-- FILTRO DE FECHAS -->
+                        <!-- ================================================= -->
+
+                        <Border
+                            Grid.Row="1"
+                            Background="White"
+                            BorderBrush="#D5D5D5"
+                            BorderThickness="1"
+                            CornerRadius="7"
+                            Padding="16"
+                            Margin="0,0,0,18">
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="230"/>
+                                    <ColumnDefinition Width="190"/>
+                                    <ColumnDefinition Width="190"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <!-- PERÍODO -->
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    Margin="0,0,15,0">
+
+                                    <TextBlock
+                                        Text="PERÍODO"
+                                        FontSize="10"
+                                        FontWeight="SemiBold"
+                                        Foreground="#777777"
+                                        Margin="0,0,0,5"/>
+
+                                    <ComboBox
+                                        x:Name="CmbPeriodoReporte"
+                                        Height="38"
+                                        SelectedIndex="0"
+                                        SelectionChanged="PeriodoReporte_SelectionChanged">
+
+                                        <ComboBoxItem Content="Hoy"/>
+                                        <ComboBoxItem Content="Ayer"/>
+                                        <ComboBoxItem Content="Últimos 7 días"/>
+                                        <ComboBoxItem Content="Últimas 2 semanas"/>
+                                        <ComboBoxItem Content="Últimas 3 semanas"/>
+                                        <ComboBoxItem Content="Este mes"/>
+                                        <ComboBoxItem Content="Todo el historial"/>
+                                        <ComboBoxItem Content="Personalizado"/>
+
+                                    </ComboBox>
+
+                                </StackPanel>
+
+
+                                <!-- DESDE -->
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="0,0,15,0">
+
+                                    <TextBlock
+                                        Text="DESDE"
+                                        FontSize="10"
+                                        FontWeight="SemiBold"
+                                        Foreground="#777777"
+                                        Margin="0,0,0,5"/>
+
+                                    <CalendarDatePicker
+                                        x:Name="FechaReporteDesde"
+                                        Height="38"
+                                        IsEnabled="False"
+                                        DateChanged="FechaReporte_DateChanged"/>
+
+                                </StackPanel>
+
+
+                                <!-- HASTA -->
+
+                                <StackPanel
+                                    Grid.Column="2">
+
+                                    <TextBlock
+                                        Text="HASTA"
+                                        FontSize="10"
+                                        FontWeight="SemiBold"
+                                        Foreground="#777777"
+                                        Margin="0,0,0,5"/>
+
+                                    <CalendarDatePicker
+                                        x:Name="FechaReporteHasta"
+                                        Height="38"
+                                        IsEnabled="False"
+                                        DateChanged="FechaReporte_DateChanged"/>
+
+                                </StackPanel>
+
+
+                                <!-- TEXTO DEL PERÍODO -->
+
+                                <StackPanel
+                                    Grid.Column="3"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="20,15,0,0">
+
+                                    <TextBlock
+                                        Text="MOSTRANDO"
+                                        FontSize="9"
+                                        Foreground="#999999"
+                                        HorizontalAlignment="Right"/>
+
+                                    <TextBlock
+                                        x:Name="TxtPeriodoReporte"
+                                        Text="Ventas de hoy"
+                                        FontSize="13"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource GrisMuyOscuro}"
+                                        HorizontalAlignment="Right"/>
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+
+
+                        <!-- ================================================= -->
                         <!-- TARJETAS -->
+                        <!-- ================================================= -->
 
                         <Grid
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Margin="0,0,0,20">
 
                             <Grid.ColumnDefinitions>
-
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-
                             </Grid.ColumnDefinitions>
 
+
+                            <!-- TOTAL VENDIDO -->
 
                             <Border
                                 Grid.Column="0"
@@ -1889,6 +2019,8 @@
                             </Border>
 
 
+                            <!-- VENTAS -->
+
                             <Border
                                 Grid.Column="1"
                                 Style="{StaticResource TarjetaResumen}">
@@ -1912,6 +2044,8 @@
                             </Border>
 
 
+                            <!-- PIEZAS -->
+
                             <Border
                                 Grid.Column="2"
                                 Style="{StaticResource TarjetaResumen}">
@@ -1934,6 +2068,8 @@
 
                             </Border>
 
+
+                            <!-- PRODUCTO MÁS VENDIDO -->
 
                             <Border
                                 Grid.Column="3"
@@ -1967,10 +2103,12 @@
                         </Grid>
 
 
-                        <!-- TABLA VENTAS -->
+                        <!-- ================================================= -->
+                        <!-- TABLA DE VENTAS -->
+                        <!-- ================================================= -->
 
                         <Border
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Background="White"
                             BorderBrush="#D5D5D5"
                             BorderThickness="1"
@@ -1979,27 +2117,23 @@
                             <Grid>
 
                                 <Grid.RowDefinitions>
-
                                     <RowDefinition Height="48"/>
-
                                     <RowDefinition Height="*"/>
-
                                 </Grid.RowDefinitions>
 
+
+                                <!-- ENCABEZADOS -->
 
                                 <Grid
                                     Background="{StaticResource GrisMuyOscuro}">
 
                                     <Grid.ColumnDefinitions>
-
                                         <ColumnDefinition Width="140"/>
                                         <ColumnDefinition Width="170"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="160"/>
-
                                     </Grid.ColumnDefinitions>
-
 
                                     <TextBlock
                                         Grid.Column="0"
@@ -2039,6 +2173,8 @@
                                 </Grid>
 
 
+                                <!-- LISTA -->
+
                                 <ListView
                                     x:Name="TablaVentas"
                                     Grid.Row="1"
@@ -2053,19 +2189,15 @@
                                                 BorderBrush="#E5E5E5"
                                                 BorderThickness="0,0,0,1">
 
-                                                <Grid
-                                                    MinHeight="52">
+                                                <Grid MinHeight="52">
 
                                                     <Grid.ColumnDefinitions>
-
                                                         <ColumnDefinition Width="140"/>
                                                         <ColumnDefinition Width="170"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="160"/>
-
                                                     </Grid.ColumnDefinitions>
-
 
                                                     <TextBlock
                                                         Grid.Column="0"
@@ -2186,7 +2318,7 @@
                                 Foreground="White"
                                 BorderBrush="#777777"
                                 BorderThickness="0,0,0,1"
-                                Padding="12,6"
+                                Padding="12,10,12,10"
                                 VerticalContentAlignment="Center"
                                 SelectionHighlightColor="#FFC107"/>
 
@@ -2227,7 +2359,7 @@
                                         Foreground="White"
                                         BorderBrush="#777777"
                                         BorderThickness="0,0,0,1"
-                                        Padding="12,6"
+                                        Padding="12,10,12,10"
                                         VerticalContentAlignment="Center"
                                         SelectionHighlightColor="#FFC107"/>
 
@@ -2286,7 +2418,7 @@
                                         Foreground="White"
                                         BorderBrush="#777777"
                                         BorderThickness="0,0,0,1"
-                                        Padding="12,6"
+                                        Padding="12,10,12,10"
                                         VerticalContentAlignment="Center"
                                         SelectionHighlightColor="#FFC107"/>
 
@@ -2311,7 +2443,7 @@
                                         Foreground="White"
                                         BorderBrush="#777777"
                                         BorderThickness="0,0,0,1"
-                                        Padding="12,6"
+                                        Padding="12,0"
                                         VerticalContentAlignment="Center"
                                         SelectionHighlightColor="#FFC107"/>
                                 </StackPanel>
@@ -2350,6 +2482,7 @@
                                             <CheckBox
                                                 Content="{x:Bind DescripcionCompleta, Mode=OneWay}"
                                                 Tag="{x:Bind Id, Mode=OneWay}"
+                                                IsChecked="{x:Bind Seleccionado, Mode=TwoWay}"
                                                 Foreground="White"
                                                 Margin="4,1"
                                                 MinHeight="26"

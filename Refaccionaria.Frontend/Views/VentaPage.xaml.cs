@@ -178,6 +178,8 @@ namespace Refaccionaria.Frontend.Views
                 LlenarMarcas();
 
                 LlenarModelos();
+
+                LlenarAnios();
             }
             catch (Exception ex)
             {

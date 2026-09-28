@@ -14,6 +14,7 @@ namespace Refaccionaria.Frontend.Views
 {
     public sealed partial class VentaPage : Page
     {
+        private const string TODOS_ANIOS = "Cualquier año";
         // =========================================================
         // LLENAR MARCAS
         // =========================================================
@@ -25,17 +26,14 @@ namespace Refaccionaria.Frontend.Views
                 return;
             }
 
-
             string? seleccionAnterior =
                 CmbMarca.SelectedItem?.ToString();
-
 
             CmbMarca.Items.Clear();
 
             CmbMarca.Items.Add(
                 TODAS_MARCAS
             );
-
 
             IEnumerable<string> nombres =
                 _marcas
@@ -47,14 +45,12 @@ namespace Refaccionaria.Frontend.Views
                 )
                 .OrderBy(n => n);
 
-
             foreach (string nombre in nombres)
             {
                 CmbMarca.Items.Add(
                     nombre
                 );
             }
-
 
             if (!string.IsNullOrWhiteSpace(
                     seleccionAnterior))
@@ -74,7 +70,6 @@ namespace Refaccionaria.Frontend.Views
                 }
             }
 
-
             CmbMarca.SelectedIndex = 0;
         }
 
@@ -91,21 +86,17 @@ namespace Refaccionaria.Frontend.Views
                 return;
             }
 
-
             CmbModelo.Items.Clear();
 
             CmbModelo.Items.Add(
                 TODOS_MODELOS
             );
 
-
             string marcaSeleccionada =
                 CmbMarca.SelectedItem?.ToString()
                 ?? TODAS_MARCAS;
 
-
             IEnumerable<string> modelos;
-
 
             if (marcaSeleccionada ==
                 TODAS_MARCAS)
@@ -127,7 +118,6 @@ namespace Refaccionaria.Frontend.Views
                     .Select(a => a.Modelo);
             }
 
-
             foreach (string modelo in
                      modelos
                      .Where(m =>
@@ -142,8 +132,76 @@ namespace Refaccionaria.Frontend.Views
                 );
             }
 
-
             CmbModelo.SelectedIndex = 0;
+        }
+
+        // =========================================================
+        // LLENAR AÑOS
+        // =========================================================
+
+        private void LlenarAnios()
+        {
+            if (CmbMarca == null ||
+                CmbModelo == null ||
+                CmbAnio == null)
+            {
+                return;
+            }
+
+            CmbAnio.Items.Clear();
+            CmbAnio.Items.Add(TODOS_ANIOS);
+
+            string marcaSeleccionada =
+                CmbMarca.SelectedItem?.ToString()
+                ?? TODAS_MARCAS;
+
+            string modeloSeleccionado =
+                CmbModelo.SelectedItem?.ToString()
+                ?? TODOS_MODELOS;
+
+            IEnumerable<ModeloAuto> vehiculos = _autos;
+
+            // Filtrar por marca
+            if (marcaSeleccionada != TODAS_MARCAS)
+            {
+                vehiculos = vehiculos.Where(a =>
+                    string.Equals(
+                        a.Marca,
+                        marcaSeleccionada,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+            }
+
+            // Filtrar por modelo
+            if (modeloSeleccionado != TODOS_MODELOS)
+            {
+                vehiculos = vehiculos.Where(a =>
+                    string.Equals(
+                        a.Modelo,
+                        modeloSeleccionado,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+            }
+
+            IEnumerable<int> anios =
+                vehiculos
+                .SelectMany(a =>
+                    Enumerable.Range(
+                        a.AnioInicio,
+                        a.AnioFin - a.AnioInicio + 1
+                    )
+                )
+                .Distinct()
+                .OrderByDescending(a => a);
+
+            foreach (int anio in anios)
+            {
+                CmbAnio.Items.Add(anio);
+            }
+
+            CmbAnio.SelectedIndex = 0;
         }
 
 
@@ -212,7 +270,6 @@ namespace Refaccionaria.Frontend.Views
                             )
                     );
             }
-
 
             // -----------------------------------------------------
             // CATEGORÍA
@@ -403,12 +460,33 @@ namespace Refaccionaria.Frontend.Views
         {
             AplicarFiltros();
         }
+        private void Modelo_Changed(
+        object sender,
+        SelectionChangedEventArgs e)
+        {
+            if (!_listo)
+            {
+                return;
+            }
 
+            _listo = false;
+
+            LlenarAnios();
+
+            _listo = true;
+
+            AplicarFiltros();
+        }
 
         private void Filtro_Changed(
-            object sender,
-            SelectionChangedEventArgs e)
+    object sender,
+    SelectionChangedEventArgs e)
         {
+            if (!_listo)
+            {
+                return;
+            }
+
             AplicarFiltros();
         }
 
@@ -426,6 +504,7 @@ namespace Refaccionaria.Frontend.Views
             _listo = false;
 
             LlenarModelos();
+            LlenarAnios();
 
             _listo = true;
 
@@ -475,10 +554,6 @@ namespace Refaccionaria.Frontend.Views
 
             RbTodos.IsChecked =
                 true;
-
-            _tipoSeleccionado =
-                "Todos";
-
 
             _listo = true;
 
