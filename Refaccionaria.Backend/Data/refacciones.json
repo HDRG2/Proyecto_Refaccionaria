@@ -1,18 +1,106 @@
 [
   {
     "Id": 1,
-    "Codigo": "FA-001",
+    "Codigo": "FIL-001",
     "Nombre": "Filtro de Aceite",
     "MarcaId": 1,
     "CategoriaId": 2,
-    "Precio": 185.00,
-    "Stock": 62,
+    "Precio": 189.00,
+    "Stock": 23,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      7
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)",
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 2,
+    "Codigo": "ACE-001",
+    "Nombre": "Aceite de Motor 5W-30",
+    "MarcaId": 1,
+    "CategoriaId": 1,
+    "Precio": 749.00,
+    "Stock": 23,
     "StockBajo": false,
     "Activo": true,
     "EsUniversal": true,
     "AutosCompatibles": [],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Filtros",
+    "CategoriaNombre": "Aceites y lubricantes",
     "AutosDescripciones": []
+  },
+  {
+    "Id": 3,
+    "Codigo": "BAL-002",
+    "Nombre": "Balatas delanteras Ceramitas",
+    "MarcaId": 2,
+    "CategoriaId": 3,
+    "Precio": 1249.00,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      2
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)",
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 4,
+    "Codigo": "BUJ-003",
+    "Nombre": "Bujia de encendido",
+    "MarcaId": 3,
+    "CategoriaId": 10,
+    "Precio": 149.00,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      5
+    ],
+    "MarcaNombre": "NGK",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)",
+      "Chevrolet Spark (2016-2021)"
+    ]
+  },
+  {
+    "Id": 5,
+    "Codigo": "AMO-005",
+    "Nombre": "Amortiguador Delantero",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 1450.00,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      9
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00F3n",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)",
+      "Toyota Yaris (2016-2020)"
+    ]
   }
 ]
