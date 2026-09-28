@@ -20,5 +20,8 @@ public partial class ModeloAuto : ObservableObject, IEntity
     [ObservableProperty]
     private int anioFin;
 
+    [ObservableProperty]
+    private bool seleccionado;
+
     public string DescripcionCompleta => $"{Marca} {Modelo} ({AnioInicio}-{AnioFin})";
 }

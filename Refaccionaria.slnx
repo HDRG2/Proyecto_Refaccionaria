@@ -1,6 +1,17 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/Refaccionaria.Frontend/">
-    <Project Path="Refaccionaria.Frontend/Refaccionaria.csproj" />
+    <Project Path="Refaccionaria.Frontend/Refaccionaria.Frontend.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="Debug|Any CPU" Project="x64" />
+      <Deploy Solution="*|x64" />
+    </Project>
   </Folder>
-  <Project Path="Refaccionaria.Backend/Refaccionaria.Backend.csproj" />
+  <Project Path="Refaccionaria.Backend/Refaccionaria.Backend.csproj">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|Any CPU" Project="Any CPU" />
+  </Project>
 </Solution>

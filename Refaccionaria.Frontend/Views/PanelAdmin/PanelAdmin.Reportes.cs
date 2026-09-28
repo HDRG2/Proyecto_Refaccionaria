@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Refaccionaria.Frontend.Models;
 using Refaccionaria.Frontend.Services;
@@ -14,57 +15,380 @@ namespace Refaccionaria.Frontend.Views;
 
 public sealed partial class PanelAdmin : Page
 {
+    private List<Venta> ventasReporteActual = new();
+
+    private bool filtrosReporteListos = false;
     // =========================================================
     // ACTUALIZAR RESUMEN DE REPORTES
     // =========================================================
 
     private void ActualizarResumenVentas()
     {
-        var ventasRegistradas = ventas.ToList();
+        // Si todavía no se ha preparado el filtro,
+        // mostramos HOY por defecto.
+        if (!filtrosReporteListos)
+        {
+            filtrosReporteListos = true;
 
+            if (CmbPeriodoReporte != null)
+            {
+                CmbPeriodoReporte.SelectedIndex = 0;
+            }
+        }
+
+        AplicarFiltroReporte();
+    }
+
+
+    // =========================================================
+    // FILTRAR REPORTE POR PERÍODO
+    // =========================================================
+
+    private void AplicarFiltroReporte()
+    {
+        if (ventas == null)
+            return;
+
+        DateTime hoy = DateTime.Today;
+
+        DateTime? desde = null;
+        DateTime? hasta = null;
+
+        int periodo =
+            CmbPeriodoReporte?.SelectedIndex ?? 0;
+
+
+        switch (periodo)
+        {
+            // HOY
+            case 0:
+
+                desde = hoy;
+                hasta = hoy;
+
+                TxtPeriodoReporte.Text =
+                    $"Hoy - {hoy:dd/MM/yyyy}";
+
+                break;
+
+
+            // AYER
+            case 1:
+
+                desde = hoy.AddDays(-1);
+                hasta = hoy.AddDays(-1);
+
+                TxtPeriodoReporte.Text =
+                    $"Ayer - {hoy.AddDays(-1):dd/MM/yyyy}";
+
+                break;
+
+
+            // ÚLTIMOS 7 DÍAS
+            case 2:
+
+                desde = hoy.AddDays(-6);
+                hasta = hoy;
+
+                TxtPeriodoReporte.Text =
+                    "Últimos 7 días";
+
+                break;
+
+
+            // ÚLTIMAS 2 SEMANAS
+            case 3:
+
+                desde = hoy.AddDays(-13);
+                hasta = hoy;
+
+                TxtPeriodoReporte.Text =
+                    "Últimas 2 semanas";
+
+                break;
+
+
+            // ÚLTIMAS 3 SEMANAS
+            case 4:
+
+                desde = hoy.AddDays(-20);
+                hasta = hoy;
+
+                TxtPeriodoReporte.Text =
+                    "Últimas 3 semanas";
+
+                break;
+
+
+            // ESTE MES
+            case 5:
+
+                desde =
+                    new DateTime(
+                        hoy.Year,
+                        hoy.Month,
+                        1
+                    );
+
+                hasta = hoy;
+
+                TxtPeriodoReporte.Text =
+                    $"{hoy:MMMM yyyy}";
+
+                break;
+
+
+            // TODO EL HISTORIAL
+            case 6:
+
+                TxtPeriodoReporte.Text =
+                    "Todo el historial";
+
+                break;
+
+
+            // PERSONALIZADO
+            case 7:
+
+                if (FechaReporteDesde.Date.HasValue)
+                {
+                    desde =
+                        FechaReporteDesde.Date.Value.Date;
+                }
+
+                if (FechaReporteHasta.Date.HasValue)
+                {
+                    hasta =
+                        FechaReporteHasta.Date.Value.Date;
+                }
+
+                if (desde.HasValue &&
+                    hasta.HasValue)
+                {
+                    TxtPeriodoReporte.Text =
+                        $"{desde.Value:dd/MM/yyyy} - " +
+                        $"{hasta.Value:dd/MM/yyyy}";
+                }
+                else
+                {
+                    TxtPeriodoReporte.Text =
+                        "Selecciona las fechas";
+                }
+
+                break;
+        }
+
+
+        IEnumerable<Venta> consulta =
+            ventas;
+
+
+        if (desde.HasValue)
+        {
+            consulta =
+                consulta.Where(
+                    v => v.Fecha.Date >= desde.Value.Date
+                );
+        }
+
+
+        if (hasta.HasValue)
+        {
+            consulta =
+                consulta.Where(
+                    v => v.Fecha.Date <= hasta.Value.Date
+                );
+        }
+
+
+        ventasReporteActual =
+            consulta
+                .OrderByDescending(v => v.Fecha)
+                .ToList();
+
+
+        // Actualizar tabla
+        TablaVentas.ItemsSource =
+            ventasReporteActual;
+
+
+        // Actualizar tarjetas
+        ActualizarTarjetasReporte(
+            ventasReporteActual
+        );
+    }
+
+
+    // =========================================================
+    // ACTUALIZAR TARJETAS DEL REPORTE
+    // =========================================================
+
+    private void ActualizarTarjetasReporte(
+        List<Venta> ventasFiltradas)
+    {
         decimal totalVendido =
-            ventasRegistradas.Sum(v => v.Total);
+            ventasFiltradas.Sum(v => v.Total);
+
 
         int cantidadVentas =
-            ventasRegistradas.Count;
+            ventasFiltradas.Count;
+
 
         int piezasVendidas =
-            ventasRegistradas
+            ventasFiltradas
                 .SelectMany(v => v.Lineas)
                 .Sum(d => d.Cantidad);
 
+
         var productoMasVendido =
-            ventasRegistradas
+            ventasFiltradas
                 .SelectMany(v => v.Lineas)
                 .Where(d => d.Refaccion != null)
-                .GroupBy(d => d.Refaccion!.Nombre)
+                .GroupBy(
+                    d => d.Refaccion!.Nombre
+                )
                 .Select(g => new
                 {
                     Nombre = g.Key,
-                    Cantidad = g.Sum(d => d.Cantidad)
+
+                    Cantidad =
+                        g.Sum(d => d.Cantidad)
                 })
-                .OrderByDescending(x => x.Cantidad)
+                .OrderByDescending(
+                    x => x.Cantidad
+                )
                 .FirstOrDefault();
+
 
         TxtRepTotal.Text =
             totalVendido.ToString("C");
 
+
         TxtRepVentas.Text =
             cantidadVentas.ToString();
+
 
         TxtRepPiezas.Text =
             piezasVendidas.ToString();
 
+
         TxtRepTop.Text =
-            productoMasVendido?.Nombre ?? "—";
+            productoMasVendido?.Nombre
+            ?? "—";
+
 
         TxtRepTopDetalle.Text =
             productoMasVendido != null
                 ? $"{productoMasVendido.Cantidad} piezas"
                 : string.Empty;
 
+
+        // Este texto ahora indica cuántas ventas
+        // existen en el período seleccionado.
         TxtRepHoy.Text =
-            $"{ventasRegistradas.Count(v => v.Fecha.Date == DateTime.Today)} ventas hoy";
+            cantidadVentas == 1
+                ? "1 venta en este período"
+                : $"{cantidadVentas} ventas en este período";
+    }
+
+
+    // =========================================================
+    // CAMBIAR PERÍODO
+    // =========================================================
+
+    private void PeriodoReporte_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
+    {
+        if (FechaReporteDesde == null ||
+            FechaReporteHasta == null)
+        {
+            return;
+        }
+
+
+        bool personalizado =
+            CmbPeriodoReporte.SelectedIndex == 7;
+
+
+        FechaReporteDesde.IsEnabled =
+            personalizado;
+
+        FechaReporteHasta.IsEnabled =
+            personalizado;
+
+
+        // Al entrar por primera vez a personalizado,
+        // colocamos HOY en ambos calendarios.
+        if (personalizado)
+        {
+            if (!FechaReporteDesde.Date.HasValue)
+            {
+                FechaReporteDesde.Date =
+                    DateTimeOffset.Now;
+            }
+
+
+            if (!FechaReporteHasta.Date.HasValue)
+            {
+                FechaReporteHasta.Date =
+                    DateTimeOffset.Now;
+            }
+        }
+
+
+        AplicarFiltroReporte();
+    }
+
+
+    // =========================================================
+    // CAMBIAR FECHAS PERSONALIZADAS
+    // =========================================================
+
+    private void FechaReporte_DateChanged(
+        CalendarDatePicker sender,
+        CalendarDatePickerDateChangedEventArgs args)
+    {
+        if (CmbPeriodoReporte == null)
+            return;
+
+
+        if (CmbPeriodoReporte.SelectedIndex != 7)
+            return;
+
+
+        if (!FechaReporteDesde.Date.HasValue ||
+            !FechaReporteHasta.Date.HasValue)
+        {
+            return;
+        }
+
+
+        DateTime desde =
+            FechaReporteDesde.Date.Value.Date;
+
+
+        DateTime hasta =
+            FechaReporteHasta.Date.Value.Date;
+
+
+        if (desde > hasta)
+        {
+            TxtPeriodoReporte.Text =
+                "La fecha inicial es posterior a la final";
+
+            TablaVentas.ItemsSource =
+                new List<Venta>();
+
+            ActualizarTarjetasReporte(
+                new List<Venta>()
+            );
+
+            return;
+        }
+
+
+        AplicarFiltroReporte();
     }
 
 
@@ -393,7 +717,7 @@ public sealed partial class PanelAdmin : Page
     {
         try
         {
-            if (ventas == null || ventas.Count == 0)
+            if (ventasReporteActual.Count == 0)
             {
                 await MostrarMensajeReporte(
                     "No hay ventas registradas para generar el reporte.");
@@ -457,7 +781,7 @@ public sealed partial class PanelAdmin : Page
 
             ReporteVentasPdf.Generar(
                 rutaCompleta,
-                ventas);
+                ventasReporteActual);
 
             // =====================================================
             // MENSAJE

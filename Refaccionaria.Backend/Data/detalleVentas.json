@@ -166,5 +166,209 @@
       "CategoriaNombre": "Filtros",
       "AutosDescripciones": []
     }
+  },
+  {
+    "Subtotal": 1450.00,
+    "Id": 8,
+    "VentaId": 9,
+    "RefaccionId": 5,
+    "Cantidad": 1,
+    "PrecioUnitario": 1450.00,
+    "Refaccion": {
+      "Id": 5,
+      "Codigo": "AMO-005",
+      "Nombre": "Amortiguador Delantero",
+      "MarcaId": 8,
+      "CategoriaId": 4,
+      "Precio": 1450.00,
+      "Stock": 3,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        8,
+        9
+      ],
+      "MarcaNombre": "Monroe",
+      "CategoriaNombre": "Suspensi\u00F3n",
+      "AutosDescripciones": [
+        "Toyota Corolla (2014-2019)",
+        "Toyota Yaris (2016-2020)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 1498.00,
+    "Id": 9,
+    "VentaId": 9,
+    "RefaccionId": 2,
+    "Cantidad": 2,
+    "PrecioUnitario": 749.00,
+    "Refaccion": {
+      "Id": 2,
+      "Codigo": "ACE-001",
+      "Nombre": "Aceite de Motor 5W-30",
+      "MarcaId": 1,
+      "CategoriaId": 1,
+      "Precio": 749.00,
+      "Stock": 25,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": true,
+      "AutosCompatibles": [],
+      "MarcaNombre": "Bosch",
+      "CategoriaNombre": "Aceites y lubricantes",
+      "AutosDescripciones": []
+    }
+  },
+  {
+    "Subtotal": 378.00,
+    "Id": 10,
+    "VentaId": 9,
+    "RefaccionId": 1,
+    "Cantidad": 2,
+    "PrecioUnitario": 189.00,
+    "Refaccion": {
+      "Id": 1,
+      "Codigo": "FIL-001",
+      "Nombre": "Filtro de Aceite",
+      "MarcaId": 1,
+      "CategoriaId": 2,
+      "Precio": 189.00,
+      "Stock": 25,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        6,
+        7
+      ],
+      "MarcaNombre": "Bosch",
+      "CategoriaNombre": "Filtros",
+      "AutosDescripciones": [
+        "Volkswagen Jetta (2011-2018)",
+        "Volkswagen Vento (2014-2022)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 1249.00,
+    "Id": 11,
+    "VentaId": 9,
+    "RefaccionId": 3,
+    "Cantidad": 1,
+    "PrecioUnitario": 1249.00,
+    "Refaccion": {
+      "Id": 3,
+      "Codigo": "BAL-002",
+      "Nombre": "Balatas delanteras Ceramitas",
+      "MarcaId": 2,
+      "CategoriaId": 3,
+      "Precio": 1249.00,
+      "Stock": 12,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        1,
+        2
+      ],
+      "MarcaNombre": "Brembo",
+      "CategoriaNombre": "Frenos",
+      "AutosDescripciones": [
+        "Nissan Sentra (2013-2019)",
+        "Nissan Versa (2012-2019)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 149.00,
+    "Id": 12,
+    "VentaId": 10,
+    "RefaccionId": 4,
+    "Cantidad": 1,
+    "PrecioUnitario": 149.00,
+    "Refaccion": {
+      "Id": 4,
+      "Codigo": "BUJ-003",
+      "Nombre": "Bujia de encendido",
+      "MarcaId": 3,
+      "CategoriaId": 10,
+      "Precio": 149.00,
+      "Stock": 4,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        4,
+        5
+      ],
+      "MarcaNombre": "NGK",
+      "CategoriaNombre": "Encendido",
+      "AutosDescripciones": [
+        "Chevrolet Aveo (2018-2024)",
+        "Chevrolet Spark (2016-2021)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 1249.00,
+    "Id": 13,
+    "VentaId": 10,
+    "RefaccionId": 3,
+    "Cantidad": 1,
+    "PrecioUnitario": 1249.00,
+    "Refaccion": {
+      "Id": 3,
+      "Codigo": "BAL-002",
+      "Nombre": "Balatas delanteras Ceramitas",
+      "MarcaId": 2,
+      "CategoriaId": 3,
+      "Precio": 1249.00,
+      "Stock": 11,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        1,
+        2
+      ],
+      "MarcaNombre": "Brembo",
+      "CategoriaNombre": "Frenos",
+      "AutosDescripciones": [
+        "Nissan Sentra (2013-2019)",
+        "Nissan Versa (2012-2019)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 2900.00,
+    "Id": 14,
+    "VentaId": 10,
+    "RefaccionId": 5,
+    "Cantidad": 2,
+    "PrecioUnitario": 1450.00,
+    "Refaccion": {
+      "Id": 5,
+      "Codigo": "AMO-005",
+      "Nombre": "Amortiguador Delantero",
+      "MarcaId": 8,
+      "CategoriaId": 4,
+      "Precio": 1450.00,
+      "Stock": 2,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        8,
+        9
+      ],
+      "MarcaNombre": "Monroe",
+      "CategoriaNombre": "Suspensi\u00F3n",
+      "AutosDescripciones": [
+        "Toyota Corolla (2014-2019)",
+        "Toyota Yaris (2016-2020)"
+      ]
+    }
   }
 ]

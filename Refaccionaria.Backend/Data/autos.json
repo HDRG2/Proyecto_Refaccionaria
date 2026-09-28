@@ -5,6 +5,7 @@
     "Modelo": "Sentra",
     "AnioInicio": 2013,
     "AnioFin": 2019
+  
   },
   {
     "Id": 2,
@@ -12,6 +13,7 @@
     "Modelo": "Versa",
     "AnioInicio": 2012,
     "AnioFin": 2019
+
   },
   {
     "Id": 3,
@@ -19,6 +21,7 @@
     "Modelo": "March",
     "AnioInicio": 2011,
     "AnioFin": 2020
+  
   },
   {
     "Id": 4,
@@ -26,6 +29,7 @@
     "Modelo": "Aveo",
     "AnioInicio": 2018,
     "AnioFin": 2024
+
   },
   {
     "Id": 5,
@@ -33,6 +37,7 @@
     "Modelo": "Spark",
     "AnioInicio": 2016,
     "AnioFin": 2021
+ 
   },
   {
     "Id": 6,
@@ -40,6 +45,7 @@
     "Modelo": "Jetta",
     "AnioInicio": 2011,
     "AnioFin": 2018
+    
   },
   {
     "Id": 7,
@@ -47,6 +53,7 @@
     "Modelo": "Vento",
     "AnioInicio": 2014,
     "AnioFin": 2022
+    
   },
   {
     "Id": 8,
@@ -54,6 +61,7 @@
     "Modelo": "Corolla",
     "AnioInicio": 2014,
     "AnioFin": 2019
+    
   },
   {
     "Id": 9,
@@ -61,6 +69,7 @@
     "Modelo": "Yaris",
     "AnioInicio": 2016,
     "AnioFin": 2020
+
   },
   {
     "Id": 10,
@@ -68,5 +77,6 @@
     "Modelo": "Civic",
     "AnioInicio": 2012,
     "AnioFin": 2015
+
   }
 ]

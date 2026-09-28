@@ -1,0 +1,25 @@
+Refaccionaria/                          (carpeta raíz / solución)
+├── Refaccionaria.sln
+│
+├── Refaccionaria.Backend/              (Class Library)
+│   ├── Refaccionaria.Backend.csproj
+│   ├── Models/
+│   │   ├── Producto.cs
+│   │   ├── Cliente.cs
+│   │   ├── Venta.cs
+│   │   └── DetalleVenta.cs
+│   ├── Data/
+│   │   └── ConexionDB.cs
+│   └── Services/               (o DAO/Repositories)
+│       ├── ProductoService.cs
+│       ├── ClienteService.cs
+│       └── VentaService.cs
+│
+└── Refaccionaria.Frontend/             (Windows Forms App)
+    ├── Refaccionaria.Frontend.csproj
+    ├── Program.cs
+    └── Forms/
+        ├── FrmMain.cs
+        ├── FrmVenta.cs
+        ├── FrmProductos.cs
+        └── FrmClientes.cs
