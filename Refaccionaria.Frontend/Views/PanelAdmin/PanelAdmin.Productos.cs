@@ -304,57 +304,122 @@ public sealed partial class PanelAdmin : Page
     // =========================================================
 
     private async void EliminarProductoDesdeFormulario_Click(
-        object sender,
-        RoutedEventArgs e)
+    object sender,
+    RoutedEventArgs e)
     {
+        // =====================================================
+        // 1. COMPROBAR PRODUCTO
+        // =====================================================
+
         if (refaccionEditando == null)
         {
             await MostrarMensaje(
                 "Producto no encontrado",
                 "No hay ningún producto seleccionado."
             );
+
             return;
         }
 
         Refaccion producto = refaccionEditando;
 
+
+        // =====================================================
+        // 2. CONFIRMAR RETIRO
+        // =====================================================
+
         ContentDialog dialogo = new()
         {
             Title = "Retirar producto",
+
             Content =
                 $"¿Deseas retirar \"{producto.Nombre}\" del inventario?\n\n" +
                 "No se eliminará su información. Podrás reactivarlo después " +
                 "desde Productos retirados.",
+
             PrimaryButtonText = "Retirar",
             CloseButtonText = "Cancelar",
+
             DefaultButton = ContentDialogButton.Close,
+
             XamlRoot = XamlRoot
         };
 
-        ContentDialogResult resultado = await dialogo.ShowAsync();
+        ContentDialogResult resultado =
+            await dialogo.ShowAsync();
 
         if (resultado != ContentDialogResult.Primary)
+        {
             return;
+        }
 
-        producto.Activo = false;
 
-        await repoRefacciones.UpdateAsync(producto);
+        try
+        {
+            // =================================================
+            // 3. RETIRAR MEDIANTE PRODUCTOSERVICE
+            // =================================================
 
-        refacciones.Remove(producto);
+            await productoService.RetirarProductoAsync(
+                producto.Id
+            );
 
-        if (!refaccionesInactivas.Contains(producto))
-            refaccionesInactivas.Add(producto);
 
-        refaccionEditando = null;
-        modoFormulario = string.Empty;
-        Formulario.Visibility = Visibility.Collapsed;
+            // =================================================
+            // 4. ACTUALIZAR OBJETO LOCAL
+            // =================================================
 
-        ActualizarTodo();
+            producto.Activo = false;
 
-        await MostrarMensaje(
-            "Producto retirado",
-            $"\"{producto.Nombre}\" fue enviado a Productos retirados."
-        );
+
+            // =================================================
+            // 5. MOVER A PRODUCTOS RETIRADOS
+            // =================================================
+
+            refacciones.Remove(producto);
+
+            if (!refaccionesInactivas.Contains(producto))
+            {
+                refaccionesInactivas.Add(producto);
+            }
+
+
+            // =================================================
+            // 6. CERRAR FORMULARIO
+            // =================================================
+
+            refaccionEditando = null;
+
+            modoFormulario =
+                string.Empty;
+
+            Formulario.Visibility =
+                Visibility.Collapsed;
+
+
+            // =================================================
+            // 7. ACTUALIZAR PANTALLA
+            // =================================================
+
+            ActualizarTodo();
+
+
+            // =================================================
+            // 8. CONFIRMACIÓN
+            // =================================================
+
+            await MostrarMensaje(
+                "Producto retirado",
+                $"\"{producto.Nombre}\" fue enviado a Productos retirados."
+            );
+        }
+        catch (Exception ex)
+        {
+            await MostrarMensaje(
+                "No se pudo retirar el producto",
+                ex.Message
+            );
+        }
     }
 
 
@@ -363,14 +428,23 @@ public sealed partial class PanelAdmin : Page
     // =========================================================
 
     private async void ReactivarProducto_Click(
-        object sender,
-        RoutedEventArgs e)
+    object sender,
+    RoutedEventArgs e)
     {
+        // =====================================================
+        // 1. OBTENER PRODUCTO
+        // =====================================================
+
         if (sender is not Button boton ||
             boton.Tag is not Refaccion producto)
         {
             return;
         }
+
+
+        // =====================================================
+        // 2. PEDIR CANTIDAD RECIBIDA
+        // =====================================================
 
         NumberBox cajaCantidad = new()
         {
@@ -378,46 +452,75 @@ public sealed partial class PanelAdmin : Page
             Minimum = 0,
             Maximum = 1000000,
             Value = 0,
-            SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Compact
+            SpinButtonPlacementMode =
+                NumberBoxSpinButtonPlacementMode.Compact
         };
+
 
         StackPanel contenido = new()
         {
             Spacing = 12
         };
 
+
         contenido.Children.Add(
             new TextBlock
             {
                 Text = producto.Nombre,
                 FontSize = 18,
-                FontWeight = Microsoft.UI.Text.FontWeights.Bold
+                FontWeight =
+                    Microsoft.UI.Text.FontWeights.Bold
             }
         );
+
 
         contenido.Children.Add(
             new TextBlock
             {
-                Text = $"Existencia actual: {producto.Stock} piezas"
+                Text =
+                    $"Existencia actual: {producto.Stock} piezas"
             }
         );
 
-        contenido.Children.Add(cajaCantidad);
+
+        contenido.Children.Add(
+            cajaCantidad
+        );
+
+
+        // =====================================================
+        // 3. MOSTRAR CONFIRMACIÓN
+        // =====================================================
 
         ContentDialog dialogo = new()
         {
             Title = "Reactivar / reabastecer producto",
+
             Content = contenido,
+
             PrimaryButtonText = "Reactivar",
             CloseButtonText = "Cancelar",
-            DefaultButton = ContentDialogButton.Primary,
+
+            DefaultButton =
+                ContentDialogButton.Primary,
+
             XamlRoot = XamlRoot
         };
 
-        ContentDialogResult resultado = await dialogo.ShowAsync();
+
+        ContentDialogResult resultado =
+            await dialogo.ShowAsync();
+
 
         if (resultado != ContentDialogResult.Primary)
+        {
             return;
+        }
+
+
+        // =====================================================
+        // 4. VALIDAR CANTIDAD
+        // =====================================================
 
         if (double.IsNaN(cajaCantidad.Value) ||
             cajaCantidad.Value < 0 ||
@@ -427,33 +530,124 @@ public sealed partial class PanelAdmin : Page
                 "Cantidad incorrecta",
                 "Escribe una cantidad válida."
             );
+
             return;
         }
 
-        int cantidadRecibida = (int)cajaCantidad.Value;
 
-        producto.Stock += cantidadRecibida;
-        producto.Activo = true;
-        producto.StockBajo = producto.Stock <= 5;
+        int cantidadRecibida =
+            (int)cajaCantidad.Value;
 
-        await repoRefacciones.UpdateAsync(producto);
 
-        refaccionesInactivas.Remove(producto);
+        try
+        {
+            // =================================================
+            // 5. REACTIVAR MEDIANTE PRODUCTOSERVICE
+            // =================================================
 
-        if (!refacciones.Contains(producto))
-            refacciones.Add(producto);
+            Refaccion productoActualizado =
+                await productoService.ReactivarProductoAsync(
+                    producto.Id,
+                    cantidadRecibida
+                );
 
-        ActualizarTodo();
 
-        await MostrarMensaje(
-            "Producto reactivado",
-            cantidadRecibida > 0
-                ? $"\"{producto.Nombre}\" volvió al inventario con {producto.Stock} piezas."
-                : $"\"{producto.Nombre}\" volvió al inventario."
-        );
+            // =================================================
+            // 6. COMPLETAR INFORMACIÓN VISUAL
+            // =================================================
+
+            CompletarDatosRefaccion(
+                productoActualizado
+            );
+
+
+            // =================================================
+            // 7. ACTUALIZAR COLECCIÓN GENERAL
+            // =================================================
+
+            Refaccion? productoEnTodas =
+                todasLasRefacciones.FirstOrDefault(
+                    r => r.Id == productoActualizado.Id
+                );
+
+            if (productoEnTodas != null &&
+                !ReferenceEquals(
+                    productoEnTodas,
+                    productoActualizado))
+            {
+                int indice =
+                    todasLasRefacciones.IndexOf(
+                        productoEnTodas
+                    );
+
+                todasLasRefacciones[indice] =
+                    productoActualizado;
+            }
+
+
+            // =================================================
+            // 8. QUITAR DE PRODUCTOS RETIRADOS
+            // =================================================
+
+            Refaccion? productoRetirado =
+                refaccionesInactivas.FirstOrDefault(
+                    r => r.Id == productoActualizado.Id
+                );
+
+            if (productoRetirado != null)
+            {
+                refaccionesInactivas.Remove(
+                    productoRetirado
+                );
+            }
+
+
+            // =================================================
+            // 9. REGRESAR AL INVENTARIO ACTIVO
+            // =================================================
+
+            Refaccion? productoActivo =
+                refacciones.FirstOrDefault(
+                    r => r.Id == productoActualizado.Id
+                );
+
+            if (productoActivo == null)
+            {
+                refacciones.Add(
+                    productoActualizado
+                );
+            }
+
+
+            // =================================================
+            // 10. ACTUALIZAR PANTALLA
+            // =================================================
+
+            ActualizarTodo();
+
+
+            // =================================================
+            // 11. CONFIRMACIÓN
+            // =================================================
+
+            await MostrarMensaje(
+                "Producto reactivado",
+
+                cantidadRecibida > 0
+
+                    ? $"\"{productoActualizado.Nombre}\" volvió al inventario con {productoActualizado.Stock} piezas."
+
+                    : $"\"{productoActualizado.Nombre}\" volvió al inventario."
+            );
+        }
+        catch (Exception ex)
+        {
+            await MostrarMensaje(
+                "No se pudo reactivar el producto",
+                ex.Message
+            );
+        }
     }
-
-
     // =========================================================
     // ELIMINAR DEFINITIVAMENTE
     // =========================================================
@@ -462,40 +656,133 @@ public sealed partial class PanelAdmin : Page
         object sender,
         RoutedEventArgs e)
     {
+        // =====================================================
+        // 1. OBTENER PRODUCTO
+        // =====================================================
+
         if (sender is not Button boton ||
             boton.Tag is not Refaccion producto)
         {
             return;
         }
 
+
+        // =====================================================
+        // 2. CONFIRMAR ELIMINACIÓN
+        // =====================================================
+
         ContentDialog dialogo = new()
         {
             Title = "Eliminar definitivamente",
+
             Content =
                 $"¿Estás seguro de eliminar \"{producto.Nombre}\"?\n\n" +
                 "Esta acción borrará permanentemente el producto y no se puede deshacer.",
+
             PrimaryButtonText = "Eliminar definitivamente",
             CloseButtonText = "Cancelar",
-            DefaultButton = ContentDialogButton.Close,
+
+            DefaultButton =
+                ContentDialogButton.Close,
+
             XamlRoot = XamlRoot
         };
 
-        ContentDialogResult resultado = await dialogo.ShowAsync();
+
+        ContentDialogResult resultado =
+            await dialogo.ShowAsync();
+
 
         if (resultado != ContentDialogResult.Primary)
+        {
             return;
+        }
 
-        await repoRefacciones.DeleteAsync(producto.Id);
 
-        refaccionesInactivas.Remove(producto);
-        refacciones.Remove(producto);
-        todasLasRefacciones.Remove(producto);
+        try
+        {
+            // =================================================
+            // 3. ELIMINAR MEDIANTE PRODUCTOSERVICE
+            // =================================================
 
-        ActualizarTodo();
+            await productoService.EliminarProductoAsync(
+                producto.Id
+            );
 
-        await MostrarMensaje(
-            "Producto eliminado",
-            $"\"{producto.Nombre}\" fue eliminado definitivamente."
-        );
+
+            // =================================================
+            // 4. QUITAR DE PRODUCTOS RETIRADOS
+            // =================================================
+
+            Refaccion? productoRetirado =
+                refaccionesInactivas.FirstOrDefault(
+                    r => r.Id == producto.Id
+                );
+
+            if (productoRetirado != null)
+            {
+                refaccionesInactivas.Remove(
+                    productoRetirado
+                );
+            }
+
+
+            // =================================================
+            // 5. QUITAR DEL INVENTARIO ACTIVO
+            // =================================================
+
+            Refaccion? productoActivo =
+                refacciones.FirstOrDefault(
+                    r => r.Id == producto.Id
+                );
+
+            if (productoActivo != null)
+            {
+                refacciones.Remove(
+                    productoActivo
+                );
+            }
+
+
+            // =================================================
+            // 6. QUITAR DE LA COLECCIÓN GENERAL
+            // =================================================
+
+            Refaccion? productoGeneral =
+                todasLasRefacciones.FirstOrDefault(
+                    r => r.Id == producto.Id
+                );
+
+            if (productoGeneral != null)
+            {
+                todasLasRefacciones.Remove(
+                    productoGeneral
+                );
+            }
+
+
+            // =================================================
+            // 7. ACTUALIZAR PANTALLA
+            // =================================================
+
+            ActualizarTodo();
+
+
+            // =================================================
+            // 8. CONFIRMACIÓN
+            // =================================================
+
+            await MostrarMensaje(
+                "Producto eliminado",
+                $"\"{producto.Nombre}\" fue eliminado definitivamente."
+            );
+        }
+        catch (Exception ex)
+        {
+            await MostrarMensaje(
+                "No se pudo eliminar el producto",
+                ex.Message
+            );
+        }
     }
 }

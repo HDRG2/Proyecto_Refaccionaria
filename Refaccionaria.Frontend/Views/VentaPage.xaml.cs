@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using Refaccionaria.Backend.Repositories;
 using Refaccionaria.Frontend.Models;
+using Refaccionaria.Frontend.Services;
 
 namespace Refaccionaria.Frontend.Views
 {
@@ -39,6 +40,9 @@ namespace Refaccionaria.Frontend.Views
         private readonly IRepository<DetalleVenta> repoDetalleVentas =
             App.Current.Services.GetRequiredService<IRepository<DetalleVenta>>();
 
+         private readonly Usuario _usuarioActual;
+
+        private readonly VentaService ventaService;
 
         // =========================================================
         // COLECCIONES
@@ -100,9 +104,16 @@ namespace Refaccionaria.Frontend.Views
         // CONSTRUCTOR
         // =========================================================
 
-        public VentaPage()
+        public VentaPage(Usuario usuarioActual)
         {
+           
             InitializeComponent();
+
+            ventaService = new VentaService(
+                repoVentas,
+                repoDetalleVentas,
+                repoRefacciones
+            );
 
             ListaRefacciones.ItemsSource =
                 _resultados;
@@ -111,7 +122,12 @@ namespace Refaccionaria.Frontend.Views
                 _ticket;
 
             Loaded += VentaPage_Loaded;
+
+             _usuarioActual = usuarioActual;
+
+            
         }
+        
 
 
         // =========================================================
@@ -124,7 +140,14 @@ namespace Refaccionaria.Frontend.Views
         {
             Loaded -= VentaPage_Loaded;
 
-            await CargarDatosAsync();
+
+            bool datosCorrectos = await CargarDatosAsync();
+
+            if (!datosCorrectos)
+            {
+                _listo = false;
+                return;
+            }
 
             _listo = true;
 
@@ -138,27 +161,50 @@ namespace Refaccionaria.Frontend.Views
         // CARGAR DATOS
         // =========================================================
 
-        private async Task CargarDatosAsync()
+        private async Task<bool> CargarDatosAsync()
         {
             try
             {
+                // -------------------------------------------------
+                // REFACCIONES
+                // -------------------------------------------------
+
+                await repoRefacciones.ReloadAsync();
+
                 _refacciones =
                     (await repoRefacciones.GetAllAsync())
                     .ToList();
+
+
+                // -------------------------------------------------
+                // MARCAS
+                // -------------------------------------------------
+                 await repoMarcas.ReloadAsync();
 
                 _marcas =
                     (await repoMarcas.GetAllAsync())
                     .ToList();
 
+
+                // -------------------------------------------------
+                // CATEGORÍAS
+                // -------------------------------------------------
+                await repoCategorias.ReloadAsync();
                 _categorias =
                     (await repoCategorias.GetAllAsync())
                     .ToList();
 
+
+                // -------------------------------------------------
+                // AUTOS
+                // -------------------------------------------------
+                await repoAutos.ReloadAsync();
                 _autos =
                     (await repoAutos.GetAllAsync())
                     .ToList();
 
 
+                ValidarRelacionesDatos();
                 // -------------------------------------------------
                 // COMPLETAR INFORMACIÓN VISUAL
                 // -------------------------------------------------
@@ -180,13 +226,98 @@ namespace Refaccionaria.Frontend.Views
                 LlenarModelos();
 
                 LlenarAnios();
+
+                return true;
             }
             catch (Exception ex)
             {
                 await MostrarMensaje(
-                    "Error al cargar datos",
-                    ex.Message
+                    "Problema en los datos",
+                    "Se detectó un problema en los archivos del sistema.\n\n" +
+                    ex.Message +
+                    "\n\n" +
+                    "No es posible iniciar el sistema de ventas.\n" +
+                    "Contacta al administrador para restaurar los datos."
                 );
+
+                Application.Current.Exit();
+
+                return false;
+            }
+        }
+
+        // =========================================================
+        // VALIDAR RELACIONES ENTRE LOS ARCHIVOS JSON
+        // =========================================================
+
+        private void ValidarRelacionesDatos()
+        {
+            // -------------------------------------------------
+            // IDs EXISTENTES
+            // -------------------------------------------------
+
+            HashSet<int> idsMarcas =
+                _marcas
+                .Select(m => m.Id)
+                .ToHashSet();
+
+            HashSet<int> idsCategorias =
+                _categorias
+                .Select(c => c.Id)
+                .ToHashSet();
+
+            HashSet<int> idsAutos =
+                _autos
+                .Select(a => a.Id)
+                .ToHashSet();
+
+
+            // -------------------------------------------------
+            // VALIDAR REFACCIONES
+            // -------------------------------------------------
+
+            foreach (Refaccion refaccion in _refacciones)
+            {
+                // MARCA
+                if (!idsMarcas.Contains(refaccion.MarcaId))
+                {
+                    throw new InvalidDataException(
+                        $"La refacción '{refaccion.Nombre}' " +
+                        $"({refaccion.Codigo}) tiene MarcaId " +
+                        $"{refaccion.MarcaId}, pero esa marca " +
+                        $"no existe en marcas.json."
+                    );
+                }
+
+
+                // CATEGORÍA
+                if (!idsCategorias.Contains(refaccion.CategoriaId))
+                {
+                    throw new InvalidDataException(
+                        $"La refacción '{refaccion.Nombre}' " +
+                        $"({refaccion.Codigo}) tiene CategoriaId " +
+                        $"{refaccion.CategoriaId}, pero esa categoría " +
+                        $"no existe en categorias.json."
+                    );
+                }
+
+
+                // AUTOS COMPATIBLES
+                if (refaccion.AutosCompatibles != null)
+                {
+                    foreach (int autoId in refaccion.AutosCompatibles)
+                    {
+                        if (!idsAutos.Contains(autoId))
+                        {
+                            throw new InvalidDataException(
+                                $"La refacción '{refaccion.Nombre}' " +
+                                $"({refaccion.Codigo}) contiene AutoId " +
+                                $"{autoId}, pero ese vehículo " +
+                                $"no existe en autos.json."
+                            );
+                        }
+                    }
+                }
             }
         }
 

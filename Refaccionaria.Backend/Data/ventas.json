@@ -1,5 +1,6 @@
 [
   {
+    "EmpleadoNombre": "",
     "Id": 1,
     "Folio": "V-20260923-132426181",
     "Fecha": "2026-09-23T13:24:26.184618-06:00",
@@ -37,6 +38,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 2,
     "Folio": "V-20260923-171854167",
     "Fecha": "2026-09-23T17:18:54.1702041-06:00",
@@ -74,6 +76,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 3,
     "Folio": "V-20260923-181237374",
     "Fecha": "2026-09-23T18:12:37.3774622-06:00",
@@ -111,6 +114,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 4,
     "Folio": "V-20260923-195623020",
     "Fecha": "2026-09-23T19:56:23.023675-06:00",
@@ -148,6 +152,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 5,
     "Folio": "V-20260923-201607689",
     "Fecha": "2026-09-23T20:16:07.6922047-06:00",
@@ -185,6 +190,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 6,
     "Folio": "V-20260924-154001042",
     "Fecha": "2026-09-24T15:40:01.0425536-06:00",
@@ -222,6 +228,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 7,
     "Folio": "V-20260924-234923166",
     "Fecha": "2026-09-24T23:49:23.1696394-06:00",
@@ -234,6 +241,7 @@
     "Lineas": []
   },
   {
+    "EmpleadoNombre": "",
     "Id": 8,
     "Folio": "V-20260924-235021408",
     "Fecha": "2026-09-24T23:50:21.408979-06:00",
@@ -271,6 +279,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 9,
     "Folio": "V-20260925-111854207",
     "Fecha": "2026-09-25T11:18:54.2104272-06:00",
@@ -398,6 +407,7 @@
     ]
   },
   {
+    "EmpleadoNombre": "",
     "Id": 10,
     "Folio": "V-20260925-135436986",
     "Fecha": "2026-09-25T13:54:36.9891525-06:00",
@@ -483,6 +493,256 @@
           "CategoriaId": 4,
           "Precio": 1450.00,
           "Stock": 2,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            8,
+            9
+          ],
+          "MarcaNombre": "Monroe",
+          "CategoriaNombre": "Suspensi\u00F3n",
+          "AutosDescripciones": [
+            "Toyota Corolla (2014-2019)",
+            "Toyota Yaris (2016-2020)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "Jos\u00E9 Remires",
+    "Id": 11,
+    "Folio": "V-20261001-124306329",
+    "Fecha": "2026-10-01T12:43:06.3323575-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 890,
+    "Cambio": 2.60,
+    "Total": 887.40,
+    "Lineas": [
+      {
+        "Subtotal": 318.00,
+        "Id": 15,
+        "VentaId": 11,
+        "RefaccionId": 1,
+        "Cantidad": 2,
+        "PrecioUnitario": 159.00,
+        "Refaccion": {
+          "Id": 1,
+          "Codigo": "FIL-001",
+          "Nombre": "Filtro de Aceite",
+          "MarcaId": 4,
+          "CategoriaId": 2,
+          "Precio": 159.00,
+          "Stock": 23,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            6,
+            7
+          ],
+          "MarcaNombre": "Mobil",
+          "CategoriaNombre": "Filtros",
+          "AutosDescripciones": [
+            "Volkswagen Jetta (2011-2018)",
+            "Volkswagen Vento (2014-2022)"
+          ]
+        }
+      },
+      {
+        "Subtotal": 447.00,
+        "Id": 16,
+        "VentaId": 11,
+        "RefaccionId": 4,
+        "Cantidad": 3,
+        "PrecioUnitario": 149.00,
+        "Refaccion": {
+          "Id": 4,
+          "Codigo": "BUJ-003",
+          "Nombre": "Bujia de encendido",
+          "MarcaId": 3,
+          "CategoriaId": 10,
+          "Precio": 149.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            4,
+            5
+          ],
+          "MarcaNombre": "NGK",
+          "CategoriaNombre": "Encendido",
+          "AutosDescripciones": [
+            "Chevrolet Aveo (2018-2024)",
+            "Chevrolet Spark (2016-2021)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 12,
+    "Folio": "V-20261001-224950603",
+    "Fecha": "2026-10-01T22:49:50.6037608-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 3400,
+    "Cambio": 36.00,
+    "Total": 3364.00,
+    "Lineas": [
+      {
+        "Subtotal": 2900.00,
+        "Id": 17,
+        "VentaId": 12,
+        "RefaccionId": 5,
+        "Cantidad": 2,
+        "PrecioUnitario": 1450.00,
+        "Refaccion": {
+          "Id": 5,
+          "Codigo": "AMO-005",
+          "Nombre": "Amortiguador Delantero",
+          "MarcaId": 8,
+          "CategoriaId": 4,
+          "Precio": 1450.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            8,
+            9
+          ],
+          "MarcaNombre": "Monroe",
+          "CategoriaNombre": "Suspensi\u00F3n",
+          "AutosDescripciones": [
+            "Toyota Corolla (2014-2019)",
+            "Toyota Yaris (2016-2020)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 13,
+    "Folio": "V-20261001-225755870",
+    "Fecha": "2026-10-01T22:57:55.8708615-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 180,
+    "Cambio": 7.16,
+    "Total": 172.84,
+    "Lineas": [
+      {
+        "Subtotal": 149.00,
+        "Id": 18,
+        "VentaId": 13,
+        "RefaccionId": 4,
+        "Cantidad": 1,
+        "PrecioUnitario": 149.00,
+        "Refaccion": {
+          "Id": 4,
+          "Codigo": "BUJ-003",
+          "Nombre": "Bujia de encendido",
+          "MarcaId": 3,
+          "CategoriaId": 10,
+          "Precio": 149.00,
+          "Stock": 20,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            4,
+            5
+          ],
+          "MarcaNombre": "NGK",
+          "CategoriaNombre": "Encendido",
+          "AutosDescripciones": [
+            "Chevrolet Aveo (2018-2024)",
+            "Chevrolet Spark (2016-2021)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 14,
+    "Folio": "V-20261001-231331411",
+    "Fecha": "2026-10-01T23:13:31.415049-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 348,
+    "Cambio": 2.32,
+    "Total": 345.68,
+    "Lineas": [
+      {
+        "Subtotal": 298.00,
+        "Id": 19,
+        "VentaId": 14,
+        "RefaccionId": 4,
+        "Cantidad": 2,
+        "PrecioUnitario": 149.00,
+        "Refaccion": {
+          "Id": 4,
+          "Codigo": "BUJ-003",
+          "Nombre": "Bujia de encendido",
+          "MarcaId": 3,
+          "CategoriaId": 10,
+          "Precio": 149.00,
+          "Stock": 19,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            4,
+            5
+          ],
+          "MarcaNombre": "NGK",
+          "CategoriaNombre": "Encendido",
+          "AutosDescripciones": [
+            "Chevrolet Aveo (2018-2024)",
+            "Chevrolet Spark (2016-2021)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 15,
+    "Folio": "V-20261001-234715110",
+    "Fecha": "2026-10-01T23:47:15.1139912-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 2900.00,
+    "Cambio": 0,
+    "Total": 2900.00,
+    "Lineas": [
+      {
+        "Subtotal": 2900.00,
+        "Id": 20,
+        "VentaId": 15,
+        "RefaccionId": 5,
+        "Cantidad": 2,
+        "PrecioUnitario": 1450.00,
+        "Refaccion": {
+          "Id": 5,
+          "Codigo": "AMO-005",
+          "Nombre": "Amortiguador Delantero",
+          "MarcaId": 8,
+          "CategoriaId": 4,
+          "Precio": 1450.00,
+          "Stock": 3,
           "StockBajo": true,
           "Activo": true,
           "EsUniversal": false,
