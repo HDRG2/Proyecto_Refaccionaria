@@ -2128,57 +2128,71 @@
                                     Background="{StaticResource GrisMuyOscuro}">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="140"/>
-                                        <ColumnDefinition Width="170"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1.8*"/>
+                                        <ColumnDefinition Width="1.7*"/>
+                                        <ColumnDefinition Width="1.8*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="1.5*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock
                                         Grid.Column="0"
                                         Text="FOLIO"
-                                        Style="{StaticResource Etiqueta}"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
                                         Margin="15,0"
                                         VerticalAlignment="Center"/>
 
                                     <TextBlock
                                         Grid.Column="1"
                                         Text="FECHA"
-                                        Style="{StaticResource Etiqueta}"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
                                         Margin="15,0"
                                         VerticalAlignment="Center"/>
 
                                     <TextBlock
                                         Grid.Column="2"
-                                        Text="MÉTODO DE PAGO"
-                                        Style="{StaticResource Etiqueta}"
+                                        Text="EMPLEADO"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
                                         Margin="15,0"
                                         VerticalAlignment="Center"/>
 
                                     <TextBlock
                                         Grid.Column="3"
-                                        Text="TOTAL"
-                                        Style="{StaticResource Etiqueta}"
+                                        Text="MÉTODO DE PAGO"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
                                         Margin="15,0"
                                         VerticalAlignment="Center"/>
 
                                     <TextBlock
                                         Grid.Column="4"
+                                        Text="TOTAL"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
+                                        Margin="15,0"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Grid.Column="5"
                                         Text="ACCIÓN"
-                                        Style="{StaticResource Etiqueta}"
+                                        Foreground="#FFD400"
+                                        FontWeight="SemiBold"
                                         Margin="15,0"
                                         VerticalAlignment="Center"/>
 
                                 </Grid>
-
 
                                 <!-- LISTA -->
 
                                 <ListView
                                     x:Name="TablaVentas"
                                     Grid.Row="1"
-                                    SelectionMode="Single">
+                                    SelectionMode="Single"
+                                    HorizontalContentAlignment="Stretch">
 
                                     <ListView.ItemTemplate>
 
@@ -2187,45 +2201,60 @@
 
                                             <Border
                                                 BorderBrush="#E5E5E5"
-                                                BorderThickness="0,0,0,1">
+                                                BorderThickness="0,0,0,1"
+                                                HorizontalAlignment="Stretch">
 
-                                                <Grid MinHeight="52">
+                                                <Grid MinHeight="52"
+                                                      HorizontalAlignment="Stretch">
 
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="140"/>
-                                                        <ColumnDefinition Width="170"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="160"/>
+                                                        <ColumnDefinition Width="1.5*"/>
+                                                        <ColumnDefinition Width="1.8*"/>
+                                                        <ColumnDefinition Width="1.7*"/>
+                                                        <ColumnDefinition Width="1.8*"/>
+                                                        <ColumnDefinition Width="1.2*"/>
+                                                        <ColumnDefinition Width="1.5*"/>
                                                     </Grid.ColumnDefinitions>
 
+                                                    <!-- FOLIO -->
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         Text="{x:Bind Folio, Mode=OneWay}"
                                                         Margin="15,0"
                                                         VerticalAlignment="Center"/>
 
+                                                    <!-- FECHA -->
                                                     <TextBlock
                                                         Grid.Column="1"
                                                         Text="{x:Bind conv:Formato.Fecha(Fecha), Mode=OneWay}"
                                                         Margin="15,0"
                                                         VerticalAlignment="Center"/>
 
+                                                    <!-- EMPLEADO -->
                                                     <TextBlock
                                                         Grid.Column="2"
+                                                        Text="{x:Bind EmpleadoNombre, Mode=OneWay}"
+                                                        Margin="15,0"
+                                                        VerticalAlignment="Center"/>
+
+                                                    <!-- MÉTODO DE PAGO -->
+                                                    <TextBlock
+                                                        Grid.Column="3"
                                                         Text="{x:Bind MetodoPago, Mode=OneWay}"
                                                         Margin="15,0"
                                                         VerticalAlignment="Center"/>
 
+                                                    <!-- TOTAL -->
                                                     <TextBlock
-                                                        Grid.Column="3"
+                                                        Grid.Column="4"
                                                         Text="{x:Bind conv:Formato.Moneda(Total), Mode=OneWay}"
                                                         Margin="15,0"
                                                         VerticalAlignment="Center"
                                                         FontWeight="SemiBold"/>
 
+                                                    <!-- ACCIÓN -->
                                                     <Button
-                                                        Grid.Column="4"
+                                                        Grid.Column="5"
                                                         Content="Ver Ticket"
                                                         Tag="{x:Bind}"
                                                         Style="{StaticResource BotonRojo}"

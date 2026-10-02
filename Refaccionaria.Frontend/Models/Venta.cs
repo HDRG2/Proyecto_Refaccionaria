@@ -35,4 +35,6 @@ public partial class Venta : ObservableObject, IEntity
 
     [ObservableProperty]
     private ObservableCollection<DetalleVenta> lineas = new();
+
+    public string EmpleadoNombre { get; set; } = string.Empty;
 }

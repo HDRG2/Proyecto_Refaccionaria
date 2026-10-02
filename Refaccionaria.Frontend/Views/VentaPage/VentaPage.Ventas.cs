@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Refaccionaria.Frontend.Models;
+using Refaccionaria.Backend.Repositories;
 
 namespace Refaccionaria.Frontend.Views
 {
@@ -22,92 +23,26 @@ namespace Refaccionaria.Frontend.Views
             object sender,
             RoutedEventArgs e)
         {
+            // =====================================================
+            // 1. VALIDAR QUE HAYA PRODUCTOS
+            // =====================================================
+
             if (_ticket.Count == 0)
             {
                 return;
             }
 
-
-            BtnConfirmar.IsEnabled =
-                false;
-
+            BtnConfirmar.IsEnabled = false;
 
             try
             {
-                // -------------------------------------------------
-                // 1. VALIDAR EXISTENCIAS OTRA VEZ
-                // -------------------------------------------------
-
-                foreach (DetalleVenta linea in _ticket)
-                {
-                    Refaccion? refaccion =
-                        _refacciones.FirstOrDefault(
-                            r =>
-                                r.Id ==
-                                linea.RefaccionId
-                        );
-
-
-                    if (refaccion == null)
-                    {
-                        await MostrarMensaje(
-                            "Producto no encontrado",
-                            "Uno de los productos del ticket ya no existe."
-                        );
-
-
-                        BtnConfirmar.IsEnabled =
-                            true;
-
-
-                        return;
-                    }
-
-
-                    if (!refaccion.Activo)
-                    {
-                        await MostrarMensaje(
-                            "Producto retirado",
-                            $"\"{refaccion.Nombre}\" ya no está disponible."
-                        );
-
-
-                        BtnConfirmar.IsEnabled =
-                            true;
-
-
-                        return;
-                    }
-
-
-                    if (refaccion.Stock <
-                        linea.Cantidad)
-                    {
-                        await MostrarMensaje(
-                            "Existencia insuficiente",
-                            $"\"{refaccion.Nombre}\" solo tiene {refaccion.Stock} unidades disponibles."
-                        );
-
-
-                        BtnConfirmar.IsEnabled =
-                            true;
-
-
-                        return;
-                    }
-                }
-
-
-                // -------------------------------------------------
-                // 2. DATOS DEL PAGO
-                // -------------------------------------------------
+                // =================================================
+                // 2. LEER EL PAGO
+                // =================================================
 
                 decimal recibido;
-                decimal cambio;
 
-
-                if (_metodoPago ==
-                    "Efectivo")
+                if (_metodoPago == "Efectivo")
                 {
                     if (!IntentarLeerDecimal(
                             TxtRecibido.Text,
@@ -118,245 +53,127 @@ namespace Refaccionaria.Frontend.Views
                             "Ingresa la cantidad recibida."
                         );
 
-
-                        BtnConfirmar.IsEnabled =
-                            true;
-
+                        BtnConfirmar.IsEnabled = true;
 
                         return;
                     }
-
-
-                    if (recibido <
-                        _total)
-                    {
-                        await MostrarMensaje(
-                            "Pago insuficiente",
-                            "La cantidad recibida es menor al total de la venta."
-                        );
-
-
-                        BtnConfirmar.IsEnabled =
-                            true;
-
-
-                        return;
-                    }
-
-
-                    cambio =
-                        recibido - _total;
                 }
                 else
                 {
-                    recibido =
-                        _total;
-
-                    cambio =
-                        0m;
+                    recibido = _total;
                 }
 
 
-                // -------------------------------------------------
-                // 3. CREAR VENTA
-                // -------------------------------------------------
+                // =================================================
+                // 3. REGISTRAR LA VENTA
+                // =================================================
 
                 Venta venta =
-                    new()
-                    {
-                        Folio =
-                            GenerarFolio(),
-
-                        Fecha =
-                            DateTime.Now,
-
-                        /*
-                         * Actualmente VentaPage no recibe todavía
-                         * el Usuario completo, por lo que dejamos
-                         * UsuarioId en 0.
-                         *
-                         * Después podemos pasar el vendedor que
-                         * inició sesión y guardar su Id real.
-                         */
-
-                        UsuarioId =
-                            0,
-
-                        MetodoPago =
-                            _metodoPago,
-
-                        Referencia =
-                            string.Empty,
-
-                        Recibido =
-                            recibido,
-
-                        Cambio =
-                            cambio,
-
-                        Total =
-                            _total
-                    };
-
-
-                // -------------------------------------------------
-                // 4. GUARDAR CABECERA DE LA VENTA
-                // -------------------------------------------------
-
-                await repoVentas.AddAsync(
-                    venta
-                );
-
-
-                // -------------------------------------------------
-                // 5. GUARDAR DETALLES
-                // -------------------------------------------------
-
-                foreach (DetalleVenta lineaTicket in _ticket)
-                {
-                    DetalleVenta detalle =
-                        new()
-                        {
-                            VentaId =
-                                venta.Id,
-
-                            RefaccionId =
-                                lineaTicket.RefaccionId,
-
-                            Cantidad =
-                                lineaTicket.Cantidad,
-
-                            PrecioUnitario =
-                                lineaTicket.PrecioUnitario,
-
-                            Refaccion =
-                                lineaTicket.Refaccion
-                        };
-
-                    await repoDetalleVentas.AddAsync(
-                        detalle
+                    await ventaService.RegistrarVentaAsync(
+                        _usuarioActual,
+                        _ticket,
+                        _metodoPago,
+                        recibido
                     );
 
-                    venta.Lineas.Add(
-                        detalle
-                    );
-                }
 
-                // MUY IMPORTANTE:
-                // Actualizamos la venta después de agregar sus líneas.
-                await repoVentas.UpdateAsync(
-                    venta
-                );
+                // =================================================
+                // 4. ACTUALIZAR INVENTARIO LOCAL
+                // =================================================
 
+                await repoRefacciones.ReloadAsync();
 
-                // -------------------------------------------------
-                // 6. DESCONTAR EXISTENCIAS
-                // -------------------------------------------------
+                _refacciones =
+                    (await repoRefacciones.GetAllAsync())
+                    .ToList();
 
-                foreach (DetalleVenta linea in _ticket)
+                foreach (Refaccion refaccion in _refacciones)
                 {
-                    Refaccion? refaccion =
-                        _refacciones.FirstOrDefault(
-                            r =>
-                                r.Id ==
-                                linea.RefaccionId
-                        );
-
-                    if (refaccion == null)
-                    {
-                        continue;
-                    }
-
-                    refaccion.Stock -= linea.Cantidad;
-
-                    if (refaccion.Stock <= 0)
-                    {
-                        refaccion.Stock = 0;
-                        refaccion.StockBajo = true;
-
-                        // Al quedarse sin existencia, se retira del inventario activo.
-                        refaccion.Activo = false;
-                    }
-                    else
-                    {
-                        refaccion.StockBajo = refaccion.Stock <= 5;
-                        refaccion.Activo = true;
-                    }
-
-                    await repoRefacciones.UpdateAsync(refaccion);
+                    CompletarDatosRefaccion(refaccion);
                 }
 
 
-                // -------------------------------------------------
-                // 7. MOSTRAR ÉXITO
-                // -------------------------------------------------
+                // =================================================
+                // 5. MOSTRAR VENTA EXITOSA
+                // =================================================
 
                 TxtFolio.Text =
                     venta.Folio;
 
-
                 TxtMetodoExito.Text =
                     venta.MetodoPago;
 
-
                 TxtCambioExito.Text =
-                    cambio.ToString("C");
-
+                    venta.Cambio.ToString("C");
 
                 TxtDetalleExito.Text =
-                    $"Venta por {_total:C} registrada correctamente.";
-
+                    $"Venta por {venta.Total:C} registrada correctamente.";
 
                 PanelCobro.Visibility =
                     Visibility.Collapsed;
-
 
                 PanelExito.Visibility =
                     Visibility.Visible;
 
 
-                // -------------------------------------------------
-                // 8. VACIAR CARRITO
-                // -------------------------------------------------
+                // =================================================
+                // 6. VACIAR CARRITO
+                // =================================================
 
                 _ticket.Clear();
 
                 ActualizarTotales();
 
 
-                // -------------------------------------------------
-                // 9. REFRESCAR CATÁLOGO
-                // -------------------------------------------------
+                // =================================================
+                // 7. ACTUALIZAR CATÁLOGO
+                // =================================================
 
-
-            AplicarFiltros();
-
+                AplicarFiltros();
             }
             catch (Exception ex)
             {
-                BtnConfirmar.IsEnabled =
-                    true;
+                BtnConfirmar.IsEnabled = true;
 
 
                 await MostrarMensaje(
-                    "Error al registrar la venta",
+                    "No se pudo registrar la venta",
                     ex.Message
                 );
+
+
+                // =================================================
+                // Volver a cargar inventario por seguridad
+                // =================================================
+
+                try
+                {
+                    await repoRefacciones.ReloadAsync();
+
+                    _refacciones =
+                        (await repoRefacciones.GetAllAsync())
+                        .ToList();
+
+                    foreach (Refaccion refaccion in _refacciones)
+                    {
+                        CompletarDatosRefaccion(refaccion);
+                    }
+
+                    AplicarFiltros();
+                }
+                catch
+                {
+                    await MostrarMensaje(
+                        "Error crítico",
+                        "No fue posible volver a cargar el inventario.\n\n" +
+                        "No continúes realizando ventas y contacta al administrador."
+                    );
+
+                    Application.Current.Exit();
+                }
             }
         }
-
-
-        // =========================================================
-        // GENERAR FOLIO
-        // =========================================================
-
-        private static string GenerarFolio()
-        {
-            return
-                $"V-{DateTime.Now:yyyyMMdd-HHmmssfff}";
-        }
-
-
+        
         // =========================================================
         // CANCELAR COBRO
         // =========================================================

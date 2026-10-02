@@ -55,3 +55,6 @@ _ReSharper*/
 # Generated
 Generated Files/
 *_wpftmp.csproj
+
+#Backups
+Refaccionaria.Backend/Backups/

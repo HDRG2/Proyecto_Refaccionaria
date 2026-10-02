@@ -16,5 +16,14 @@
     "Nombre": "Jos\u00E9 Remires",
     "Telefono": "8125646932",
     "Activo": true
+  },
+  {
+    "Id": 3,
+    "NombreUsuario": "P201",
+    "Password": "12345",
+    "Rol": "Vendedor",
+    "Nombre": "Pedro Lopez",
+    "Telefono": "8154695245",
+    "Activo": true
   }
 ]

@@ -150,6 +150,47 @@ public partial class App : Application
         return services.BuildServiceProvider();
     }
 
+    // =========================================================
+    // RUTA DE LA CARPETA DATA
+    // =========================================================
+
+    public static string ObtenerCarpetaData()
+    {
+        string rutaRefacciones =
+            Ruta("refacciones.json");
+
+        string? carpetaData =
+            Path.GetDirectoryName(
+                rutaRefacciones
+            );
+
+        if (string.IsNullOrWhiteSpace(carpetaData))
+        {
+            throw new DirectoryNotFoundException(
+                "No se pudo localizar la carpeta Data."
+            );
+        }
+
+        return carpetaData;
+    }
+
+    // =========================================================
+    // RESTAURAR JSON DESDE BASE ESTABLE
+    // =========================================================
+
+    public static void RestaurarArchivoBaseEstable(
+        string nombreArchivo)
+    {
+        string carpetaData =
+            ObtenerCarpetaData();
+
+        JsonRepository<Refaccion>
+            .RestaurarDesdeBaseEstable(
+                carpetaData,
+                nombreArchivo
+            );
+    }
+
 
     // =========================================================
     // RUTA DE LOS ARCHIVOS JSON
