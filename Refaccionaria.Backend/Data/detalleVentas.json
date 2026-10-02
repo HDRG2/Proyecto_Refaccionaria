@@ -370,5 +370,185 @@
         "Toyota Yaris (2016-2020)"
       ]
     }
+  },
+  {
+    "Subtotal": 318.00,
+    "Id": 15,
+    "VentaId": 11,
+    "RefaccionId": 1,
+    "Cantidad": 2,
+    "PrecioUnitario": 159.00,
+    "Refaccion": {
+      "Id": 1,
+      "Codigo": "FIL-001",
+      "Nombre": "Filtro de Aceite",
+      "MarcaId": 4,
+      "CategoriaId": 2,
+      "Precio": 159.00,
+      "Stock": 23,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        6,
+        7
+      ],
+      "MarcaNombre": "Mobil",
+      "CategoriaNombre": "Filtros",
+      "AutosDescripciones": [
+        "Volkswagen Jetta (2011-2018)",
+        "Volkswagen Vento (2014-2022)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 447.00,
+    "Id": 16,
+    "VentaId": 11,
+    "RefaccionId": 4,
+    "Cantidad": 3,
+    "PrecioUnitario": 149.00,
+    "Refaccion": {
+      "Id": 4,
+      "Codigo": "BUJ-003",
+      "Nombre": "Bujia de encendido",
+      "MarcaId": 3,
+      "CategoriaId": 10,
+      "Precio": 149.00,
+      "Stock": 3,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        4,
+        5
+      ],
+      "MarcaNombre": "NGK",
+      "CategoriaNombre": "Encendido",
+      "AutosDescripciones": [
+        "Chevrolet Aveo (2018-2024)",
+        "Chevrolet Spark (2016-2021)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 2900.00,
+    "Id": 17,
+    "VentaId": 12,
+    "RefaccionId": 5,
+    "Cantidad": 2,
+    "PrecioUnitario": 1450.00,
+    "Refaccion": {
+      "Id": 5,
+      "Codigo": "AMO-005",
+      "Nombre": "Amortiguador Delantero",
+      "MarcaId": 8,
+      "CategoriaId": 4,
+      "Precio": 1450.00,
+      "Stock": 3,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        8,
+        9
+      ],
+      "MarcaNombre": "Monroe",
+      "CategoriaNombre": "Suspensi\u00F3n",
+      "AutosDescripciones": [
+        "Toyota Corolla (2014-2019)",
+        "Toyota Yaris (2016-2020)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 149.00,
+    "Id": 18,
+    "VentaId": 13,
+    "RefaccionId": 4,
+    "Cantidad": 1,
+    "PrecioUnitario": 149.00,
+    "Refaccion": {
+      "Id": 4,
+      "Codigo": "BUJ-003",
+      "Nombre": "Bujia de encendido",
+      "MarcaId": 3,
+      "CategoriaId": 10,
+      "Precio": 149.00,
+      "Stock": 20,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        4,
+        5
+      ],
+      "MarcaNombre": "NGK",
+      "CategoriaNombre": "Encendido",
+      "AutosDescripciones": [
+        "Chevrolet Aveo (2018-2024)",
+        "Chevrolet Spark (2016-2021)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 298.00,
+    "Id": 19,
+    "VentaId": 14,
+    "RefaccionId": 4,
+    "Cantidad": 2,
+    "PrecioUnitario": 149.00,
+    "Refaccion": {
+      "Id": 4,
+      "Codigo": "BUJ-003",
+      "Nombre": "Bujia de encendido",
+      "MarcaId": 3,
+      "CategoriaId": 10,
+      "Precio": 149.00,
+      "Stock": 19,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        4,
+        5
+      ],
+      "MarcaNombre": "NGK",
+      "CategoriaNombre": "Encendido",
+      "AutosDescripciones": [
+        "Chevrolet Aveo (2018-2024)",
+        "Chevrolet Spark (2016-2021)"
+      ]
+    }
+  },
+  {
+    "Subtotal": 2900.00,
+    "Id": 20,
+    "VentaId": 15,
+    "RefaccionId": 5,
+    "Cantidad": 2,
+    "PrecioUnitario": 1450.00,
+    "Refaccion": {
+      "Id": 5,
+      "Codigo": "AMO-005",
+      "Nombre": "Amortiguador Delantero",
+      "MarcaId": 8,
+      "CategoriaId": 4,
+      "Precio": 1450.00,
+      "Stock": 3,
+      "StockBajo": true,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        8,
+        9
+      ],
+      "MarcaNombre": "Monroe",
+      "CategoriaNombre": "Suspensi\u00F3n",
+      "AutosDescripciones": [
+        "Toyota Corolla (2014-2019)",
+        "Toyota Yaris (2016-2020)"
+      ]
+    }
   }
 ]

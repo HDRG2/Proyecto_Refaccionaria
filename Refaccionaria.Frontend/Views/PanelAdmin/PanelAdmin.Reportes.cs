@@ -205,6 +205,20 @@ public sealed partial class PanelAdmin : Page
             consulta
                 .OrderByDescending(v => v.Fecha)
                 .ToList();
+        
+        foreach (Venta venta in ventasReporteActual)
+        {
+            Usuario? empleado =
+                vendedores.FirstOrDefault(
+                    u => u.Id == venta.UsuarioId
+                );
+            
+            venta.EmpleadoNombre =
+                empleado != null
+                    ? empleado.Nombre
+                    : "Usuario desconocido";
+        }
+                
 
 
         // Actualizar tabla

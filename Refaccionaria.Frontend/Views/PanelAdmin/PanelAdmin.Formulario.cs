@@ -152,12 +152,20 @@ public sealed partial class PanelAdmin : Page
 
     private async Task GuardarNuevoProductoAsync()
     {
-        // -----------------------------------------------------
-        // NOMBRE
-        // -----------------------------------------------------
+        // =====================================================
+        // 1. LEER DATOS DEL FORMULARIO
+        // =====================================================
 
         string nombre =
             TxtFormNombre.Text.Trim();
+
+        string codigo =
+            TxtFormCodigo.Text.Trim();
+
+
+        // =====================================================
+        // 2. VALIDACIONES DE LA INTERFAZ
+        // =====================================================
 
         if (string.IsNullOrWhiteSpace(nombre))
         {
@@ -174,13 +182,6 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // CÓDIGO
-        // -----------------------------------------------------
-
-        string codigo =
-            TxtFormCodigo.Text.Trim();
-
         if (string.IsNullOrWhiteSpace(codigo))
         {
             await MostrarMensaje(
@@ -196,36 +197,6 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // CÓDIGO DUPLICADO
-        // -----------------------------------------------------
-
-        bool codigoExiste = todasLasRefacciones.Any(
-            r => r.Codigo.Equals(
-                codigo,
-                StringComparison.OrdinalIgnoreCase
-            )
-        );
-
-        if (codigoExiste)
-        {
-            await MostrarMensaje(
-                "Código existente",
-                "Ya existe una refacción con ese código."
-            );
-
-            TxtFormCodigo.Focus(
-                FocusState.Programmatic
-            );
-
-            return;
-        }
-
-
-        // -----------------------------------------------------
-        // CATEGORÍA
-        // -----------------------------------------------------
-
         if (CmbFormCategoria.SelectedItem
             is not Categoria categoria)
         {
@@ -238,10 +209,6 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // MARCA
-        // -----------------------------------------------------
-
         if (CmbFormMarca.SelectedItem
             is not Marca marca)
         {
@@ -253,10 +220,6 @@ public sealed partial class PanelAdmin : Page
             return;
         }
 
-
-        // -----------------------------------------------------
-        // PRECIO
-        // -----------------------------------------------------
 
         if (!decimal.TryParse(
                 TxtFormPrecio.Text.Trim(),
@@ -276,9 +239,219 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // STOCK
-        // -----------------------------------------------------
+        if (!int.TryParse(
+                TxtFormStock.Text.Trim(),
+                out int stock)
+            || stock < 0)
+        {
+            await MostrarMensaje(
+                "Stock incorrecto",
+                "Escribe una cantidad válida."
+            );
+
+            TxtFormStock.Focus(
+                FocusState.Programmatic
+            );
+
+            return;
+        }
+
+
+        // =====================================================
+        // 3. COMPATIBILIDAD
+        // =====================================================
+
+        bool esUniversal =
+            ChkFormUniversal.IsChecked == true;
+
+        List<int> autosSeleccionados = new();
+
+        if (!esUniversal)
+        {
+            autosSeleccionados.AddRange(
+                autosCompatiblesSeleccionados
+            );
+        }
+
+
+        try
+        {
+            // =================================================
+            // 4. CREAR PRODUCTO MEDIANTE EL SERVICIO
+            // =================================================
+
+            Refaccion nuevaRefaccion =
+                await productoService.CrearProductoAsync(
+                    nombre,
+                    codigo,
+                    categoria,
+                    marca,
+                    precio,
+                    stock,
+                    esUniversal,
+                    autosSeleccionados
+                );
+
+
+            // =================================================
+            // 5. COMPLETAR INFORMACIÓN VISUAL
+            // =================================================
+
+            CompletarDatosRefaccion(
+                nuevaRefaccion
+            );
+
+
+            // =================================================
+            // 6. ACTUALIZAR COLECCIONES
+            // =================================================
+
+            todasLasRefacciones.Add(
+                nuevaRefaccion
+            );
+
+            refacciones.Add(
+                nuevaRefaccion
+            );
+
+            ListaTarjetas.ItemsSource =
+                refacciones;
+
+            ActualizarTodo();
+
+
+            // =================================================
+            // 7. CERRAR FORMULARIO
+            // =================================================
+
+            Formulario.Visibility =
+                Visibility.Collapsed;
+
+            modoFormulario =
+                string.Empty;
+
+
+            // =================================================
+            // 8. CONFIRMACIÓN
+            // =================================================
+
+            await MostrarMensaje(
+                "Producto guardado",
+                $"La refacción \"{nuevaRefaccion.Nombre}\" se guardó correctamente."
+            );
+        }
+        catch (Exception ex)
+        {
+            await MostrarMensaje(
+                "No se pudo guardar el producto",
+                ex.Message
+            );
+        }
+    }
+
+    private async Task GuardarEdicionProductoAsync()
+    {
+        // =====================================================
+        // 1. COMPROBAR QUE HAY UN PRODUCTO EDITÁNDOSE
+        // =====================================================
+
+        if (refaccionEditando == null)
+        {
+            await MostrarMensaje(
+                "Error",
+                "No se encontró el producto que se desea editar."
+            );
+
+            return;
+        }
+
+
+        // =====================================================
+        // 2. LEER DATOS DEL FORMULARIO
+        // =====================================================
+
+        string nombre =
+            TxtFormNombre.Text.Trim();
+
+        string codigo =
+            TxtFormCodigo.Text.Trim();
+
+
+        // =====================================================
+        // 3. VALIDACIONES DE LA INTERFAZ
+        // =====================================================
+
+        if (string.IsNullOrWhiteSpace(nombre))
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Escribe el nombre del producto."
+            );
+
+            TxtFormNombre.Focus(
+                FocusState.Programmatic
+            );
+
+            return;
+        }
+
+
+        if (string.IsNullOrWhiteSpace(codigo))
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Escribe el código del producto."
+            );
+
+            TxtFormCodigo.Focus(
+                FocusState.Programmatic
+            );
+
+            return;
+        }
+
+
+        if (CmbFormCategoria.SelectedItem
+            is not Categoria categoria)
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Selecciona una categoría."
+            );
+
+            return;
+        }
+
+
+        if (CmbFormMarca.SelectedItem
+            is not Marca marca)
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Selecciona una marca."
+            );
+
+            return;
+        }
+
+
+        if (!decimal.TryParse(
+                TxtFormPrecio.Text.Trim(),
+                out decimal precio)
+            || precio < 0)
+        {
+            await MostrarMensaje(
+                "Precio incorrecto",
+                "Escribe un precio válido."
+            );
+
+            TxtFormPrecio.Focus(
+                FocusState.Programmatic
+            );
+
+            return;
+        }
+
 
         if (!int.TryParse(
                 TxtFormStock.Text.Trim(),
@@ -298,17 +471,12 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // UNIVERSAL
-        // -----------------------------------------------------
+        // =====================================================
+        // 4. COMPATIBILIDAD
+        // =====================================================
 
         bool esUniversal =
             ChkFormUniversal.IsChecked == true;
-
-
-        // -----------------------------------------------------
-        // AUTOS COMPATIBLES
-        // -----------------------------------------------------
 
         List<int> autosSeleccionados = new();
 
@@ -320,399 +488,123 @@ public sealed partial class PanelAdmin : Page
         }
 
 
-        // -----------------------------------------------------
-        // CREAR REFACCIÓN
-        // -----------------------------------------------------
-
-        Refaccion nuevaRefaccion =
-            new()
-            {
-                Codigo = codigo,
-
-                Nombre = nombre,
-
-                MarcaId = marca.Id,
-
-                CategoriaId = categoria.Id,
-
-                Precio = precio,
-
-                Stock = stock,
-
-                StockBajo = stock <= 5,
-
-                Activo = true,
-
-                EsUniversal = esUniversal,
-
-                AutosCompatibles =
-                    autosSeleccionados,
-
-                MarcaNombre =
-                    marca.Nombre,
-
-                CategoriaNombre =
-                    categoria.Nombre
-            };
-
-
-        // -----------------------------------------------------
-        // AUTOS PARA MOSTRAR EN LA TARJETA
-        // -----------------------------------------------------
-
-        if (!esUniversal)
+        try
         {
-            foreach (
-                int autoId
-                in autosSeleccionados)
-            {
-                ModeloAuto? auto =
-                    autos.FirstOrDefault(
-                        a => a.Id == autoId
-                    );
+            // =================================================
+            // 5. EDITAR MEDIANTE PRODUCTOSERVICE
+            // =================================================
 
-                if (auto != null)
-                {
-                    nuevaRefaccion
-                        .AutosDescripciones
-                        .Add(
-                            auto.DescripcionCompleta
-                        );
-                }
-            }
-        }
-
-
-        // -----------------------------------------------------
-        // GUARDAR EN JSON
-        // -----------------------------------------------------
-
-        await repoRefacciones.AddAsync(
-            nuevaRefaccion
-        );
-
-
-        // -----------------------------------------------------
-        // AGREGAR A LA COLECCIÓN VISUAL
-        // -----------------------------------------------------
-
-        todasLasRefacciones.Add(
-            nuevaRefaccion
-        );
-
-        refacciones.Add(
-            nuevaRefaccion
-        );
-
-
-        // -----------------------------------------------------
-        // ACTUALIZAR PANTALLA
-        // -----------------------------------------------------
-
-        ListaTarjetas.ItemsSource =
-            refacciones;
-
-        ActualizarTodo();
-
-
-        // -----------------------------------------------------
-        // CERRAR FORMULARIO
-        // -----------------------------------------------------
-
-        Formulario.Visibility =
-            Visibility.Collapsed;
-
-        modoFormulario =
-            string.Empty;
-
-
-        // -----------------------------------------------------
-        // MENSAJE
-        // -----------------------------------------------------
-
-        await MostrarMensaje(
-            "Producto guardado",
-            $"La refacción \"{nuevaRefaccion.Nombre}\" se guardó correctamente."
-        );
-    }
-
-    private async Task GuardarEdicionProductoAsync()
-    {
-        // =====================================================
-        // COMPROBAR QUE HAY UN PRODUCTO EDITÁNDOSE
-        // =====================================================
-
-        if (refaccionEditando == null)
-        {
-            await MostrarMensaje(
-                "Error",
-                "No se encontró el producto que se desea editar."
-            );
-
-            return;
-        }
-
-
-        // =====================================================
-        // NOMBRE
-        // =====================================================
-
-        string nombre = TxtFormNombre.Text.Trim();
-
-        if (string.IsNullOrWhiteSpace(nombre))
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Escribe el nombre del producto."
-            );
-
-            TxtFormNombre.Focus(FocusState.Programmatic);
-
-            return;
-        }
-
-
-        // =====================================================
-        // CÓDIGO
-        // =====================================================
-
-        string codigo = TxtFormCodigo.Text.Trim();
-
-        if (string.IsNullOrWhiteSpace(codigo))
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Escribe el código del producto."
-            );
-
-            TxtFormCodigo.Focus(FocusState.Programmatic);
-
-            return;
-        }
-
-
-        // =====================================================
-        // EVITAR CÓDIGOS DUPLICADOS
-        // =====================================================
-
-        bool codigoExiste = todasLasRefacciones.Any(
-            r =>
-                r.Id != refaccionEditando.Id &&
-                r.Codigo.Equals(
+            Refaccion productoActualizado =
+                await productoService.EditarProductoAsync(
+                    refaccionEditando,
+                    nombre,
                     codigo,
-                    StringComparison.OrdinalIgnoreCase
-                )
-        );
+                    categoria,
+                    marca,
+                    precio,
+                    stock,
+                    esUniversal,
+                    autosSeleccionados
+                );
 
-        if (codigoExiste)
-        {
-            await MostrarMensaje(
-                "Código existente",
-                "Ya existe otra refacción con ese código."
+
+            // =================================================
+            // 6. COMPLETAR INFORMACIÓN VISUAL
+            // =================================================
+
+            CompletarDatosRefaccion(
+                productoActualizado
             );
 
-            TxtFormCodigo.Focus(FocusState.Programmatic);
 
-            return;
-        }
+            // =================================================
+            // 7. ACTUALIZAR COLECCIONES DE LA PANTALLA
+            // =================================================
 
+            Refaccion? productoEnTodas =
+                todasLasRefacciones.FirstOrDefault(
+                    r => r.Id == productoActualizado.Id
+                );
 
-        // =====================================================
-        // CATEGORÍA
-        // =====================================================
-
-        if (CmbFormCategoria.SelectedItem is not Categoria categoria)
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Selecciona una categoría."
-            );
-
-            return;
-        }
-
-
-        // =====================================================
-        // MARCA
-        // =====================================================
-
-        if (CmbFormMarca.SelectedItem is not Marca marca)
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Selecciona una marca."
-            );
-
-            return;
-        }
-
-
-        // =====================================================
-        // PRECIO
-        // =====================================================
-
-        if (!decimal.TryParse(
-                TxtFormPrecio.Text.Trim(),
-                out decimal precio)
-            || precio < 0)
-        {
-            await MostrarMensaje(
-                "Precio incorrecto",
-                "Escribe un precio válido."
-            );
-
-            TxtFormPrecio.Focus(FocusState.Programmatic);
-
-            return;
-        }
-
-
-        // =====================================================
-        // STOCK
-        // =====================================================
-
-        if (!int.TryParse(
-                TxtFormStock.Text.Trim(),
-                out int stock)
-            || stock < 0)
-        {
-            await MostrarMensaje(
-                "Stock incorrecto",
-                "Escribe una cantidad válida."
-            );
-
-            TxtFormStock.Focus(FocusState.Programmatic);
-
-            return;
-        }
-
-
-        // =====================================================
-        // UNIVERSAL
-        // =====================================================
-
-        bool esUniversal =
-            ChkFormUniversal.IsChecked == true;
-
-
-        // =====================================================
-        // AUTOS COMPATIBLES
-        // =====================================================
-
-        List<int> autosSeleccionados = new();
-
-        if (!esUniversal)
-        {
-            autosSeleccionados.AddRange(
-                autosCompatiblesSeleccionados
-            );
-        }
-
-
-        // =====================================================
-        // MODIFICAR EL OBJETO
-        // =====================================================
-
-        refaccionEditando.Nombre = nombre;
-
-        refaccionEditando.Codigo = codigo;
-
-        refaccionEditando.CategoriaId = categoria.Id;
-
-        refaccionEditando.MarcaId = marca.Id;
-
-        refaccionEditando.Precio = precio;
-
-        refaccionEditando.Stock = stock;
-
-        refaccionEditando.StockBajo =
-            stock <= 5;
-
-        refaccionEditando.EsUniversal =
-            esUniversal;
-
-        refaccionEditando.AutosCompatibles =
-            autosSeleccionados;
-
-        refaccionEditando.CategoriaNombre =
-            categoria.Nombre;
-
-        refaccionEditando.MarcaNombre =
-            marca.Nombre;
-
-
-        // =====================================================
-        // ACTUALIZAR AUTOS PARA MOSTRAR EN LA TARJETA
-        // =====================================================
-
-        refaccionEditando.AutosDescripciones.Clear();
-
-        if (!esUniversal)
-        {
-            foreach (int autoId in autosSeleccionados)
+            if (productoEnTodas != null &&
+                !ReferenceEquals(
+                    productoEnTodas,
+                    productoActualizado))
             {
-                ModeloAuto? auto =
-                    autos.FirstOrDefault(
-                        a => a.Id == autoId
+                int indice =
+                    todasLasRefacciones.IndexOf(
+                        productoEnTodas
                     );
 
-                if (auto != null)
-                {
-                    refaccionEditando
-                        .AutosDescripciones
-                        .Add(
-                            auto.DescripcionCompleta
-                        );
-                }
+                todasLasRefacciones[indice] =
+                    productoActualizado;
             }
+
+
+            Refaccion? productoEnActivas =
+                refacciones.FirstOrDefault(
+                    r => r.Id == productoActualizado.Id
+                );
+
+            if (productoEnActivas != null &&
+                !ReferenceEquals(
+                    productoEnActivas,
+                    productoActualizado))
+            {
+                int indice =
+                    refacciones.IndexOf(
+                        productoEnActivas
+                    );
+
+                refacciones[indice] =
+                    productoActualizado;
+            }
+
+
+            // =================================================
+            // 8. ACTUALIZAR PANTALLA
+            // =================================================
+
+            ActualizarTodo();
+
+
+            // =================================================
+            // 9. GUARDAR NOMBRE PARA EL MENSAJE
+            // =================================================
+
+            string nombreProducto =
+                productoActualizado.Nombre;
+
+
+            // =================================================
+            // 10. CERRAR FORMULARIO
+            // =================================================
+
+            Formulario.Visibility =
+                Visibility.Collapsed;
+
+            modoFormulario =
+                string.Empty;
+
+            refaccionEditando =
+                null;
+
+
+            // =================================================
+            // 11. CONFIRMACIÓN
+            // =================================================
+
+            await MostrarMensaje(
+                "Producto actualizado",
+                $"La refacción \"{nombreProducto}\" se actualizó correctamente."
+            );
         }
-
-
-        // =====================================================
-        // AQUÍ VA LA LÍNEA QUE ME PREGUNTABAS
-        // =====================================================
-
-        await repoRefacciones.UpdateAsync(
-            refaccionEditando
-        );
-
-
-        // =====================================================
-        // ACTUALIZAR CONTADORES
-        // =====================================================
-
-        ActualizarTodo();
-
-
-        // =====================================================
-        // CERRAR FORMULARIO
-        // =====================================================
-
-        Formulario.Visibility =
-            Visibility.Collapsed;
-
-        modoFormulario =
-            string.Empty;
-
-
-        // =====================================================
-        // GUARDAMOS EL NOMBRE ANTES DE LIMPIAR LA VARIABLE
-        // =====================================================
-
-        string nombreProducto =
-            refaccionEditando.Nombre;
-
-        refaccionEditando =
-            null;
-
-
-        // =====================================================
-        // CONFIRMACIÓN
-        // =====================================================
-
-        await MostrarMensaje(
-            "Producto actualizado",
-            $"La refacción \"{nombreProducto}\" se actualizó correctamente."
-        );
+        catch (Exception ex)
+        {
+            await MostrarMensaje(
+                "No se pudo actualizar el producto",
+                ex.Message
+            );
+        }
     }
 }

@@ -437,7 +437,7 @@ namespace Refaccionaria.Frontend
                 // -------------------------------------------------
 
                 Content =
-                    new VentaPage();
+                    new VentaPage(usuarioEncontrado);
             }
             catch (Exception ex)
             {
