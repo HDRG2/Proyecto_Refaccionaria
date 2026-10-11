@@ -453,7 +453,8 @@ public sealed partial class PanelAdmin : Page
             Maximum = 1000000,
             Value = 0,
             SpinButtonPlacementMode =
-                NumberBoxSpinButtonPlacementMode.Compact
+                NumberBoxSpinButtonPlacementMode.Hidden,
+            HorizontalAlignment = HorizontalAlignment.Stretch
         };
 
 

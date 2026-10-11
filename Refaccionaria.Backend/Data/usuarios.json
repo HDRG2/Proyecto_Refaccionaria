@@ -25,5 +25,14 @@
     "Nombre": "Pedro Lopez",
     "Telefono": "8154695245",
     "Activo": true
+  },
+  {
+    "Id": 4,
+    "NombreUsuario": "Daniel502",
+    "Password": "12345",
+    "Rol": "Vendedor",
+    "Nombre": "Daniel",
+    "Telefono": "8145969687",
+    "Activo": true
   }
 ]

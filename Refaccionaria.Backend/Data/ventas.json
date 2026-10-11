@@ -759,5 +759,201 @@
         }
       }
     ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 16,
+    "Folio": "V-20261005-202150259",
+    "Fecha": "2026-10-05T20:21:50.2622865-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 8491.00,
+    "Cambio": 0,
+    "Total": 8491.00,
+    "Lineas": [
+      {
+        "Subtotal": 1450.00,
+        "Id": 21,
+        "VentaId": 16,
+        "RefaccionId": 5,
+        "Cantidad": 1,
+        "PrecioUnitario": 1450.00,
+        "Refaccion": {
+          "Id": 5,
+          "Codigo": "AMO-005",
+          "Nombre": "Amortiguador Delantero",
+          "MarcaId": 8,
+          "CategoriaId": 4,
+          "Precio": 1450.00,
+          "Stock": 1,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            8,
+            9
+          ],
+          "MarcaNombre": "Monroe",
+          "CategoriaNombre": "Suspensi\u00F3n",
+          "AutosDescripciones": [
+            "Toyota Corolla (2014-2019)",
+            "Toyota Yaris (2016-2020)"
+          ]
+        }
+      },
+      {
+        "Subtotal": 3747.00,
+        "Id": 22,
+        "VentaId": 16,
+        "RefaccionId": 3,
+        "Cantidad": 3,
+        "PrecioUnitario": 1249.00,
+        "Refaccion": {
+          "Id": 3,
+          "Codigo": "BAL-002",
+          "Nombre": "Balatas delanteras Ceramitas",
+          "MarcaId": 2,
+          "CategoriaId": 3,
+          "Precio": 1249.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            1,
+            2
+          ],
+          "MarcaNombre": "Brembo",
+          "CategoriaNombre": "Frenos",
+          "AutosDescripciones": [
+            "Nissan Sentra (2013-2019)",
+            "Nissan Versa (2012-2019)"
+          ]
+        }
+      },
+      {
+        "Subtotal": 2996.00,
+        "Id": 23,
+        "VentaId": 16,
+        "RefaccionId": 2,
+        "Cantidad": 4,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 23,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites y lubricantes",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 298.00,
+        "Id": 24,
+        "VentaId": 16,
+        "RefaccionId": 4,
+        "Cantidad": 2,
+        "PrecioUnitario": 149.00,
+        "Refaccion": {
+          "Id": 4,
+          "Codigo": "BUJ-003",
+          "Nombre": "Bujia de encendido",
+          "MarcaId": 3,
+          "CategoriaId": 10,
+          "Precio": 149.00,
+          "Stock": 17,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            4,
+            5
+          ],
+          "MarcaNombre": "NGK",
+          "CategoriaNombre": "Encendido",
+          "AutosDescripciones": [
+            "Chevrolet Aveo (2018-2024)",
+            "Chevrolet Spark (2016-2021)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 17,
+    "Folio": "V-20261008-003255849",
+    "Fecha": "2026-10-08T00:32:55.8522787-06:00",
+    "UsuarioId": 4,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 10990.00,
+    "Cambio": 0,
+    "Total": 10990.00,
+    "Lineas": [
+      {
+        "Subtotal": 2247.00,
+        "Id": 25,
+        "VentaId": 17,
+        "RefaccionId": 2,
+        "Cantidad": 3,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 19,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites y lubricantes",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 8743.00,
+        "Id": 26,
+        "VentaId": 17,
+        "RefaccionId": 3,
+        "Cantidad": 7,
+        "PrecioUnitario": 1249.00,
+        "Refaccion": {
+          "Id": 3,
+          "Codigo": "BAL-002",
+          "Nombre": "Balatas delanteras Ceramitas",
+          "MarcaId": 2,
+          "CategoriaId": 3,
+          "Precio": 1249.00,
+          "Stock": 7,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            1,
+            2
+          ],
+          "MarcaNombre": "Brembo",
+          "CategoriaNombre": "Frenos",
+          "AutosDescripciones": [
+            "Nissan Sentra (2013-2019)",
+            "Nissan Versa (2012-2019)"
+          ]
+        }
+      }
+    ]
   }
 ]

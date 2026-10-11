@@ -328,10 +328,22 @@ public sealed partial class PanelAdmin : Page
         CmbFormMarca.ItemsSource = marcas;
         CmbFormMarca.DisplayMemberPath = "Nombre";
 
+        CmbModelo.DisplayMemberPath = "Modelo";
+        CmbModelo.ItemsSource = autos
+            .GroupBy(a => a.Id)
+            .Select(g => g.First())
+            .OrderBy(a => a.Modelo)
+            .ToList();
+
         CmbFormCategoria.ItemsSource = categorias;
         CmbFormCategoria.DisplayMemberPath = "Nombre";
 
         LstFormAutos.ItemsSource = autos;
+
+        LstTipos.ItemsSource = categorias
+            .Select(c => c.Nombre)
+            .OrderBy(n => n)
+            .ToList();
 
         ActualizarTodo();
         ActualizarResumenVentas();
