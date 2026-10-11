@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <Page
     x:Class="Refaccionaria.Frontend.Views.PanelAdmin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -63,21 +62,74 @@
                 VerticalAlignment="Center"
                 Margin="24,0,0,0">
 
-                <Border
-                    Width="42"
-                    Height="42"
-                    CornerRadius="8"
-                    Background="{StaticResource RojoRefaccionaria}">
+                <!-- LOGO HEXÁGONO + PISTÓN -->
+                <Grid
+                    Width="46"
+                    Height="46">
 
-                    <TextBlock
-                        Text="⚙"
-                        FontSize="25"
-                        Foreground="White"
+                    <!-- Hexágono -->
+                    <Polygon
+                        Fill="#242424"
+                        Points="23,1 43,12 43,34 23,45 3,34 3,12"/>
+
+                    <!-- Pistón amarillo -->
+                    <Grid
+                        Width="22"
+                        Height="28"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center">
 
-                </Border>
+                        <!-- Cabeza -->
+                        <Rectangle
+                            Width="18"
+                            Height="6"
+                            RadiusX="1"
+                            RadiusY="1"
+                            Fill="{StaticResource AmarilloRefaccionaria}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,3,0,0"/>
 
+                        <!-- Ranura -->
+                        <Rectangle
+                            Width="14"
+                            Height="3"
+                            Fill="{StaticResource AmarilloRefaccionaria}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,11,0,0"/>
+
+                        <!-- Biela -->
+                        <Rectangle
+                            Width="5"
+                            Height="10"
+                            Fill="{StaticResource AmarilloRefaccionaria}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,14,0,0"/>
+
+                        <!-- Base circular -->
+                        <Ellipse
+                            Width="9"
+                            Height="9"
+                            Fill="{StaticResource AmarilloRefaccionaria}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"/>
+
+                        <!-- Agujero de la biela -->
+                        <Ellipse
+                            Width="3"
+                            Height="3"
+                            Fill="#242424"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,0,3"/>
+
+                    </Grid>
+
+                </Grid>
+
+                <!-- NOMBRE -->
                 <StackPanel
                     Margin="12,0,0,0"
                     VerticalAlignment="Center">
@@ -525,6 +577,8 @@
 
                             <RowDefinition Height="Auto"/>
 
+                            <RowDefinition Height="Auto"/>
+
                             <RowDefinition Height="*"/>
 
                         </Grid.RowDefinitions>
@@ -807,12 +861,12 @@
 
                         <Border
                             x:Name="PanelFiltros"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Visibility="Collapsed"
                             Background="White"
                             CornerRadius="7"
                             Padding="18"
-                            Margin="0,60,0,18"
+                            Margin="0,0,0,18"
                             BorderBrush="#D5D5D5"
                             BorderThickness="1">
 
@@ -884,27 +938,65 @@
                                 <GridView
                                     x:Name="LstTipos"
                                     SelectionMode="Single"
-                                    SelectionChanged="Filtro_Changed">
+                                    SelectionChanged="Filtro_Changed"
+                                    HorizontalAlignment="Stretch"
+                                    ScrollViewer.HorizontalScrollMode="Disabled"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
+                                    <!-- DISTRIBUCIÓN DE CATEGORÍAS -->
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <ItemsWrapGrid
+                                                Orientation="Horizontal"
+                                                ItemWidth="160"
+                                                ItemHeight="48"/>
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+
+                                    <!-- ESTILO DE CADA ELEMENTO -->
+                                    <GridView.ItemContainerStyle>
+                                        <Style TargetType="GridViewItem">
+                                            <Setter Property="Padding"
+                                                    Value="2"/>
+                                            <Setter Property="Margin"
+                                                    Value="0"/>
+                                            <Setter Property="MinWidth"
+                                                    Value="0"/>
+                                            <Setter Property="HorizontalContentAlignment"
+                                                    Value="Stretch"/>
+                                            <Setter Property="Background"
+                                                    Value="Transparent"/>
+                                            <Setter Property="BorderBrush"
+                                                    Value="Transparent"/>
+                                            <Setter Property="BorderThickness"
+                                                    Value="0"/>
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+
+                                    <!-- DISEÑO DE LAS CATEGORÍAS -->
                                     <GridView.ItemTemplate>
-
-                                        <DataTemplate
-                                            x:DataType="x:String">
+                                        <DataTemplate x:DataType="x:String">
 
                                             <Border
-                                                Background="#F3F3F3"
-                                                CornerRadius="15"
-                                                Padding="14,7"
-                                                Margin="0,0,7,0">
+                                                Background="White"
+                                                BorderBrush="#D5D5D5"
+                                                BorderThickness="1"
+                                                CornerRadius="7"
+                                                Padding="12,8"
+                                                Margin="3">
 
                                                 <TextBlock
                                                     Text="{x:Bind}"
-                                                    FontSize="12"/>
+                                                    FontSize="12"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#292929"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="NoWrap"
+                                                    TextTrimming="None"/>
 
                                             </Border>
 
                                         </DataTemplate>
-
                                     </GridView.ItemTemplate>
 
                                 </GridView>
@@ -920,7 +1012,7 @@
 
                         <GridView
                             x:Name="ListaTarjetas"
-                            Grid.Row="3"
+                            Grid.Row="4"
                             SelectionMode="None"
                             IsItemClickEnabled="False">
 
@@ -930,7 +1022,7 @@
 
                                     <ItemsWrapGrid
                                         Orientation="Horizontal"
-                                        MaximumRowsOrColumns="4"/>
+                                        MaximumRowsOrColumns="5"/>
 
                                 </ItemsPanelTemplate>
 
@@ -1095,7 +1187,7 @@
 
                         <StackPanel
                             x:Name="PanelSinResultados"
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Visibility="Collapsed"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">

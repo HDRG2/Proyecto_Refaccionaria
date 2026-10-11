@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "Nombre": "Aceites y lubricantes"
+    "Nombre": "Aceites"
   },
   {
     "Id": 2,
@@ -54,5 +54,9 @@
   {
     "Id": 14,
     "Nombre": "Accesorios"
+  },
+  {
+    "Id":15,
+    "Nombre": "Lubricantes"  
   }
 ]

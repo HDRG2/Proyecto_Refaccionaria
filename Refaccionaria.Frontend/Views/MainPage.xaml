@@ -25,8 +25,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ============ FILA 0: BARRA SUPERIOR ============ -->
-
+        <!-- BARRA SUPERIOR -->
         <Grid Grid.Row="0"
               Background="#262626"
               Padding="24,0"
@@ -47,7 +46,6 @@
                         Width="28"
                         Height="28"
                         CornerRadius="4">
-
                     <TextBlock Text="&#128736;"
                                FontSize="14"
                                HorizontalAlignment="Center"
@@ -110,12 +108,10 @@
 
                 <TextBlock VerticalAlignment="Center"
                            Foreground="#DDDDDD">
-
                     <Run Text="{x:Bind _nombreUsuario}"
                          FontWeight="Bold"
                          Foreground="White"/>
                     <Run Text=", Administrador"/>
-
                     <Run Text=", Mostrador"/>
                 </TextBlock>
 
@@ -133,8 +129,7 @@
                 VerticalAlignment="Bottom"
                 Background="#FFC20E"/>
 
-        <!-- ============ FILA 1: BANNER + BUSCADOR ============ -->
-
+        <!-- BANNER Y BUSCADOR -->
         <Grid Grid.Row="1"
               Background="#171717"
               Height="200">
@@ -177,7 +172,6 @@
                     </TextBlock>
 
                     <Grid Margin="0,10,0,0">
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -204,37 +198,31 @@
             </Border>
         </Grid>
 
-        <!-- ============ FILA 2: SIDEBAR + CATÁLOGO ============ -->
-
+        <!-- SIDEBAR Y CATÁLOGO -->
         <ScrollViewer Grid.Row="2"
                       Background="#E8E6E1">
 
-            <Grid Margin="0,0,0,0">
-
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="312"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- ===== SIDEBAR (oscuro) ===== -->
-
+                <!-- SIDEBAR -->
                 <Border Grid.Column="0"
                         Background="#1B1B1B">
 
                     <StackPanel Spacing="16"
                                 Padding="24,26,24,40">
 
-                        <!-- Bloque: filtro por auto -->
-
+                        <!-- FILTRO POR AUTO -->
                         <Border BorderBrush="#FFC20E"
                                 BorderThickness="2"
                                 Background="#262626">
 
                             <StackPanel>
-
                                 <Border Background="#FFC20E"
                                         Padding="14,11">
-
                                     <TextBlock Text="¿QUÉ AUTO TRAE EL CLIENTE?"
                                                Foreground="#262626"
                                                FontWeight="Bold"
@@ -250,7 +238,6 @@
                                                TextWrapping="Wrap"/>
 
                                     <StackPanel Spacing="4">
-
                                         <TextBlock Text="Marca"
                                                    FontWeight="Bold"
                                                    Foreground="#FFC20E"
@@ -263,7 +250,6 @@
                                     </StackPanel>
 
                                     <StackPanel Spacing="4">
-
                                         <TextBlock Text="Modelo"
                                                    FontWeight="Bold"
                                                    Foreground="#FFC20E"
@@ -288,17 +274,14 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Bloque: tipo de pieza (chips) -->
-
+                        <!-- TIPO DE PIEZA -->
                         <Border BorderBrush="#FFC20E"
                                 BorderThickness="2"
                                 Background="#262626">
 
                             <StackPanel>
-
                                 <Border Background="#FFC20E"
                                         Padding="14,11">
-
                                     <TextBlock Text="TIPO DE PIEZA"
                                                Foreground="#262626"
                                                FontWeight="Bold"
@@ -315,9 +298,7 @@
                                     </ItemsControl.ItemsPanel>
 
                                     <ItemsControl.ItemTemplate>
-
                                         <DataTemplate x:DataType="x:String">
-
                                             <Button Content="{x:Bind}"
                                                     Margin="0,0,6,6"
                                                     BorderBrush="#FFC20E"
@@ -335,17 +316,14 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Bloque: alertas de resurtido -->
-
+                        <!-- ALERTAS DE RESURTIDO -->
                         <Border BorderBrush="#FFC20E"
                                 BorderThickness="2"
                                 Background="#262626">
 
                             <StackPanel>
-
                                 <Border Background="#B3261E"
                                         Padding="14,11">
-
                                     <TextBlock Text="HAY QUE RESURTIR"
                                                Foreground="White"
                                                FontWeight="Bold"
@@ -356,7 +334,6 @@
                                               ItemsSource="{x:Bind ViewModel.Alertas, Mode=OneWay}">
 
                                     <ItemsControl.ItemTemplate>
-
                                         <DataTemplate x:DataType="models:Refaccion">
 
                                             <Button HorizontalAlignment="Stretch"
@@ -368,7 +345,6 @@
                                                     CommandParameter="{x:Bind}">
 
                                                 <Grid>
-
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
@@ -406,17 +382,14 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- Bloque: estadísticas -->
-
+                        <!-- ESTADÍSTICAS -->
                         <Border BorderBrush="#FFC20E"
                                 BorderThickness="2"
                                 Background="#262626">
 
                             <StackPanel>
-
                                 <Border Background="#FFC20E"
                                         Padding="14,11">
-
                                     <TextBlock Text="CÓMO VA EL ALMACÉN"
                                                Foreground="#262626"
                                                FontWeight="Bold"
@@ -491,20 +464,17 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ===== CATÁLOGO (claro, con más color) ===== -->
-
+                <!-- CATÁLOGO DE REFACCIONES -->
                 <StackPanel Grid.Column="1"
                             Margin="32,26,32,40">
 
                     <Grid Margin="0,0,0,16">
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
-
                             <TextBlock Text="Piezas en catálogo"
                                        FontSize="26"
                                        FontWeight="ExtraBold"
@@ -524,15 +494,19 @@
                                   VerticalAlignment="Bottom">
 
                             <ComboBoxItem Content="Nombre (A-Z)"
-                                    Tag="NombreAsc"/>
+                                          Tag="NombreAsc"/>
+
                             <ComboBoxItem Content="Nombre (Z-A)"
-                                    Tag="NombreDesc"/>
+                                          Tag="NombreDesc"/>
+
                             <ComboBoxItem Content="Precio: Menor a Mayor"
-                                    Tag="PrecioAsc"/>
+                                          Tag="PrecioAsc"/>
+
                             <ComboBoxItem Content="Precio: Mayor a Menor"
-                                    Tag="PrecioDesc"/>
+                                          Tag="PrecioDesc"/>
+
                             <ComboBoxItem Content="Stock disponible"
-                                    Tag="Stock"/>
+                                          Tag="Stock"/>
                         </ComboBox>
                     </Grid>
 
@@ -545,7 +519,6 @@
                         </ItemsControl.ItemsPanel>
 
                         <ItemsControl.ItemTemplate>
-
                             <DataTemplate x:DataType="models:Refaccion">
 
                                 <Grid Width="256"
@@ -565,7 +538,6 @@
                                             Background="#FFFBF0">
 
                                         <StackPanel>
-
                                             <Grid Background="#262626"
                                                   Padding="13,9">
 
@@ -618,12 +590,14 @@
 
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate x:DataType="x:String">
+
                                                             <Border Background="#FFF4CC"
                                                                     BorderBrush="#FFC20E"
                                                                     BorderThickness="1"
                                                                     Margin="0,0,4,4"
                                                                     Padding="6,2"
                                                                     CornerRadius="2">
+
                                                                 <TextBlock Text="{x:Bind}"
                                                                            FontSize="11"
                                                                            Foreground="#262626"/>
@@ -640,10 +614,12 @@
 
                                                     <StackPanel Grid.Column="0"
                                                                 Orientation="Horizontal">
+
                                                         <TextBlock Text="$"
                                                                    FontWeight="ExtraBold"
                                                                    FontSize="18"
                                                                    Foreground="#262626"/>
+
                                                         <TextBlock Text="{x:Bind Precio}"
                                                                    FontWeight="ExtraBold"
                                                                    FontSize="18"
@@ -656,9 +632,11 @@
                                                             BorderThickness="1"
                                                             Padding="8,3"
                                                             CornerRadius="4">
+
                                                         <TextBlock FontSize="12"
                                                                    FontWeight="Bold"
                                                                    Foreground="White">
+
                                                             <Run Text="{x:Bind Stock}"/>
                                                             <Run Text=" disp."/>
                                                         </TextBlock>
@@ -674,6 +652,122 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+
+        <!-- ========================================= -->
+        <!--       ASISTENTE IA FLOTANTE              -->
+        <!-- ========================================= -->
+
+        <StackPanel Grid.Row="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,24,24"
+                    Spacing="12">
+
+            <!-- VENTANA DEL CHATBOT -->
+            <Border x:Name="PanelChatbot"
+                    Width="370"
+                    Height="440"
+                    Background="White"
+                    BorderBrush="#262626"
+                    BorderThickness="2"
+                    CornerRadius="12"
+                    Visibility="Collapsed">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ENCABEZADO -->
+                    <Grid Grid.Row="0"
+                          Background="#262626"
+                          Padding="16,12">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Spacing="3">
+
+                            <TextBlock Text="ASISTENTE IA"
+                                       FontWeight="Bold"
+                                       FontSize="17"
+                                       Foreground="#FFC20E"/>
+
+                            <TextBlock Text="EL PISTÓN"
+                                       FontSize="12"
+                                       Foreground="White"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="1"
+                                Content="✕"
+                                Click="CerrarChatbot_Click"
+                                Background="Transparent"
+                                Foreground="White"
+                                BorderThickness="0"/>
+                    </Grid>
+
+                    <!-- MENSAJES -->
+                    <ScrollViewer Grid.Row="1"
+                                  x:Name="ScrollChatbot"
+                                  Padding="14"
+                                  VerticalScrollBarVisibility="Auto">
+
+                        <StackPanel x:Name="PanelMensajes"
+                                    Spacing="10">
+
+                            <TextBlock Text="¡Hola! Soy el asistente de El Pistón. ¿En qué puedo ayudarte?"
+                                       TextWrapping="Wrap"
+                                       Foreground="#262626"
+                                       FontSize="14"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- CAJA DE TEXTO -->
+                    <Grid Grid.Row="2"
+                          Padding="10"
+                          ColumnSpacing="8">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="TxtMensajeChatbot"
+                                 Grid.Column="0"
+                                 PlaceholderText="Escribe tu pregunta..."
+                                 AcceptsReturn="False"/>
+
+                        <Button Grid.Column="1"
+                                Content="Enviar"
+                                Click="EnviarChatbot_Click"
+                                Background="#FFC20E"
+                                Foreground="#262626"
+                                FontWeight="Bold"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- BOTÓN CIRCULAR -->
+            <Button x:Name="BtnAbrirChatbot"
+                    Width="60"
+                    Height="60"
+                    CornerRadius="30"
+                    Background="#FFC20E"
+                    Foreground="#262626"
+                    BorderBrush="#262626"
+                    BorderThickness="2"
+                    HorizontalAlignment="Right"
+                    Click="AbrirChatbot_Click">
+
+                <FontIcon Glyph="&#xE8F2;"
+                          FontFamily="Segoe MDL2 Assets"
+                          FontSize="27"/>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>
 

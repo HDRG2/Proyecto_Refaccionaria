@@ -34,7 +34,7 @@
                 <Border
                     Width="290"
                     MinHeight="385"
-                    Margin="0,0,18,18"
+                    Margin="20,0,20,16"
                     Background="White"
                     BorderBrush="#E0E0E0"
                     BorderThickness="1"
@@ -54,7 +54,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="62"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="62"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -165,6 +165,7 @@
 
                             <Grid.ColumnDefinitions>
 
+
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
 
@@ -224,12 +225,22 @@
 
                             <StackPanel
                                 Orientation="Horizontal"
-                                HorizontalAlignment="Center">
+                                HorizontalAlignment="Center"
+                                Spacing="9">
 
-                                <TextBlock
-                                    Text="&#x1F6D2;"
-                                    FontSize="17"
-                                    Margin="0,0,9,0"/>
+                                <Viewbox
+                                    Width="20"
+                                    Height="20">
+
+                                    <Path
+                                        Data="M2 3 H5 L7.5 16 H19 L22 7 H6 M8 11 H20 M12 7 V16 M17 7 V16 M8 20 A1.5 1.5 0 1 1 11 20 A1.5 1.5 0 1 1 8 20 M17 20 A1.5 1.5 0 1 1 20 20 A1.5 1.5 0 1 1 17 20"
+                                        Stroke="White"
+                                        StrokeThickness="1.8"
+                                        StrokeLineJoin="Round"
+                                        Fill="Transparent"
+                                        Stretch="Uniform"/>
+
+                                </Viewbox>
 
                                 <TextBlock
                                     Text="Agregar"
@@ -314,7 +325,9 @@
                                 Grid.Column="1"
                                 Content="✕"
                                 Style="{StaticResource BotonQuitar}"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
+                                Margin="0,-6,-4,0"
                                 ToolTipService.ToolTip="Quitar del ticket"
                                 Click="Quitar_Click"/>
 
@@ -471,12 +484,21 @@
 
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock
+                        <Viewbox
                             Grid.Column="0"
-                            Text="&#x1F6D2;"
-                            FontSize="22"
-                            Foreground="White"
-                            VerticalAlignment="Center"/>
+                            Width="26"
+                            Height="26"
+                            VerticalAlignment="Center">
+
+                            <Path
+                                Data="M2 3 H5 L7.5 16 H19 L22 7 H6 M8 11 H20 M12 7 V16 M17 7 V16 M8 20 A1.5 1.5 0 1 1 11 20 A1.5 1.5 0 1 1 8 20 M17 20 A1.5 1.5 0 1 1 20 20 A1.5 1.5 0 1 1 17 20"
+                                Stroke="White"
+                                StrokeThickness="1.8"
+                                StrokeLineJoin="Round"
+                                Fill="Transparent"
+                                Stretch="Uniform"/>
+
+                        </Viewbox>
 
                         <StackPanel
                             Grid.Column="1"
@@ -539,12 +561,21 @@
                             Height="80"
                             HorizontalAlignment="Center">
 
-                            <TextBlock
-                                Text="&#x1F6D2;"
-                                FontSize="32"
+                            <Viewbox
+                                Width="36"
+                                Height="36"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="{StaticResource GrisTexto}"/>
+                                VerticalAlignment="Center">
+
+                                <Path
+                                    Data="M2 3 H5 L7.5 16 H19 L22 7 H6 M8 11 H20 M12 7 V16 M17 7 V16 M8 20 A1.5 1.5 0 1 1 11 20 A1.5 1.5 0 1 1 8 20 M17 20 A1.5 1.5 0 1 1 20 20 A1.5 1.5 0 1 1 17 20"
+                                    Stroke="White"
+                                    StrokeThickness="1.8"
+                                    StrokeLineJoin="Round"
+                                    Fill="Transparent"
+                                    Stretch="Uniform"/>
+
+                            </Viewbox>
 
                         </Border>
 
@@ -701,21 +732,16 @@
 
                     <!-- LOGO -->
 
-                    <Border
-                        Width="48"
-                        Height="48"
-                        Background="{StaticResource Rojo}"
-                        CornerRadius="7">
-
-                        <TextBlock
-                            Text="⚙"
-                            FontSize="27"
-                            Foreground="White"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-
-                    </Border>
-
+                    <Viewbox Width="42"
+                             Height="42">
+                        <Path
+                            Data="M12 2 L14 2.5 L14.7 4.5 L16.7 5.4 L18.6 4.5 L20.5 6.4 L19.6 8.3 L20.5 10.3 L22.5 11 L22.5 13 L20.5 13.7 L19.6 15.7 L20.5 17.6 L18.6 19.5 L16.7 18.6 L14.7 19.5 L14 21.5 L10 21.5 L9.3 19.5 L7.3 18.6 L5.4 19.5 L3.5 17.6 L4.4 15.7 L3.5 13.7 L1.5 13 L1.5 11 L3.5 10.3 L4.4 8.3 L3.5 6.4 L5.4 4.5 L7.3 5.4 L9.3 4.5 L10 2.5 Z M15.5 12 A3.5 3.5 0 1 1 8.5 12 A3.5 3.5 0 1 1 15.5 12"
+                            Stroke="White"
+                            StrokeThickness="1.8"
+                            StrokeLineJoin="Round"
+                            Fill="Transparent"
+                            Stretch="Uniform"/>
+                    </Viewbox>
 
                     <StackPanel
                         Margin="14,0,0,0"
@@ -803,13 +829,20 @@
                             Height="42">
 
                             <!-- CARRITO -->
-                            <TextBlock
-                                Text="🛒"
-                                FontSize="25"
-                                Foreground="White"
+                            <Viewbox
+                                Width="30"
+                                Height="30"
                                 HorizontalAlignment="Left"
-                                VerticalAlignment="Bottom"/>
+                                VerticalAlignment="Bottom">
 
+                                <Path
+                                    Data="M2 3 H5 L7.5 16 H19 L22 7 H6 M8 11 H20 M12 7 V16 M17 7 V16 M8 20 A1.5 1.5 0 1 1 11 20 A1.5 1.5 0 1 1 8 20 M17 20 A1.5 1.5 0 1 1 20 20 A1.5 1.5 0 1 1 17 20"
+                                    Stroke="White"
+                                    StrokeThickness="1.8"
+                                    StrokeLineJoin="Round"
+                                    Fill="Transparent"
+                                    Stretch="Uniform"/>
+                            </Viewbox>
                             <!-- CONTADOR -->
                             <Border
                                 Width="22"
@@ -971,70 +1004,193 @@
 
 
                     <!-- CATEGORÍAS -->
+                    <Grid Margin="0,16,0,-6"
+                          ColumnSpacing="8"
+                          RowSpacing="6">
 
-                    <VariableSizedWrapGrid
-                        Orientation="Horizontal"
-                        Margin="0,16,0,-6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- PRIMERA FILA -->
 
                         <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="0"
                             x:Name="RbTodos"
                             Content="Todos"
                             Tag="Todos"
                             GroupName="Tipo"
                             Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
                             IsChecked="True"
                             Checked="Tipo_Checked"/>
 
                         <RadioButton
-                            Content="Motor"
-                            Tag="Motor"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Content="Aceites"
+                            Tag="Aceites"
                             GroupName="Tipo"
                             Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
                             Checked="Tipo_Checked"/>
 
                         <RadioButton
-                            Content="Frenos"
-                            Tag="Frenos"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Content="Suspensión"
-                            Tag="Suspensión"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Content="Eléctrico"
-                            Tag="Eléctrico"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="2"
                             Content="Filtros"
                             Tag="Filtros"
                             GroupName="Tipo"
                             Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
                             Checked="Tipo_Checked"/>
 
                         <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Content="Frenos"
+                            Tag="Frenos"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            Content="Suspensión"
+                            Tag="Suspensión"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="5"
+                            Content="Dirección"
+                            Tag="Dirección"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="6"
+                            Content="Motor"
+                            Tag="Motor"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="0"
+                            Grid.Column="7"
                             Content="Transmisión"
                             Tag="Transmisión"
                             GroupName="Tipo"
                             Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <!-- SEGUNDA FILA -->
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Content="Sistema eléctrico"
+                            Tag="Sistema eléctrico"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
                             Checked="Tipo_Checked"/>
 
                         <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="1"
                             Content="Enfriamiento"
                             Tag="Enfriamiento"
                             GroupName="Tipo"
                             Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
                             Checked="Tipo_Checked"/>
 
-                    </VariableSizedWrapGrid>
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Content="Encendido"
+                            Tag="Encendido"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Content="Escape"
+                            Tag="Escape"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Content="Iluminación"
+                            Tag="Iluminación"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            Content="Carrocería"
+                            Tag="Carrocería"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            Content="Accesorios"
+                            Tag="Accesorios"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                        <RadioButton
+                            Grid.Row="1"
+                            Grid.Column="7"
+                            Content="Lubricantes"
+                            Tag="Lubricantes"
+                            GroupName="Tipo"
+                            Style="{StaticResource Pildora}"
+                            HorizontalAlignment="Stretch"
+                            Checked="Tipo_Checked"/>
+
+                    </Grid>
 
                 </StackPanel>
 
@@ -1060,14 +1216,16 @@
 
                         <ItemsControl
                             x:Name="ListaRefacciones"
-                            ItemTemplate="{StaticResource TarjetaProducto}">
+                            ItemTemplate="{StaticResource TarjetaProducto}"
+                            HorizontalAlignment="Center">
 
                             <ItemsControl.ItemsPanel>
 
                                 <ItemsPanelTemplate>
 
                                     <ItemsWrapGrid
-                                        Orientation="Horizontal"/>
+                                        Orientation="Horizontal"
+                                        MaximumRowsOrColumns="5"/>
 
                                 </ItemsPanelTemplate>
 
@@ -1299,7 +1457,7 @@
 
                     <!-- =========================================
                          VENTA EXITOSA
-                         ========================================= -->
+                    ========================================= -->
 
                     <StackPanel
                         x:Name="PanelExito"
@@ -1413,11 +1571,247 @@
                 </Grid>
 
             </Border>
-
         </Grid>
 
-    </Grid>
+        <!-- =====================================================
+             ASISTENTE IA
+             ===================================================== -->
+        <StackPanel Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,25,25"
+                    Spacing="12"
+                    Canvas.ZIndex="100">
 
+            <!-- VENTANA DEL CHAT -->
+            <Border x:Name="PanelChatbot"
+                    Width="380"
+                    Height="460"
+                    Background="#FFFFFF"
+                    BorderBrush="#D90429"
+                    BorderThickness="2"
+                    CornerRadius="14"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Right">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ENCABEZADO -->
+                    <Border Grid.Row="0"
+                            Background="#181818"
+                            CornerRadius="12,12,0,0"
+                            Padding="16,14">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Asistentencia virtual"
+                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="18"/>
+
+                                <TextBlock Text="EL PISTÓN · Asistente de ventas"
+                                           Foreground="#FFB7B7"
+                                           FontSize="12"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="1"
+                                    Content="✕"
+                                    Background="Transparent"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Click="CerrarChatbot_Click"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- CONVERSACIÓN -->
+                    <ScrollViewer x:Name="ScrollChatbot"
+                                  Grid.Row="1"
+                                  Background="#F5F5F5"
+                                  Padding="14"
+                                  VerticalScrollBarVisibility="Auto">
+
+                        <StackPanel x:Name="PanelMensajes"
+                                    Spacing="12">
+
+                            <Border Background="#E5E5E5"
+                                    CornerRadius="10"
+                                    Padding="12"
+                                    HorizontalAlignment="Left"
+                                    MaxWidth="310">
+
+                                <TextBlock
+                                    Text="¡Hola! Soy el asistente de El Pistón. ¿En qué puedo ayudarte?"
+                                    Foreground="#202020"
+                                    TextWrapping="Wrap"
+                                    FontSize="14"/>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- ÁREA PARA ESCRIBIR -->
+                    <Grid Grid.Row="2"
+                          Background="White"
+                          Padding="12"
+                          ColumnSpacing="8">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="TxtMensajeChatbot"
+                                 Grid.Column="0"
+                                 Height="42"
+                                 Background="White"
+                                 Foreground="Black"
+                                 BorderBrush="Black"
+                                 BorderThickness="1"
+                                 CornerRadius="0"
+                                 PlaceholderText="Escribe tu pregunta..."
+                                 PlaceholderForeground="#777777"
+                                 VerticalContentAlignment="Center"
+                                 AcceptsReturn="False"
+                                 KeyDown="TxtMensajeChatbot_KeyDown">
+
+                            <TextBox.Resources>
+                                <SolidColorBrush x:Key="TextControlBackground"
+                                                 Color="White"/>
+                                <SolidColorBrush x:Key="TextControlBackgroundPointerOver"
+                                                 Color="White"/>
+                                <SolidColorBrush x:Key="TextControlBackgroundFocused"
+                                                 Color="White"/>
+
+                                <SolidColorBrush x:Key="TextControlForeground"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="TextControlForegroundPointerOver"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="TextControlForegroundFocused"
+                                                 Color="Black"/>
+
+                                <SolidColorBrush x:Key="TextControlBorderBrush"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="TextControlBorderBrushPointerOver"
+                                                 Color="Black"/>
+                                <SolidColorBrush x:Key="TextControlBorderBrushFocused"
+                                                 Color="Black"/>
+                            </TextBox.Resources>
+                        </TextBox>
+
+                        <Button x:Name="BtnEnviarChatbot"
+                                Grid.Column="1"
+                                Content="Enviar"
+                                Click="EnviarChatbot_Click"
+                                Background="#D90429"
+                                Foreground="White"
+                                BorderBrush="#D90429"
+                                BorderThickness="0"
+                                FontWeight="Bold"
+                                Padding="14,8">
+
+                            <Button.Resources>
+
+                                <!-- Color normal -->
+                                <SolidColorBrush
+                                    x:Key="ButtonBackground"
+                                    Color="#D90429"/>
+
+                                <!-- Color al pasar el mouse -->
+                                <SolidColorBrush
+                                    x:Key="ButtonBackgroundPointerOver"
+                                    Color="#D90429"/>
+
+                                <!-- Color al presionar -->
+                                <SolidColorBrush
+                                    x:Key="ButtonBackgroundPressed"
+                                    Color="#D90429"/>
+
+                                <!-- Texto blanco al pasar el mouse -->
+                                <SolidColorBrush
+                                    x:Key="ButtonForegroundPointerOver"
+                                    Color="White"/>
+
+                                <!-- Texto blanco al presionar -->
+                                <SolidColorBrush
+                                    x:Key="ButtonForegroundPressed"
+                                    Color="White"/>
+
+                                <!-- Borde rojo al pasar el mouse -->
+                                <SolidColorBrush
+                                    x:Key="ButtonBorderBrushPointerOver"
+                                    Color="#D90429"/>
+
+                                <!-- Borde rojo al presionar -->
+                                <SolidColorBrush
+                                    x:Key="ButtonBorderBrushPressed"
+                                    Color="#D90429"/>
+
+                                <SolidColorBrush
+                                    x:Key="ButtonBackgroundDisabled"
+                                    Color="#D90429"/>
+
+                                <SolidColorBrush
+                                    x:Key="ButtonForegroundDisabled"
+                                    Color="White"/>
+
+                            </Button.Resources>
+
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- BOTÓN CIRCULAR FLOTANTE -->
+            <Button x:Name="BtnAbrirChatbot"
+                    Width="64"
+                    Height="64"
+                    CornerRadius="32"
+                    Background="#D90429"
+                    Foreground="White"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                    HorizontalAlignment="Right"
+                    Click="AbrirChatbot_Click"
+                    ToolTipService.ToolTip="Abrir asistente IA">
+
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver"
+                                     Color="#D90429"/>
+
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed"
+                                     Color="#D90429"/>
+
+                    <SolidColorBrush x:Key="ButtonForegroundPointerOver"
+                                     Color="White"/>
+
+                    <SolidColorBrush x:Key="ButtonForegroundPressed"
+                                     Color="White"/>
+
+                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver"
+                                     Color="White"/>
+
+                    <SolidColorBrush x:Key="ButtonBorderBrushPressed"
+                                     Color="White"/>
+                </Button.Resources>
+
+                <FontIcon Glyph="&#xE8F2;"
+                          FontFamily="Segoe MDL2 Assets"
+                          FontSize="29"/>
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
 </Page>
 
 

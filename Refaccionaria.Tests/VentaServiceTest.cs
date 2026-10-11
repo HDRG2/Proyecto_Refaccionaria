@@ -1106,7 +1106,7 @@ public class VentaServiceTests
                 );
 
 
-            // Ya no debe existir.
+            // Ya no deberia existir.
             Assert.False(
                 Directory.Exists(carpetaRespaldo)
             );
