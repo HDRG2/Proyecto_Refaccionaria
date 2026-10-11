@@ -61,5 +61,40 @@ namespace Refaccionaria.Frontend.Views
             var dialog = new PiezaDialog { XamlRoot = this.XamlRoot, ViewModel = ViewModel };
             await dialog.ShowAsync();
         }
+
+        private void AbrirChatbot_Click(object sender, RoutedEventArgs e)
+        {
+            PanelChatbot.Visibility =
+                PanelChatbot.Visibility == Visibility.Visible
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+        }
+
+        private void CerrarChatbot_Click(object sender, RoutedEventArgs e)
+        {
+            PanelChatbot.Visibility = Visibility.Collapsed;
+        }
+
+        private void EnviarChatbot_Click(object sender, RoutedEventArgs e)
+        {
+            string mensaje = TxtMensajeChatbot.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(mensaje))
+                return;
+
+            PanelMensajes.Children.Add(new TextBlock
+            {
+                Text = "Tú: " + mensaje,
+                TextWrapping = TextWrapping.Wrap
+            });
+
+            TxtMensajeChatbot.Text = string.Empty;
+
+            ScrollChatbot.UpdateLayout();
+            ScrollChatbot.ChangeView(
+                null,
+                ScrollChatbot.ScrollableHeight,
+                null);
+        }
     }
 }

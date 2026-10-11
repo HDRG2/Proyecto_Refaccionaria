@@ -73,6 +73,26 @@ namespace Refaccionaria.Frontend
         }
 
 
+        private void LayoutLogin_SizeChanged(
+            object sender,
+            SizeChangedEventArgs e)
+        {
+            bool ventanaEstrecha = e.NewSize.Width < 900;
+
+            PanelLogo.Visibility = ventanaEstrecha
+                ? Visibility.Collapsed
+                : Visibility.Visible;
+
+            ColumnaLogo.Width = ventanaEstrecha
+                ? new GridLength(0)
+                : new GridLength(1.15, GridUnitType.Star);
+
+            ColumnaFormulario.Width =
+                new GridLength(1, GridUnitType.Star);
+        }
+
+
+
         // =========================================================
         // SELECCIONAR MOSTRADOR
         // =========================================================
