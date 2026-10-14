@@ -36,4 +36,10 @@
     <ProjectReference Include="..\Refaccionaria.Backend\Refaccionaria.Backend.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Assets\LogoPiston.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
