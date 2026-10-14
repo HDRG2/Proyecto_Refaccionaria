@@ -999,5 +999,201 @@
         }
       }
     ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 19,
+    "Folio": "V-20261013-233935391",
+    "Fecha": "2026-10-13T23:39:35.3947642-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 5046.00,
+    "Cambio": 0,
+    "Total": 5046.00,
+    "Lineas": [
+      {
+        "Subtotal": 4350.00,
+        "Id": 28,
+        "VentaId": 19,
+        "RefaccionId": 5,
+        "Cantidad": 3,
+        "PrecioUnitario": 1450.00,
+        "Refaccion": {
+          "Id": 5,
+          "Codigo": "AMO-005",
+          "Nombre": "Amortiguador Delantero",
+          "MarcaId": 8,
+          "CategoriaId": 4,
+          "Precio": 1450.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            8,
+            9
+          ],
+          "MarcaNombre": "Monroe",
+          "CategoriaNombre": "Suspensi\u00F3n",
+          "AutosDescripciones": [
+            "Toyota Corolla (2014-2019)",
+            "Toyota Yaris (2016-2020)"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "Jos\u00E9 Remires",
+    "Id": 20,
+    "Folio": "V-20261014-001329032",
+    "Fecha": "2026-10-14T00:13:29.0327446-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 2700,
+    "Cambio": 93.48,
+    "Total": 2606.52,
+    "Lineas": [
+      {
+        "Subtotal": 2247.00,
+        "Id": 29,
+        "VentaId": 20,
+        "RefaccionId": 2,
+        "Cantidad": 3,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "Jos\u00E9 Remires",
+    "Id": 21,
+    "Folio": "V-20261014-003022821",
+    "Fecha": "2026-10-14T00:30:22.8248731-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 1800,
+    "Cambio": 62.32,
+    "Total": 1737.68,
+    "Lineas": [
+      {
+        "Subtotal": 1498.00,
+        "Id": 30,
+        "VentaId": 21,
+        "RefaccionId": 2,
+        "Cantidad": 2,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 7,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "Jos\u00E9 Remires",
+    "Id": 22,
+    "Folio": "V-20261014-003540489",
+    "Fecha": "2026-10-14T00:35:40.4898712-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 870,
+    "Cambio": 1.16,
+    "Total": 868.84,
+    "Lineas": [
+      {
+        "Subtotal": 749.00,
+        "Id": 31,
+        "VentaId": 22,
+        "RefaccionId": 2,
+        "Cantidad": 1,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 23,
+    "Folio": "V-20261014-020507131",
+    "Fecha": "2026-10-14T02:05:07.132037-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 1800,
+    "Cambio": 62.32,
+    "Total": 1737.68,
+    "Lineas": [
+      {
+        "Subtotal": 1498.00,
+        "Id": 32,
+        "VentaId": 23,
+        "RefaccionId": 2,
+        "Cantidad": 2,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 5,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
   }
 ]
