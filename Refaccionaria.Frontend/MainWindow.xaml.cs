@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -66,6 +67,50 @@ namespace Refaccionaria.Frontend
                 )
             );
 
+                        // -----------------------------------------------------
+            // LOGO DE LA BARRA SUPERIOR
+            // -----------------------------------------------------
+
+            appWindow.SetIcon(
+                System.IO.Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Assets",
+                    "LogoPiston.ico"
+                )
+            );
+
+            // -----------------------------------------------------
+            // COLORES DE LA BARRA SUPERIOR
+            // -----------------------------------------------------
+
+            var barra = appWindow.TitleBar;
+
+            var grisBarra =
+                Microsoft.UI.ColorHelper.FromArgb(255, 0x2B, 0x2B, 0x2B);
+
+            var grisBoton =
+                Microsoft.UI.ColorHelper.FromArgb(255, 0x3D, 0x3D, 0x3D);
+
+            var amarillo =
+                Microsoft.UI.ColorHelper.FromArgb(255, 0xFF, 0xC1, 0x07);
+
+            var blanco =
+                Microsoft.UI.ColorHelper.FromArgb(255, 0xFF, 0xFF, 0xFF);
+
+            // Fondo gris y letras amarillas
+            barra.BackgroundColor = grisBarra;
+            barra.InactiveBackgroundColor = grisBarra;
+            barra.ForegroundColor = amarillo;
+            barra.InactiveForegroundColor = amarillo;
+
+            // Botones de minimizar, maximizar y cerrar
+            barra.ButtonBackgroundColor = grisBarra;
+            barra.ButtonInactiveBackgroundColor = grisBarra;
+            barra.ButtonForegroundColor = blanco;
+            barra.ButtonHoverBackgroundColor = grisBoton;
+            barra.ButtonHoverForegroundColor = blanco;
+            barra.ButtonPressedBackgroundColor = grisBoton;
+            barra.ButtonPressedForegroundColor = amarillo;
 
             CampoUsuario.Focus(
                 FocusState.Programmatic
@@ -207,7 +252,30 @@ namespace Refaccionaria.Frontend
                     ? CampoClaveVisible.Text
                     : CampoClave.Password;
         }
+        
+        // =========================================================
+        // ENTRAR CON LA TECLA ENTER
+        // =========================================================
 
+        private void CampoLogin_KeyDown(
+            object sender,
+            KeyRoutedEventArgs e)
+        {
+            if (e.Key != Windows.System.VirtualKey.Enter)
+                return;
+
+            e.Handled = true;
+
+            // Si ya se está validando un inicio de sesión,
+            // no se vuelve a intentar.
+            if (!BotonEntrar.IsEnabled)
+                return;
+
+            BotonEntrar_Click(
+                BotonEntrar,
+                new RoutedEventArgs()
+            );
+        }
 
         // =========================================================
         // INICIAR SESIÓN

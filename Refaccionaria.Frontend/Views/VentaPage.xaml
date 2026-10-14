@@ -904,6 +904,7 @@
 
                             <TextBox
                                 x:Name="TxtBuscar"
+                                MaxLength="30"
                                 Style="{StaticResource CajaBusqueda}"
                                 Height="48"
                                 TextChanged="Buscar_TextChanged"/>
@@ -1382,6 +1383,7 @@
 
                             <TextBox
                                 x:Name="TxtRecibido"
+                                MaxLength="10"
                                 Style="{StaticResource CajaTexto}"
                                 TextChanged="Recibido_TextChanged"/>
 

@@ -659,6 +659,8 @@
                         <TextBox
                             x:Name="CampoUsuario"
                             Style="{StaticResource Campo}"
+                            MaxLength="10"
+                            KeyDown="CampoLogin_KeyDown"
                             Margin="0,0,0,18"/>
 
                         <!-- CONTRASEÑA -->
@@ -666,17 +668,21 @@
                             Text="Contraseña"
                             Style="{StaticResource Etiqueta}"/>
 
-                        <Grid Margin="0,0,0,4">
+                        <Grid Margin="0,0,0,26">
 
                             <PasswordBox
                                 x:Name="CampoClave"
                                 Style="{StaticResource EstiloContrasena}"
                                 PasswordRevealMode="Hidden"
+                                MaxLength="10"
+                                KeyDown="CampoLogin_KeyDown"
                                 Padding="12,10,92,10"/>
 
                             <TextBox
                                 x:Name="CampoClaveVisible"
                                 Style="{StaticResource Campo}"
+                                MaxLength="10"
+                                KeyDown="CampoLogin_KeyDown"
                                 Padding="12,10,92,10"
                                 VerticalAlignment="Center"
                                 Visibility="Collapsed"/>
@@ -691,16 +697,6 @@
                                 Click="BotonVerClave_Click"/>
 
                         </Grid>
-
-                        <!-- RECORDAR USUARIO -->
-                        <CheckBox
-                            x:Name="Recordar"
-                            Content=" Recordar mi usuario en este equipo"
-                            Foreground="{StaticResource Gris}"
-                            FontSize="14.5"
-                            FontFamily="{StaticResource Texto}"
-                            Margin="0,8,0,22"
-                            VerticalContentAlignment="Center"/>
 
                         <!-- BOTÓN ENTRAR -->
                         <Button

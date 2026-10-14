@@ -662,6 +662,22 @@ public sealed partial class PanelAdmin : Page
         decimal iva =
             venta.Total - subtotal;
 
+        decimal totalTicket =
+            venta.Total;
+
+        // Algunas ventas se guardaron sin IVA (el total era
+        // igual al subtotal). En ese caso se calcula el 16%.
+        if (iva <= 0m && subtotal > 0m)
+        {
+            iva =
+                Math.Round(
+                    subtotal * 0.16m,
+                    2);
+
+            totalTicket =
+                subtotal + iva;
+        }
+
         TxtTicketSubtotal.Text =
             subtotal.ToString("C");
 
@@ -669,7 +685,7 @@ public sealed partial class PanelAdmin : Page
             iva.ToString("C");
 
         TxtTicketTotal.Text =
-            venta.Total.ToString("C");
+            totalTicket.ToString("C");
 
 
         // -----------------------------------------------------

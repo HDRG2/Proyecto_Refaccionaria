@@ -144,6 +144,19 @@ public class VentaService
             total += refaccion.Precio * linea.Cantidad;
         }
 
+        // -----------------------------------------------------
+        // 3.1 AGREGAR IVA (16%)
+        // -----------------------------------------------------
+
+        decimal subtotal = total;
+
+        decimal iva =
+            Math.Round(
+                subtotal * 0.16m,
+                2
+            );
+
+        total = subtotal + iva;
 
         // -----------------------------------------------------
         // 4. VALIDAR PAGO

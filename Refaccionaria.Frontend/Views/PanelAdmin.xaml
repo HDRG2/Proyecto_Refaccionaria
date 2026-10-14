@@ -791,6 +791,7 @@
 
                                     <TextBox
                                         x:Name="TxtBuscar"
+                                        MaxLength="30"
                                         Margin="45,0,10,0"
                                         Height="44"
                                         BorderThickness="0"
@@ -1269,6 +1270,7 @@
 
                                 <TextBox
                                     x:Name="TxtBuscarEditar"
+                                    MaxLength="30"
                                     Margin="45,0,10,0"
                                     Height="44"
                                     BorderThickness="0"
@@ -2433,6 +2435,7 @@
 
                             <TextBox
                                 x:Name="TxtFormNombre"
+                                MaxLength="50"
                                 Margin="0,5,0,10"
                                 Height="44"
                                 Background="#333333"
@@ -2474,6 +2477,7 @@
 
                                     <TextBox
                                         x:Name="TxtFormCodigo"
+                                        MaxLength="10"
                                         Margin="0,5,0,10"
                                         Height="44"
                                         Background="#333333"
@@ -2533,6 +2537,7 @@
 
                                     <TextBox
                                         x:Name="TxtFormPrecio"
+                                        MaxLength="10"
                                         Margin="0,5,0,10"
                                         Height="44"
                                         Background="#333333"
@@ -2558,6 +2563,7 @@
 
                                     <TextBox
                                         x:Name="TxtFormStock"
+                                        MaxLength="10"
                                         Margin="0,5,0,10"
                                         Height="44"
                                         Background="#333333"
@@ -2635,6 +2641,7 @@
 
                             <TextBox
                                 x:Name="TxtFormEmpNombre"
+                                MaxLength="40"
                                 Margin="0,5,0,12"
                                 Height="44"
                                 Background="#333333"
@@ -2651,6 +2658,7 @@
 
                             <TextBox
                                 x:Name="TxtFormEmpTelefono"
+                                MaxLength="10"
                                 Margin="0,5,0,12"
                                 Height="44"
                                 Background="#333333"
@@ -2667,6 +2675,7 @@
 
                             <TextBox
                                 x:Name="TxtFormEmpUsuario"
+                                MaxLength="15"
                                 Margin="0,5,0,12"
                                 Height="44"
                                 Background="#333333"
@@ -2687,6 +2696,7 @@
 
                                 <PasswordBox
                                     x:Name="TxtFormEmpPassword"
+                                    MaxLength="10"
                                     Height="44"
                                     Background="#333333"
                                     Foreground="White"
