@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -207,7 +208,30 @@ namespace Refaccionaria.Frontend
                     ? CampoClaveVisible.Text
                     : CampoClave.Password;
         }
+        
+        // =========================================================
+        // ENTRAR CON LA TECLA ENTER
+        // =========================================================
 
+        private void CampoLogin_KeyDown(
+            object sender,
+            KeyRoutedEventArgs e)
+        {
+            if (e.Key != Windows.System.VirtualKey.Enter)
+                return;
+
+            e.Handled = true;
+
+            // Si ya se está validando un inicio de sesión,
+            // no se vuelve a intentar.
+            if (!BotonEntrar.IsEnabled)
+                return;
+
+            BotonEntrar_Click(
+                BotonEntrar,
+                new RoutedEventArgs()
+            );
+        }
 
         // =========================================================
         // INICIAR SESIÓN

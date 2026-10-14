@@ -153,9 +153,9 @@ public class VentaServiceTests
             // =============================================
             // REGISTRAR VENTA
             //
-            // 2 x $150 = $300
+            // 2 x $150 = $300 + IVA 16% ($48) = $348
             // Recibimos $500
-            // Cambio esperado = $200
+            // Cambio esperado = $152
             // =============================================
 
             Venta venta =
@@ -181,7 +181,7 @@ public class VentaServiceTests
             );
 
             Assert.Equal(
-                300m,
+                348m,
                 venta.Total
             );
 
@@ -191,7 +191,7 @@ public class VentaServiceTests
             );
 
             Assert.Equal(
-                200m,
+                152m,
                 venta.Cambio
             );
 
@@ -216,7 +216,7 @@ public class VentaServiceTests
             );
 
             Assert.Equal(
-                300m,
+                348m,
                 ventas[0].Total
             );
 
@@ -773,7 +773,7 @@ public class VentaServiceTests
                     usuario,
                     new[] { linea },
                     "Efectivo",
-                    300m
+                    348m
                 );
 
 
@@ -786,7 +786,7 @@ public class VentaServiceTests
             );
 
             Assert.Equal(
-                300m,
+                348m,
                 venta.Total
             );
 

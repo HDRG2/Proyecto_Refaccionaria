@@ -955,5 +955,49 @@
         }
       }
     ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 18,
+    "Folio": "V-20261013-232925625",
+    "Fecha": "2026-10-13T23:29:25.6341416-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 200,
+    "Cambio": 27.16,
+    "Total": 172.84,
+    "Lineas": [
+      {
+        "Subtotal": 149.00,
+        "Id": 27,
+        "VentaId": 18,
+        "RefaccionId": 4,
+        "Cantidad": 1,
+        "PrecioUnitario": 149.00,
+        "Refaccion": {
+          "Id": 4,
+          "Codigo": "BUJ-003",
+          "Nombre": "Bujia de encendido",
+          "MarcaId": 3,
+          "CategoriaId": 10,
+          "Precio": 149.00,
+          "Stock": 15,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            4,
+            5
+          ],
+          "MarcaNombre": "NGK",
+          "CategoriaNombre": "Encendido",
+          "AutosDescripciones": [
+            "Chevrolet Aveo (2018-2024)",
+            "Chevrolet Spark (2016-2021)"
+          ]
+        }
+      }
+    ]
   }
 ]

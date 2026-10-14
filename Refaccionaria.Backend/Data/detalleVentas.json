@@ -718,5 +718,35 @@
         "Nissan Versa (2012-2019)"
       ]
     }
+  },
+  {
+    "Subtotal": 149.00,
+    "Id": 27,
+    "VentaId": 18,
+    "RefaccionId": 4,
+    "Cantidad": 1,
+    "PrecioUnitario": 149.00,
+    "Refaccion": {
+      "Id": 4,
+      "Codigo": "BUJ-003",
+      "Nombre": "Bujia de encendido",
+      "MarcaId": 3,
+      "CategoriaId": 10,
+      "Precio": 149.00,
+      "Stock": 15,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        4,
+        5
+      ],
+      "MarcaNombre": "NGK",
+      "CategoriaNombre": "Encendido",
+      "AutosDescripciones": [
+        "Chevrolet Aveo (2018-2024)",
+        "Chevrolet Spark (2016-2021)"
+      ]
+    }
   }
 ]

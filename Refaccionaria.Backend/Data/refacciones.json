@@ -66,7 +66,7 @@
     "MarcaId": 3,
     "CategoriaId": 10,
     "Precio": 149.00,
-    "Stock": 15,
+    "Stock": 14,
     "StockBajo": false,
     "Activo": true,
     "EsUniversal": false,
