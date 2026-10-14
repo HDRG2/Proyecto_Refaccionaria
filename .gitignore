@@ -58,3 +58,14 @@ Generated Files/
 
 #Backups
 Refaccionaria.Backend/Backups/
+
+#Entorno vistual de python
+
+.venv-autogen/
+.venv/
+venv/
+
+#Archivos temporales de Python
+
+__pycache__/
+*.pyc
