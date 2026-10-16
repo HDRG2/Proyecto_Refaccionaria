@@ -1,5 +1,95 @@
 import re
 import unicodedata
+from dataclasses import dataclass, field
+
+@dataclass
+class ContextoInventario:
+    
+    #Guarda referencias a productos mediante sus códigos.
+    #No almacena precios ni existencias para evitar
+    #utilizar información desactualizada.
+    
+    codigo_seleccionado: str | None = None
+    codigos_lista: list[str] = field(default_factory=list)
+    
+    #Contexto para recomendaciones de refaccionaria.
+    categoria_consultada: str | None = None
+    marca_vehiculo: str | None = None
+    modelo_vehiculo: str | None = None
+    anio_vehiculo: int | None = None
+
+def crear_contexto_desde_productos(
+    productos: list[dict]
+) -> ContextoInventario:
+    
+    #Construye una lista ordenada de códigos de producto.
+    
+
+    codigos = []
+
+    for producto in productos:
+        codigo = str(producto.get("codigo", "")).strip()
+
+        if codigo and codigo not in codigos:
+            codigos.append(codigo)
+
+    return ContextoInventario(
+        codigo_seleccionado=None,
+        codigos_lista=codigos
+    )
+
+
+def seleccionar_producto_contextual(
+    contexto: ContextoInventario,
+    codigo: str,
+    productos: list[dict]
+) -> bool:
+    
+    #Selecciona un producto únicamente si su código
+    #existe de forma única en el inventario actual.
+    
+
+    coincidencias = [
+        producto
+        for producto in productos
+        if str(producto.get("codigo", "")).strip().casefold()
+        == codigo.strip().casefold()
+    ]
+
+    if len(coincidencias) != 1:
+        return False
+
+    contexto.codigo_seleccionado = str(
+        coincidencias[0]["codigo"]
+    )
+
+    return True
+
+
+def obtener_producto_seleccionado(
+    contexto: ContextoInventario,
+    productos: list[dict]
+) -> dict | None:
+    
+    #Recupera el producto seleccionado utilizando
+    #el inventario actual.
+    
+
+    if contexto.codigo_seleccionado is None:
+        return None
+
+    coincidencias = [
+        producto
+        for producto in productos
+        if str(producto.get("codigo", "")).strip().casefold()
+        == contexto.codigo_seleccionado.casefold()
+    ]
+
+    if len(coincidencias) != 1:
+        return None
+
+    return coincidencias[0]
+
 
 
 def normalizar_contexto(texto: str) -> str:
@@ -90,6 +180,12 @@ def resolver_producto_contextual(
             "cuanto vale este",
             "su precio",
             "y su precio",
+            "cuanto cuesta",
+            "cuanto vale",
+            "que precio tiene",
+            "cual es su precio",
+            "cuantas unidades quedan",
+            "cuantas piezas quedan",
         )
     )
 
@@ -98,7 +194,25 @@ def resolver_producto_contextual(
 
     # Analizar únicamente los mensajes recientes.
     mensajes_recientes = historial[-12:]
-
+    
+    for mensaje in reversed(mensajes_recientes):
+        if mensaje.rol != "user":
+            continue
+        texto_anterior = normalizar_contexto(mensaje.texto)
+        
+        if any(
+            expresion in texto_anterior
+            for expresion in (
+                "cambiemos de tema",
+                "otra pregunta",
+                "olvida lo anterior"
+                
+            )
+        ):
+            return None   
+        
+        break
+        
     if ordinal is not None:
         # Para "el primero", "el segundo", etc.,
         # buscar una lista anterior de varios productos.
@@ -119,24 +233,163 @@ def resolver_producto_contextual(
 
         return None
 
-    # Para "ese", "este" o "¿y ahora cuántos?",
-    # buscar la última respuesta sobre un solo producto.
-    for mensaje in reversed(mensajes_recientes):
-        if mensaje.rol != "model":
+    # Buscar únicamente la última respuesta del asistente.
+    # No saltar a respuestas más antiguas, porque podrían
+    # referirse a otro producto.
+
+    ultima_respuesta = next(
+        (
+            mensaje
+            for mensaje in reversed(mensajes_recientes)
+            if mensaje.rol == "model"
+        ),
+        None,
+    )
+
+    if ultima_respuesta is None:
+        return None
+
+    mencionados = obtener_productos_mencionados(
+        ultima_respuesta.texto,
+        productos,
+    )
+
+    # Solo recuperar el producto si hay exactamente uno.
+    if len(mencionados) == 1:
+        return mencionados[0]
+
+    # Si no hay productos o hay varios, pedir aclaración.
+    return None
+
+
+def resolver_seleccion_por_nombre(
+    pregunta: str,
+    contexto: ContextoInventario,
+    productos: list[dict],
+) -> dict | None:
+  
+    #Identifica una refacción por su nombre dentro
+    #de los productos mencionados en la conversación.
+
+    #Solo selecciona si existe una coincidencia única.
+    
+    texto = normalizar_contexto(pregunta)
+
+    palabras_ignoradas = {
+        "el", "la", "los", "las",
+        "un", "una", "de", "del",
+        "para", "por", "favor",
+        "producto", "refaccion",
+        "quiero", "ese", "esa",
+        "cuanto", "cuantos", "cuantas",
+        "cuesta", "vale", "precio",
+        "tiene", "tenemos", "quedan",
+        "disponibles", "hay",
+    }
+
+    palabras_pregunta = {
+        palabra
+        for palabra in re.findall(r"\b\w+\b", texto)
+        if palabra not in palabras_ignoradas
+        and len(palabra) >= 4
+    }
+
+    if not palabras_pregunta:
+        return None
+
+    codigos_permitidos = {
+        codigo.casefold()
+        for codigo in contexto.codigos_lista
+    }
+
+    coincidencias = []
+
+    for producto in productos:
+        codigo = str(producto.get("codigo", "")).strip()
+
+        if codigo.casefold() not in codigos_permitidos:
             continue
 
-        mencionados = obtener_productos_mencionados(
-            mensaje.texto,
-            productos,
+        nombre = normalizar_contexto(
+            str(producto.get("nombre", ""))
         )
 
-        if len(mencionados) == 1:
-            return mencionados[0]
+        palabras_nombre = set(
+            re.findall(r"\b\w+\b", nombre)
+        )
 
-        # Si el último mensaje contiene varios productos,
-        # no elegir uno arbitrariamente.
-        if len(mencionados) > 1:
-            return None
+        if palabras_pregunta & palabras_nombre:
+            coincidencias.append(producto)
 
-    return None
+    # Nunca seleccionar arbitrariamente entre varios.
+    if len(coincidencias) != 1:
+        return None
+
+    return coincidencias[0]
+
+
+def resolver_posicion_lista(
+    pregunta: str,
+    contexto: ContextoInventario,
+    productos: list[dict],
+) -> tuple[str, dict | None]:
+    import re
+    import unicodedata
+
+    def limpiar(texto: str) -> str:
+        texto = texto.casefold()
+        texto = "".join(
+            caracter
+            for caracter in unicodedata.normalize("NFD", texto)
+            if unicodedata.category(caracter) != "Mn"
+        )
+        return texto
+
+    ordinales = {
+        "primero": 0, "primera": 0,
+        "segundo": 1, "segunda": 1,
+        "tercero": 2, "tercera": 2,
+        "cuarto": 3, "cuarta": 3,
+        "quinto": 4, "quinta": 4,
+        "sexto": 5, "sexta": 5,
+        "septimo": 6, "septima": 6,
+        "octavo": 7, "octava": 7,
+        "noveno": 8, "novena": 8,
+        "decimo": 9, "decima": 9,
+    }
+
+    texto = limpiar(pregunta)
+
+    coincidencia = re.search(
+        r"\b(" + "|".join(
+            re.escape(palabra) for palabra in ordinales   
+            ) + r")\b",
+        texto,
+    )
+
+    if coincidencia is None:
+        return "sin_referencia", None
+
+    posicion = ordinales[coincidencia.group(1)]
+
+    if not contexto.codigos_lista:
+        return "sin_lista", None
+
+    if posicion >= len(contexto.codigos_lista):
+        return "fuera_de_rango", None
+
+    codigo = contexto.codigos_lista[posicion]
+
+    producto = next(
+        (
+            p for p in productos
+            if str(p.get("codigo")) == codigo
+        ),
+        None,
+    )
+
+    if producto is None:
+        return "producto_eliminado", None
+
+    return "encontrado", producto
 

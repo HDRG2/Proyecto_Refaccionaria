@@ -134,8 +134,6 @@ namespace Refaccionaria.Frontend.Views
 
         }
 
-
-
         // =========================================================
         // LOADED
         // =========================================================
@@ -463,6 +461,8 @@ namespace Refaccionaria.Frontend.Views
         private int pasoAnimacion = 0;
         private readonly List<(string Rol, string Texto)> historialChat = new();
         private const int MAX_MENSAJES_HISTORIAL = 20;
+        private string? codigoProductoSeleccionado = null;
+        private List<string> codigosProductosContexto = new();
 
         // ABRIR CHATBOT
         private void AbrirChatbot_Click(
@@ -506,6 +506,41 @@ namespace Refaccionaria.Frontend.Views
             RoutedEventArgs e)
         {
             EnviarMensajeIAAsync();
+        }
+
+        // =========================================================
+        // NUEVA CONVERSACIÓN
+        // =========================================================
+
+        private void NuevaConversacion_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            // Evitar reiniciar mientras la IA responde.
+            if (chatbotOcupado)
+                return;
+
+            // Limpiar la conversación visible.
+            PanelMensajes.Children.Clear();
+
+            // Limpiar el historial enviado a la IA.
+            historialChat.Clear();
+
+            // Reiniciar el contexto de productos.
+            codigoProductoSeleccionado = null;
+            codigosProductosContexto.Clear();
+
+            // Limpiar la caja de texto.
+            TxtMensajeChatbot.Text = string.Empty;
+
+            // Mostrar nuevamente el mensaje de bienvenida.
+            AgregarMensajeChatbot(
+                "Asistente IA",
+                "¡Hola! Soy el asistente de El Pistón. ¿En qué puedo ayudarte?",
+                false
+            );
+
+            TxtMensajeChatbot.Focus(FocusState.Programmatic);
         }
 
         // ENVIAR PREGUNTA A GEMINI
@@ -584,18 +619,33 @@ namespace Refaccionaria.Frontend.Views
                 ? Microsoft.UI.Colors.White
                 : Microsoft.UI.Colors.Black;
 
+            // Preparar el texto del mensaje.
+            string contenido = esUsuario
+                ? mensaje
+                : LimpiarFormatoGemini(mensaje);
+
+            // Evitar mostrar "Asistente IA:" en el saludo inicial.
+            bool esBienvenida =
+                contenido.StartsWith(
+                    "¡Hola! Soy el asistente de El Pistón",
+                    StringComparison.OrdinalIgnoreCase);
+
+            if (!esUsuario && !esBienvenida)
+            {
+                contenido = remitente + ":\n" + contenido;
+            }
+
             TextBlock textoMensaje = new TextBlock
             {
-                Text = esUsuario
-                    ? mensaje
-                    : remitente + ":\n" + LimpiarFormatoGemini(mensaje),
-
+                Text = contenido,
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = new SolidColorBrush(colorTexto),
                 FontSize = 14,
+                MaxWidth = 230,
 
-                // Limita el ancho del texto
-                MaxWidth = 230
+                // Conservar saltos de línea y mejorar legibilidad.
+                LineHeight = 20,
+                LineStackingStrategy = LineStackingStrategy.BlockLineHeight
             };
 
             Border burbuja = new Border
@@ -603,11 +653,8 @@ namespace Refaccionaria.Frontend.Views
                 Background = new SolidColorBrush(colorFondo),
                 CornerRadius = new CornerRadius(12),
                 Padding = new Thickness(12),
-
-                // La burbuja nunca será demasiado ancha
+                Margin = new Thickness(0, 0, 0, 10),
                 MaxWidth = 254,
-
-                // La altura se adapta al contenido
                 VerticalAlignment = VerticalAlignment.Top,
 
                 HorizontalAlignment = esUsuario
@@ -696,7 +743,13 @@ namespace Refaccionaria.Frontend.Views
             {
                 pregunta = pregunta,
                 inventario = inventarioActual,
-                historial = historial
+                historial = historial,
+
+                contexto = new
+                {
+                    codigo_seleccionado = codigoProductoSeleccionado,
+                    codigos_lista = codigosProductosContexto
+                }
             };
 
             string json = JsonSerializer.Serialize(datos);
@@ -707,19 +760,63 @@ namespace Refaccionaria.Frontend.Views
                 "application/json"
             );
 
-            using var respuesta = await clienteIA.PostAsync(
-                "http://127.0.0.1:8000/consultar",
-                contenido
-            );
 
-            string resultado = await respuesta.Content.ReadAsStringAsync();
+            string resultado;
 
-            if (!respuesta.IsSuccessStatusCode)
+            try
             {
-                throw new Exception(
-                    $"Error de AutoGen ({(int)respuesta.StatusCode}): {resultado}"
+                using var tiempoLimite = new CancellationTokenSource(
+                    TimeSpan.FromSeconds(60)
+                );
+
+                using var respuesta = await clienteIA.PostAsync(
+                    "http://127.0.0.1:8000/consultar",
+                    contenido,
+                    tiempoLimite.Token
+                );
+
+                resultado = await respuesta.Content.ReadAsStringAsync(
+                    tiempoLimite.Token
+                );
+
+                if (!respuesta.IsSuccessStatusCode)
+                {
+                    if (respuesta.StatusCode ==
+                        System.Net.HttpStatusCode.ServiceUnavailable ||
+                        respuesta.StatusCode ==
+                        System.Net.HttpStatusCode.BadGateway)
+                    {
+                        return (
+                            "El servicio de inteligencia artificial no está " +
+                            "disponible en este momento. Verifica que Ollama " +
+                            "esté encendido e inténtalo nuevamente."
+                        );
+                    }
+
+                    return (
+                        $"El servidor de IA respondió con un error " +
+                        $"({(int)respuesta.StatusCode}). " +
+                        "Inténtalo nuevamente."
+                    );
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return (
+                    "La inteligencia artificial tardó demasiado en responder. " +
+                    "Verifica que Ollama y el servidor estén funcionando " +
+                    "e inténtalo nuevamente."
                 );
             }
+            catch (HttpRequestException)
+            {
+                return (
+                    "No se pudo conectar con el servidor de inteligencia " +
+                    "artificial de El Pistón. Verifica que FastAPI " +
+                    "esté encendido e inténtalo nuevamente."
+                );
+            }
+
 
             using var documento = JsonDocument.Parse(resultado);
 
@@ -730,6 +827,36 @@ namespace Refaccionaria.Frontend.Views
             if (string.IsNullOrWhiteSpace(respuestaIA))
             {
                 throw new Exception("AutoGen no devolvió una respuesta.");
+            }
+
+            // ============================================
+            // RECIBIR CONTEXTO CONVERSACIONAL DESDE PYTHON
+            // ============================================
+
+            if (documento.RootElement.TryGetProperty(
+                    "contexto", out JsonElement contextoRespuesta)
+                && contextoRespuesta.ValueKind == JsonValueKind.Object)
+            {
+                // Recuperar el código seleccionado
+                if (contextoRespuesta.TryGetProperty(
+                        "codigo_seleccionado", out JsonElement codigo)
+                    && (codigo.ValueKind == JsonValueKind.String
+                        || codigo.ValueKind == JsonValueKind.Null))
+                {
+                    codigoProductoSeleccionado = codigo.GetString();
+                }
+
+                // Recuperar la lista de productos
+                if (contextoRespuesta.TryGetProperty(
+                        "codigos_lista", out JsonElement lista)
+                    && lista.ValueKind == JsonValueKind.Array)
+                {
+                    codigosProductosContexto = lista.EnumerateArray()
+                        .Where(elemento =>
+                            elemento.ValueKind == JsonValueKind.String)
+                        .Select(elemento => elemento.GetString()!)
+                        .ToList();
+                }
             }
 
             // Guardar la conversación únicamente cuando hubo éxito

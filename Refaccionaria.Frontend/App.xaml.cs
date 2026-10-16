@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Refaccionaria.Backend.Repositories;
 using Refaccionaria.Frontend.Models;
 using Refaccionaria.Frontend.ViewModels;
+using Refaccionaria.Frontend.Services;
 
 using QuestPDF.Infrastructure;
 
@@ -19,6 +20,8 @@ public partial class App : Application
     public IServiceProvider Services { get; }
 
     public MainWindow? MainWindow { get; private set; }
+
+    private readonly ServidorIAService servidorIA = new();
 
 
     // =========================================================
@@ -314,14 +317,22 @@ public partial class App : Application
     // =========================================================
 
     protected override void OnLaunched(
-        LaunchActivatedEventArgs args)
+    LaunchActivatedEventArgs args)
     {
         try
         {
-            MainWindow =
-                new MainWindow();
+            MainWindow = new MainWindow();
+
+            // Detener FastAPI cuando se cierre El Pistón.
+            MainWindow.Closed += (sender, e) =>
+            {
+                servidorIA.Detener();
+            };
 
             MainWindow.Activate();
+
+            // Iniciar FastAPI automáticamente.
+            _ = servidorIA.IniciarAsync();
         }
         catch (Exception ex)
         {
