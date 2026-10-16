@@ -279,6 +279,28 @@ def consultar_inventario_inteligente(
     if respuesta_vehiculo is not None:
         return respuesta_vehiculo
 
+    # Las alternativas requieren el contexto de la recomendación.
+    # No comparar todo el inventario cuando se pide "otra opción".
+    solicita_alternativa = any(
+        expresion in texto
+        for expresion in (
+            "otra opcion mas barata",
+            "otra opcion mas economica",
+            "otra alternativa mas barata",
+            "algo mas barato",
+            "una opcion mas barata",
+        )
+    )
+
+    if solicita_alternativa:
+        return (
+            "Para buscar una alternativa más económica necesito "
+            "conservar el tipo de refacción y el vehículo consultados. "
+            "No sería correcto comparar productos de categorías "
+            "diferentes. Indícame la refacción, marca, modelo y año "
+            "del vehículo para verificar las opciones disponibles."
+        )
+    
     # 1. Buscar el producto más barato.
     if any(expresion in texto for expresion in (
         "mas barato",
@@ -314,6 +336,11 @@ def consultar_inventario_inteligente(
 
     # 2. Buscar productos agotados.
     if any(expresion in texto for expresion in (
+        "mas barato",
+        "mas economico",
+        "menor precio",
+        "producto mas barato",
+        "refaccion mas barata",
         "productos agotados",
         "refacciones agotadas",
         "sin existencia",

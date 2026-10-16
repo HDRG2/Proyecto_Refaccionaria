@@ -1626,12 +1626,40 @@
                                            FontSize="12"/>
                             </StackPanel>
 
-                            <Button Grid.Column="1"
-                                    Content="✕"
-                                    Background="Transparent"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Click="CerrarChatbot_Click"/>
+                            <StackPanel Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        Spacing="4">
+
+                                <!-- NUEVA CONVERSACIÓN -->
+                                <Button x:Name="BtnNuevaConversacion"
+                                        Width="36"
+                                        Height="36"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Click="NuevaConversacion_Click"
+                                        ToolTipService.ToolTip="Nueva conversación">
+
+                                    <FontIcon Glyph="&#xE70F;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              FontSize="17"/>
+
+                                </Button>
+
+                                <!-- CERRAR CHAT -->
+                                <Button Content="✕"
+                                        Width="36"
+                                        Height="36"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Click="CerrarChatbot_Click"
+                                        ToolTipService.ToolTip="Cerrar asistente"/>
+
+                            </StackPanel>
                         </Grid>
                     </Border>
 

@@ -65,6 +65,11 @@ Refaccionaria.Backend/Backups/
 .venv/
 venv/
 
+# Archivos generados por PyInstaller
+build/
+dist/
+ServidorIA.spec
+
 #Archivos temporales de Python
 
 __pycache__/
