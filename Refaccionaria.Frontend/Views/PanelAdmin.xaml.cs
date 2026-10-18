@@ -88,6 +88,25 @@ public sealed partial class PanelAdmin : Page
     {
         InitializeComponent();
 
+        // -----------------------------------------------------
+        // VALIDACIONES DE LAS CAJAS DE TEXTO
+        // -----------------------------------------------------
+
+        // Formulario de empleado
+        Validaciones.SoloLetras(TxtFormEmpNombre);
+        Validaciones.SoloNumeros(TxtFormEmpTelefono);
+        Validaciones.LetrasYNumeros(TxtFormEmpUsuario);
+
+        // Formulario de producto
+        Validaciones.SoloLetras(TxtFormNombre);
+        Validaciones.Codigo(TxtFormCodigo);
+        Validaciones.Precio(TxtFormPrecio);
+        Validaciones.SoloNumeros(TxtFormStock);
+
+        // Buscadores
+        Validaciones.Busqueda(TxtBuscar);
+        Validaciones.Busqueda(TxtBuscarEditar);
+
         productoService = new ProductoService(
             repoRefacciones 
         );

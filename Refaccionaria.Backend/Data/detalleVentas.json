@@ -750,19 +750,11 @@
     }
   },
   {
-<<<<<<< Updated upstream
     "Subtotal": 4350.00,
     "Id": 28,
     "VentaId": 19,
     "RefaccionId": 5,
     "Cantidad": 3,
-=======
-    "Subtotal": 14500.00,
-    "Id": 28,
-    "VentaId": 19,
-    "RefaccionId": 5,
-    "Cantidad": 10,
->>>>>>> Stashed changes
     "PrecioUnitario": 1450.00,
     "Refaccion": {
       "Id": 5,
@@ -788,7 +780,6 @@
     }
   },
   {
-<<<<<<< Updated upstream
     "Subtotal": 2247.00,
     "Id": 29,
     "VentaId": 20,
@@ -816,11 +807,6 @@
     "Subtotal": 1498.00,
     "Id": 30,
     "VentaId": 21,
-=======
-    "Subtotal": 1498.00,
-    "Id": 29,
-    "VentaId": 19,
->>>>>>> Stashed changes
     "RefaccionId": 2,
     "Cantidad": 2,
     "PrecioUnitario": 749.00,
@@ -831,33 +817,20 @@
       "MarcaId": 1,
       "CategoriaId": 1,
       "Precio": 749.00,
-<<<<<<< Updated upstream
       "Stock": 7,
-=======
-      "Stock": 16,
->>>>>>> Stashed changes
       "StockBajo": false,
       "Activo": true,
       "EsUniversal": true,
       "AutosCompatibles": [],
       "MarcaNombre": "Bosch",
-<<<<<<< Updated upstream
       "CategoriaNombre": "Aceites",
-=======
-      "CategoriaNombre": "Aceites y lubricantes",
->>>>>>> Stashed changes
       "AutosDescripciones": []
     }
   },
   {
     "Subtotal": 749.00,
-<<<<<<< Updated upstream
     "Id": 31,
     "VentaId": 22,
-=======
-    "Id": 30,
-    "VentaId": 20,
->>>>>>> Stashed changes
     "RefaccionId": 2,
     "Cantidad": 1,
     "PrecioUnitario": 749.00,
@@ -868,7 +841,6 @@
       "MarcaId": 1,
       "CategoriaId": 1,
       "Precio": 749.00,
-<<<<<<< Updated upstream
       "Stock": 3,
       "StockBajo": true,
       "Activo": true,
@@ -893,8 +865,6 @@
       "MarcaId": 1,
       "CategoriaId": 1,
       "Precio": 749.00,
-=======
->>>>>>> Stashed changes
       "Stock": 5,
       "StockBajo": true,
       "Activo": true,
@@ -904,38 +874,5 @@
       "CategoriaNombre": "Aceites",
       "AutosDescripciones": []
     }
-<<<<<<< Updated upstream
-=======
-  },
-  {
-    "Subtotal": 159.00,
-    "Id": 31,
-    "VentaId": 20,
-    "RefaccionId": 1,
-    "Cantidad": 1,
-    "PrecioUnitario": 159.00,
-    "Refaccion": {
-      "Id": 1,
-      "Codigo": "FIL-001",
-      "Nombre": "Filtro de Aceite",
-      "MarcaId": 4,
-      "CategoriaId": 2,
-      "Precio": 159.00,
-      "Stock": 21,
-      "StockBajo": false,
-      "Activo": true,
-      "EsUniversal": false,
-      "AutosCompatibles": [
-        6,
-        7
-      ],
-      "MarcaNombre": "Mobil",
-      "CategoriaNombre": "Filtros",
-      "AutosDescripciones": [
-        "Volkswagen Jetta (2011-2018)",
-        "Volkswagen Vento (2014-2022)"
-      ]
-    }
->>>>>>> Stashed changes
   }
 ]

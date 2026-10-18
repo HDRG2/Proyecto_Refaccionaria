@@ -15,7 +15,7 @@
     "Rol": "Vendedor",
     "Nombre": "Jos\u00E9 Remirez",
     "Telefono": "8125646932",
-    "Activo": false
+    "Activo": true
   },
   {
     "Id": 3,
@@ -43,5 +43,14 @@
     "Nombre": "Aldo Loredo",
     "Telefono": "8111111111",
     "Activo": true
+  },
+  {
+    "Id": 6,
+    "NombreUsuario": "Jack",
+    "Password": "-KCLwmK64s",
+    "Rol": "Vendedor",
+    "Nombre": "Jacob",
+    "Telefono": "2392193912",
+    "Activo": false
   }
 ]

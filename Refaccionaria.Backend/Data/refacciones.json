@@ -28,11 +28,7 @@
     "MarcaId": 1,
     "CategoriaId": 1,
     "Precio": 749.00,
-<<<<<<< Updated upstream
     "Stock": 3,
-=======
-    "Stock": 4,
->>>>>>> Stashed changes
     "StockBajo": true,
     "Activo": true,
     "EsUniversal": true,
@@ -92,11 +88,7 @@
     "MarcaId": 8,
     "CategoriaId": 4,
     "Precio": 1450.00,
-<<<<<<< Updated upstream
     "Stock": 7,
-=======
-    "Stock": 15,
->>>>>>> Stashed changes
     "StockBajo": false,
     "Activo": true,
     "EsUniversal": false,

@@ -1001,7 +1001,6 @@
     ]
   },
   {
-<<<<<<< Updated upstream
     "EmpleadoNombre": "",
     "Id": 19,
     "Folio": "V-20261013-233935391",
@@ -1019,25 +1018,6 @@
         "VentaId": 19,
         "RefaccionId": 5,
         "Cantidad": 3,
-=======
-    "EmpleadoNombre": "Jos\u00E9 Remirez",
-    "Id": 19,
-    "Folio": "V-20261015-202821521",
-    "Fecha": "2026-10-15T20:28:21.5260948-06:00",
-    "UsuarioId": 2,
-    "MetodoPago": "Efectivo",
-    "Referencia": "",
-    "Recibido": 19000,
-    "Cambio": 442.32,
-    "Total": 18557.68,
-    "Lineas": [
-      {
-        "Subtotal": 14500.00,
-        "Id": 28,
-        "VentaId": 19,
-        "RefaccionId": 5,
-        "Cantidad": 10,
->>>>>>> Stashed changes
         "PrecioUnitario": 1450.00,
         "Refaccion": {
           "Id": 5,
@@ -1061,7 +1041,6 @@
             "Toyota Yaris (2016-2020)"
           ]
         }
-<<<<<<< Updated upstream
       }
     ]
   },
@@ -1119,13 +1098,6 @@
         "Subtotal": 1498.00,
         "Id": 30,
         "VentaId": 21,
-=======
-      },
-      {
-        "Subtotal": 1498.00,
-        "Id": 29,
-        "VentaId": 19,
->>>>>>> Stashed changes
         "RefaccionId": 2,
         "Cantidad": 2,
         "PrecioUnitario": 749.00,
@@ -1136,17 +1108,12 @@
           "MarcaId": 1,
           "CategoriaId": 1,
           "Precio": 749.00,
-<<<<<<< Updated upstream
           "Stock": 7,
-=======
-          "Stock": 16,
->>>>>>> Stashed changes
           "StockBajo": false,
           "Activo": true,
           "EsUniversal": true,
           "AutosCompatibles": [],
           "MarcaNombre": "Bosch",
-<<<<<<< Updated upstream
           "CategoriaNombre": "Aceites",
           "AutosDescripciones": []
         }
@@ -1186,9 +1153,6 @@
           "AutosCompatibles": [],
           "MarcaNombre": "Bosch",
           "CategoriaNombre": "Aceites",
-=======
-          "CategoriaNombre": "Aceites y lubricantes",
->>>>>>> Stashed changes
           "AutosDescripciones": []
         }
       }
@@ -1196,7 +1160,6 @@
   },
   {
     "EmpleadoNombre": "",
-<<<<<<< Updated upstream
     "Id": 23,
     "Folio": "V-20261014-020507131",
     "Fecha": "2026-10-14T02:05:07.132037-06:00",
@@ -1213,24 +1176,6 @@
         "VentaId": 23,
         "RefaccionId": 2,
         "Cantidad": 2,
-=======
-    "Id": 20,
-    "Folio": "V-20261015-205244466",
-    "Fecha": "2026-10-15T20:52:44.4663864-06:00",
-    "UsuarioId": 5,
-    "MetodoPago": "Tarjeta",
-    "Referencia": "",
-    "Recibido": 1053.28,
-    "Cambio": 0,
-    "Total": 1053.28,
-    "Lineas": [
-      {
-        "Subtotal": 749.00,
-        "Id": 30,
-        "VentaId": 20,
-        "RefaccionId": 2,
-        "Cantidad": 1,
->>>>>>> Stashed changes
         "PrecioUnitario": 749.00,
         "Refaccion": {
           "Id": 2,
@@ -1248,39 +1193,6 @@
           "CategoriaNombre": "Aceites",
           "AutosDescripciones": []
         }
-<<<<<<< Updated upstream
-=======
-      },
-      {
-        "Subtotal": 159.00,
-        "Id": 31,
-        "VentaId": 20,
-        "RefaccionId": 1,
-        "Cantidad": 1,
-        "PrecioUnitario": 159.00,
-        "Refaccion": {
-          "Id": 1,
-          "Codigo": "FIL-001",
-          "Nombre": "Filtro de Aceite",
-          "MarcaId": 4,
-          "CategoriaId": 2,
-          "Precio": 159.00,
-          "Stock": 21,
-          "StockBajo": false,
-          "Activo": true,
-          "EsUniversal": false,
-          "AutosCompatibles": [
-            6,
-            7
-          ],
-          "MarcaNombre": "Mobil",
-          "CategoriaNombre": "Filtros",
-          "AutosDescripciones": [
-            "Volkswagen Jetta (2011-2018)",
-            "Volkswagen Vento (2014-2022)"
-          ]
-        }
->>>>>>> Stashed changes
       }
     ]
   }

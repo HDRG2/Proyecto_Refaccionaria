@@ -115,6 +115,12 @@ namespace Refaccionaria.Frontend.Views
 
             InitializeComponent();
 
+            // Buscador: letras, números y guion
+            Validaciones.Busqueda(TxtBuscar);
+
+            // Dinero recibido: números y punto decimal
+            Validaciones.Precio(TxtRecibido);
+
             ventaService = new VentaService(
                 repoVentas,
                 repoDetalleVentas,

@@ -196,8 +196,21 @@ public sealed partial class PanelAdmin : Page
             return;
         }
 
+        // Validar que nombre y código no tengan caracteres no permitidos
+        string? errorProducto =
+            Validaciones.RevisarProducto(nombre, codigo);
 
-        if (CmbFormCategoria.SelectedItem
+        if (errorProducto != null)
+        {
+            await MostrarMensaje(
+                "Datos no válidos",
+                errorProducto
+            );
+
+            return;
+        }
+
+        if (CmbFormCategoria.SelectedItem 
             is not Categoria categoria)
         {
             await MostrarMensaje(
@@ -410,6 +423,19 @@ public sealed partial class PanelAdmin : Page
             return;
         }
 
+        // Validar que nombre y código no tengan caracteres no permitidos
+        string? errorProducto =
+            Validaciones.RevisarProducto(nombre, codigo);
+
+        if (errorProducto != null)
+        {
+            await MostrarMensaje(
+                "Datos no válidos",
+                errorProducto
+            );
+
+            return;
+        }
 
         if (CmbFormCategoria.SelectedItem
             is not Categoria categoria)

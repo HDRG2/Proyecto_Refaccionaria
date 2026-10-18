@@ -218,6 +218,23 @@ public sealed partial class PanelAdmin : Page
             return;
         }
 
+        // Validar letras, números y contraseña segura
+        string? errorEmpleado =
+            Validaciones.RevisarEmpleado(
+                nombre,
+                nombreUsuario,
+                password
+            );
+
+        if (errorEmpleado != null)
+        {
+            await MostrarMensaje(
+                "Datos no válidos",
+                errorEmpleado
+            );
+
+            return;
+        }
 
         try
         {
@@ -402,6 +419,23 @@ public sealed partial class PanelAdmin : Page
             return;
         }
 
+        // Validar letras, números y contraseña segura
+        string? errorEmpleado =
+            Validaciones.RevisarEmpleado(
+                nombre,
+                nombreUsuario,
+                password
+            );
+
+        if (errorEmpleado != null)
+        {
+            await MostrarMensaje(
+                "Datos no válidos",
+                errorEmpleado
+            );
+
+            return;
+        }
 
         try
         {

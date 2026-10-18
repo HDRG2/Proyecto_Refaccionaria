@@ -1,12 +1,14 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 using Refaccionaria.Backend.Repositories;
 using Refaccionaria.Frontend.Models;
@@ -41,7 +43,10 @@ namespace Refaccionaria.Frontend
         public MainWindow()
         {
             InitializeComponent();
-
+            
+            // Usuario del login: solo letras y números
+            Validaciones.LetrasYNumeros(CampoUsuario);
+            
             _contenidoLogin = Content;
 
 
@@ -611,6 +616,9 @@ namespace Refaccionaria.Frontend
         // CERRAR SESIÓN
         // =========================================================
 
+
+
+
         public void CerrarSesion()
         {
             if (_contenidoLogin == null)
@@ -698,6 +706,226 @@ namespace Refaccionaria.Frontend
             CampoUsuario.Focus(
                 FocusState.Programmatic
             );
+       
+       
+       
+        }
+
+    }
+
+    // =============================================================
+    // VALIDACIONES
+    // =============================================================
+    // Aquí están juntas todas las reglas de "qué se puede escribir"
+    // en las cajas de texto del programa.
+    //
+    // Cada pantalla solo dice qué regla usa cada caja, por ejemplo:
+    //
+    //     Validaciones.SoloLetras(TxtFormEmpNombre);
+    //
+    // Si el usuario escribe algo que no se acepta, la letra no
+    // aparece y se muestra un aviso debajo de la caja.
+    // =============================================================
+    public static class Validaciones
+    {
+        // =========================================================
+        // MENSAJES
+        // =========================================================
+
+        private const string AvisoLetras =
+            "Solo se aceptan letras. No se aceptan números ni caracteres especiales.";
+
+        private const string AvisoNumeros =
+            "Solo se aceptan números. No se aceptan letras ni caracteres especiales.";
+
+        private const string AvisoLetrasNumeros =
+            "Solo se aceptan letras y números. No se aceptan caracteres especiales.";
+
+        private const string AvisoCodigo =
+            "Solo se aceptan letras, números y guion (-).";
+
+        private const string AvisoBusqueda =
+            "Solo se aceptan letras y números. No se aceptan caracteres especiales.";
+
+        private const string AvisoPrecio =
+            "Solo se aceptan números y un punto decimal (máximo 2 decimales).";
+
+
+        // =========================================================
+        // REGLAS
+        // =========================================================
+
+        // Letras (incluye acentos y ñ) y espacios
+        public static bool EsLetras(string texto) =>
+            texto.All(c => char.IsLetter(c) || c == ' ');
+
+        // Solo dígitos del 0 al 9
+        public static bool EsNumeros(string texto) =>
+            texto.All(c => c >= '0' && c <= '9');
+
+        // Letras y números, sin espacios
+        public static bool EsLetrasNumeros(string texto) =>
+            texto.All(c => char.IsLetter(c) || (c >= '0' && c <= '9'));
+
+        // Letras, números y guion (ej. FIL-001). ÚNICA regla con guion.
+        public static bool EsCodigo(string texto) =>
+            texto.All(c => char.IsLetter(c) || (c >= '0' && c <= '9') || c == '-');
+
+        // Letras, números y espacios (sin guion)
+        public static bool EsBusqueda(string texto) =>
+            texto.All(c => char.IsLetter(c) || (c >= '0' && c <= '9') || c == ' ');
+
+        // Números con un punto y máximo 2 decimales (ej. 159.50)
+        public static bool EsPrecio(string texto) =>
+            Regex.IsMatch(texto, @"^[0-9]*(\.[0-9]{0,2})?$");
+
+
+        // =========================================================
+        // CONECTAR CAJAS CON SU REGLA
+        // =========================================================
+
+        public static void SoloLetras(TextBox caja) =>
+            Aplicar(caja, EsLetras, AvisoLetras);
+
+        public static void SoloNumeros(TextBox caja) =>
+            Aplicar(caja, EsNumeros, AvisoNumeros);
+
+        public static void LetrasYNumeros(TextBox caja) =>
+            Aplicar(caja, EsLetrasNumeros, AvisoLetrasNumeros);
+
+        public static void Codigo(TextBox caja) =>
+            Aplicar(caja, EsCodigo, AvisoCodigo);
+
+        public static void Busqueda(TextBox caja) =>
+            Aplicar(caja, EsBusqueda, AvisoBusqueda);
+
+        public static void Precio(TextBox caja) =>
+            Aplicar(caja, EsPrecio, AvisoPrecio);
+
+
+        // ---------------------------------------------------------
+        // Cada caja tiene UN solo globito y UN solo temporizador.
+        // Si el usuario sigue presionando teclas no permitidas, no
+        // se crean más globitos: solo se reinician los 2 segundos.
+        // ---------------------------------------------------------
+
+        private static void Aplicar(
+            TextBox caja,
+            Func<string, bool> regla,
+            string aviso)
+        {
+            ToolTip globo = new()
+            {
+                Content = aviso,
+                Placement = PlacementMode.Bottom
+            };
+
+            var temporizador =
+                caja.DispatcherQueue.CreateTimer();
+
+            temporizador.Interval =
+                TimeSpan.FromSeconds(2);
+
+            temporizador.IsRepeating =
+                false;
+
+
+            // Quita el globito
+            void Ocultar()
+            {
+                temporizador.Stop();
+
+                globo.IsOpen = false;
+
+                ToolTipService.SetToolTip(caja, null);
+            }
+
+
+            // Se quita a los 2 segundos, al salir de la caja
+            // o al cambiar de pantalla
+            temporizador.Tick += (t, a) => Ocultar();
+            caja.LostFocus += (s, e) => Ocultar();
+            caja.Unloaded += (s, e) => Ocultar();
+
+
+            caja.BeforeTextChanging += (sender, e) =>
+            {
+                // Si el programa llena la caja (por ejemplo al abrir
+                // "Editar"), no se bloquea.
+                if (caja.FocusState == FocusState.Unfocused)
+                    return;
+
+                if (regla(e.NewText))
+                    return;
+
+                e.Cancel = true;
+
+                // Mostrar el globito y reiniciar los 2 segundos
+                ToolTipService.SetToolTip(caja, globo);
+
+                globo.IsOpen = true;
+
+                temporizador.Stop();
+                temporizador.Start();
+            };
+        }
+
+
+        // =========================================================
+        // REVISIONES AL GUARDAR
+        // =========================================================
+
+        public static string? RevisarContrasena(string password)
+        {
+            if (password.Length < 8)
+                return "La contraseña debe tener mínimo 8 caracteres.";
+
+            if (!password.Any(char.IsLetter))
+                return "La contraseña debe tener al menos una letra.";
+
+            bool tieneEspecial =
+                password.Any(c =>
+                    !char.IsLetterOrDigit(c) &&
+                    !char.IsWhiteSpace(c));
+
+            if (!tieneEspecial)
+                return "Hace falta mínimo un carácter especial en la contraseña " +
+                       "(por ejemplo: ! @ # $ % & * ?).";
+
+            return null;
+        }
+
+
+        public static string? RevisarEmpleado(
+            string nombre,
+            string nombreUsuario,
+            string password)
+        {
+            if (!EsLetras(nombre))
+                return "El nombre solo puede tener letras. " +
+                       "No se aceptan números ni caracteres especiales.";
+
+            if (!EsLetrasNumeros(nombreUsuario))
+                return "El usuario solo puede tener letras y números, sin espacios " +
+                       "ni caracteres especiales.";
+
+            return RevisarContrasena(password);
+        }
+
+
+        public static string? RevisarProducto(
+            string nombre,
+            string codigo)
+        {
+            if (!EsLetras(nombre))
+                return "El nombre de la pieza solo puede tener letras. " +
+                       "No se aceptan números ni caracteres especiales.";
+
+            if (!EsCodigo(codigo))
+                return "El código solo puede tener letras, números y guion (-).";
+
+            return null;
         }
     }
+    
 }
