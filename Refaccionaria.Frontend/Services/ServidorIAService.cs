@@ -1,3 +1,4 @@
+
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,7 +20,6 @@ public sealed class ServidorIAService
         Timeout = TimeSpan.FromSeconds(3)
     };
 
-
     public async Task IniciarAsync()
     {
         lock (bloqueoProceso)
@@ -30,65 +30,48 @@ public sealed class ServidorIAService
 
         // Evitar iniciar otro servidor si ya está disponible.
         if (await ServidorDisponibleAsync())
+        {
+            Debug.WriteLine("IA: FastAPI ya está funcionando.");
             return;
+        }
 
-        string? ejecutable = BuscarEjecutableServidor();
+        // Buscar la carpeta principal del proyecto.
         string? carpetaProyecto = BuscarCarpetaProyecto();
 
-        ProcessStartInfo configuracion;
-
-        if (ejecutable != null)
+        if (carpetaProyecto == null)
         {
-            // Utilizar el servidor empaquetado.
-            configuracion = new ProcessStartInfo
-            {
-                FileName = ejecutable,
-                WorkingDirectory = Path.GetDirectoryName(ejecutable)!,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            Debug.WriteLine("IA: Utilizando ServidorIA.exe.");
-        }
-        else
-        {
-            // Respaldo para el entorno de desarrollo.
-            if (carpetaProyecto == null)
-            {
-                Debug.WriteLine(
-                    "IA: No se encontró el servidor ni el proyecto."
-                );
-                return;
-            }
-
-            string python = Path.Combine(
-                carpetaProyecto,
-                ".venv-autogen",
-                "Scripts",
-                "python.exe"
+            Debug.WriteLine(
+                "IA: No se encontró la carpeta del proyecto."
             );
-
-            if (!File.Exists(python))
-            {
-                Debug.WriteLine(
-                    "IA: No se encontró Python ni ServidorIA.exe."
-                );
-                return;
-            }
-
-            configuracion = new ProcessStartInfo
-            {
-                FileName = python,
-                Arguments =
-                    "-m uvicorn AgenteIA.servidor:app " +
-                    "--host 127.0.0.1 --port 8000",
-                WorkingDirectory = carpetaProyecto,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            Debug.WriteLine("IA: Utilizando Python de desarrollo.");
+            return;
         }
+
+        // Utilizar exclusivamente el entorno virtual.
+        string python = Path.Combine(
+            carpetaProyecto,
+            ".venv-autogen",
+            "Scripts",
+            "python.exe"
+        );
+
+        if (!File.Exists(python))
+        {
+            Debug.WriteLine(
+                "IA: No se encontró python.exe en .venv-autogen."
+            );
+            return;
+        }
+
+        ProcessStartInfo configuracion = new()
+        {
+            FileName = python,
+            Arguments =
+                "-m uvicorn AgenteIA.servidor:app " +
+                "--host 127.0.0.1 --port 8000",
+            WorkingDirectory = carpetaProyecto,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
 
         try
         {
@@ -106,10 +89,14 @@ public sealed class ServidorIAService
             if (procesoIniciado == null)
             {
                 Debug.WriteLine(
-                    "IA: No se pudo iniciar el servidor."
+                    "IA: No se pudo iniciar FastAPI."
                 );
                 return;
             }
+
+            Debug.WriteLine(
+                "IA: Iniciando FastAPI desde .venv-autogen."
+            );
 
             // Esperar hasta aproximadamente 15 segundos.
             for (int intento = 0; intento < 30; intento++)
@@ -122,7 +109,7 @@ public sealed class ServidorIAService
                     if (procesoIniciado.HasExited)
                     {
                         Debug.WriteLine(
-                            "IA: El servidor terminó durante el arranque."
+                            "IA: FastAPI terminó durante el arranque."
                         );
                         return;
                     }
@@ -152,11 +139,10 @@ public sealed class ServidorIAService
         catch (Exception ex)
         {
             Debug.WriteLine(
-                $"IA: Error al iniciar el servidor: {ex.Message}"
+                $"IA: Error al iniciar FastAPI: {ex.Message}"
             );
         }
     }
-
 
     private static async Task<bool> ServidorDisponibleAsync()
     {
@@ -176,41 +162,6 @@ public sealed class ServidorIAService
         {
             return false;
         }
-    }
-
-    private static string? BuscarEjecutableServidor()
-    {
-        DirectoryInfo? carpeta = new(
-            AppContext.BaseDirectory
-        );
-
-        while (carpeta != null)
-        {
-            // Para una instalación: junto al ejecutable de WinUI.
-            string rutaInstalada = Path.Combine(
-                carpeta.FullName,
-                "ServidorIA",
-                "ServidorIA.exe"
-            );
-
-            if (File.Exists(rutaInstalada))
-                return rutaInstalada;
-
-            // Para desarrollo: salida de PyInstaller.
-            string rutaDesarrollo = Path.Combine(
-                carpeta.FullName,
-                "dist",
-                "ServidorIA",
-                "ServidorIA.exe"
-            );
-
-            if (File.Exists(rutaDesarrollo))
-                return rutaDesarrollo;
-
-            carpeta = carpeta.Parent;
-        }
-
-        return null;
     }
 
     private static string? BuscarCarpetaProyecto()
@@ -253,14 +204,14 @@ public sealed class ServidorIAService
                         entireProcessTree: true
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
+                    Debug.WriteLine(
                         "IA: Servidor FastAPI detenido."
                     );
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(
+                Debug.WriteLine(
                     $"IA: Error al detener FastAPI: {ex.Message}"
                 );
             }
@@ -270,7 +221,6 @@ public sealed class ServidorIAService
                 procesoServidor = null;
             }
         }
-
     }
-
 }
+

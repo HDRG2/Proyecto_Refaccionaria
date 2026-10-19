@@ -13,7 +13,7 @@
     "NombreUsuario": "Jose2001",
     "Password": "12345",
     "Rol": "Vendedor",
-    "Nombre": "Jos\u00E9 Remires",
+    "Nombre": "Jos\u00E9 Remirez",
     "Telefono": "8125646932",
     "Activo": true
   },
@@ -33,6 +33,33 @@
     "Rol": "Vendedor",
     "Nombre": "Daniel",
     "Telefono": "8145969687",
+    "Activo": true
+  },
+  {
+    "Id": 5,
+    "NombreUsuario": "Aloredo",
+    "Password": "123456",
+    "Rol": "Vendedor",
+    "Nombre": "Aldo Loredo",
+    "Telefono": "8111111111",
+    "Activo": true
+  },
+  {
+    "Id": 6,
+    "NombreUsuario": "Jack",
+    "Password": "-KCLwmK64s",
+    "Rol": "Vendedor",
+    "Nombre": "Jacob",
+    "Telefono": "2392193912",
+    "Activo": false
+  },
+  {
+    "Id": 7,
+    "NombreUsuario": "JC2001",
+    "Password": "H1d2r3g?",
+    "Rol": "Vendedor",
+    "Nombre": "Juan Carlos Bodoque",
+    "Telefono": "8112636965",
     "Activo": true
   }
 ]

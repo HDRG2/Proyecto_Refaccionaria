@@ -6,7 +6,6 @@ from AgenteIA.validador_inventario import (
     analizar_compatibilidad_registrada,
 )
 
-
 def normalizar_texto(texto: str) -> str:
     texto = unicodedata.normalize("NFKD", str(texto))
     texto = "".join(
@@ -239,6 +238,76 @@ def consultar_inventario_inteligente(
 
     texto = normalizar_texto(pregunta)
     
+    
+    # Consultar todas las refacciones con vehículos compatibles registrados.
+    consultas_compatibilidad_general = (
+        "que refacciones tienen vehiculos compatibles registrados",
+        "que productos tienen vehiculos compatibles registrados",
+        "que refacciones tienen autos compatibles",
+        "que productos tienen autos compatibles",
+        "que refacciones tienen compatibilidad registrada",
+        "que productos tienen compatibilidad registrada",
+        "tienes alguna refaccion registrada en el inventario con un automovil compatible especifico",
+    )
+
+    pregunta_limpia = texto.strip(" ¿?¡!.,")
+
+    if pregunta_limpia in consultas_compatibilidad_general:
+
+        refacciones_compatibles = []
+
+        for producto in productos:
+            compatibles = producto.get("vehiculosCompatibles", [])
+
+            if not isinstance(compatibles, list):
+                continue
+
+            vehiculos_validos = []
+
+            for descripcion in compatibles:
+                datos = analizar_compatibilidad_registrada(
+                    str(descripcion)
+                )
+
+                if datos is not None:
+                    vehiculos_validos.append(str(descripcion))
+
+            if vehiculos_validos:
+                refacciones_compatibles.append(
+                    (producto, vehiculos_validos)
+                )
+
+        if not refacciones_compatibles:
+            return (
+                "Actualmente no hay refacciones con vehículos "
+                "compatibles registrados en el inventario de El Pistón."
+            )
+
+        lineas = [
+            "Refacciones con vehículos compatibles registrados:",
+            "",
+        ]
+
+        for producto, vehiculos in refacciones_compatibles:
+            lineas.append(
+                f"• {describir_producto(producto)}"
+            )
+
+            for vehiculo in vehiculos:
+                lineas.append(f"  - {vehiculo}")
+
+            lineas.append("")
+
+        total = len(refacciones_compatibles)
+
+        lineas.append(
+            f"Total: {total} "
+            f"{'refacción' if total == 1 else 'refacciones'}."
+        )
+
+        return "\n".join(lineas)
+
+    
     # Evitar recomendaciones de aceite sin verificar las especificaciones del vehículo.
     pregunta_aceite = re.search(
         r"\baceites?\b",
@@ -333,20 +402,171 @@ def consultar_inventario_inteligente(
             f"{describir_producto(producto)}, "
             f"con un precio de ${precio:,.2f} MXN."
         )
-
-    # 2. Buscar productos agotados.
+    
+        # Buscar el producto más caro del inventario.
     if any(expresion in texto for expresion in (
-        "mas barato",
-        "mas economico",
-        "menor precio",
-        "producto mas barato",
-        "refaccion mas barata",
-        "productos agotados",
-        "refacciones agotadas",
-        "sin existencia",
-        "sin stock",
-        "productos sin inventario",
+        "mas caro",
+        "mas cara",
+        "mayor precio",
+        "precio mas alto",
+        "mas costoso",
+        "mas costosa",
+        "producto mas caro",
+        "refaccion mas cara",
     )):
+        productos_con_precio = [
+            (producto, obtener_precio(producto))
+            for producto in productos
+        ]
+
+        productos_con_precio = [
+            (producto, precio)
+            for producto, precio in productos_con_precio
+            if precio is not None
+        ]
+
+        if not productos_con_precio:
+            return "No hay productos con precios válidos registrados."
+
+        producto, precio = max(
+            productos_con_precio,
+            key=lambda elemento: elemento[1]
+        )
+
+        return (
+            f"El producto más caro registrado es "
+            f"{describir_producto(producto)}, "
+            f"con un precio de ${precio:,.2f} MXN."
+        )
+        
+    # Buscar productos con menos de cierta cantidad en existencia.
+    coincidencia_stock = re.search(
+        r"\b(?:menos de|menor(?:es)? a)\s+(\d+)\s*"
+        r"(?:piezas?|unidades?|productos?)?\s*"
+        r"(?:en existencia|de existencia|en stock|de stock)?\b",
+        texto,
+    )
+
+    if coincidencia_stock and any(
+        palabra in texto
+        for palabra in (
+            "producto", "productos", "refaccion", "refacciones",
+            "pieza", "piezas", "unidad", "unidades",
+            "existencia", "stock",
+        )
+    ):
+        limite = int(coincidencia_stock.group(1))
+        encontrados = []
+
+        for producto in productos:
+            try:
+                existencia = int(producto.get("existencia"))
+            except (ValueError, TypeError):
+                continue
+
+            if 0 <= existencia < limite:
+                encontrados.append((producto, existencia))
+
+        if not encontrados:
+            return (
+                f"No hay productos registrados con menos de "
+                f"{limite} piezas en existencia."
+            )
+
+        encontrados.sort(key=lambda elemento: elemento[1])
+
+        lineas = [
+            f"Productos con menos de {limite} piezas en existencia:"
+        ]
+
+        for producto, existencia in encontrados:
+            lineas.append(
+                f"- {describir_producto(producto)}: "
+                f"{existencia} unidades."
+            )
+
+        lineas.append(
+            f"Total: {len(encontrados)} productos."
+        )
+
+        return "\n".join(lineas)
+    
+    
+    # Buscar productos con más de cierta cantidad en existencia.
+    coincidencia_stock_mayor = re.search(
+        r"\b(?:mas de|más de|mayor(?:es)? a)\s+(\d+)\s*"
+        r"(?:piezas?|unidades?|productos?)?\s*"
+        r"(?:en existencia|de existencia|en stock|de stock)?\b",
+        texto,
+    )
+
+    if coincidencia_stock_mayor and any(
+        palabra in texto
+        for palabra in (
+            "producto", "productos", "refaccion", "refacciones",
+            "pieza", "piezas", "unidad", "unidades",
+            "existencia", "stock",
+        )
+    ):
+        limite = int(coincidencia_stock_mayor.group(1))
+        encontrados = []
+
+        for producto in productos:
+            try:
+                existencia = int(producto.get("existencia"))
+            except (ValueError, TypeError):
+                continue
+
+            if existencia > limite:
+                encontrados.append((producto, existencia))
+
+        if not encontrados:
+            return (
+                f"No hay productos registrados con más de "
+                f"{limite} piezas en existencia."
+            )
+
+        encontrados.sort(
+            key=lambda elemento: elemento[1],
+            reverse=True,
+        )
+
+        lineas = [
+            f"Productos con más de {limite} piezas en existencia:"
+        ]
+
+        for producto, existencia in encontrados:
+            lineas.append(
+                f"- {describir_producto(producto)}: "
+                f"{existencia} unidades."
+            )
+
+        lineas.append(
+            f"Total: {len(encontrados)} productos."
+        )
+
+        return "\n".join(lineas)
+
+
+    
+    # 2. Buscar productos agotados.
+    expresiones_agotados = (
+        "agotado",
+        "agotados",
+        "agotada",
+        "agotadas",
+        "sin existencia",
+        "sin existencias",
+        "sin stock",
+        "existencia cero",
+        "stock cero",
+        "stock 0",
+    )
+
+    if any(
+        expresion in texto
+        for expresion in expresiones_agotados
+    ):
         agotados = []
 
         for producto in productos:
@@ -359,20 +579,104 @@ def consultar_inventario_inteligente(
                 agotados.append(producto)
 
         if not agotados:
-            return "No hay productos registrados con existencia cero."
+            return (
+                "Actualmente no hay productos agotados "
+                "en el inventario de El Pistón."
+            )
 
         lineas = ["Productos agotados:"]
+
         for producto in agotados:
-            lineas.append(f"- {describir_producto(producto)}")
+            lineas.append(
+                f"- {describir_producto(producto)}: "
+                "0 unidades."
+            )
+
+        lineas.append(
+            f"Total: {len(agotados)} productos."
+        )
+
+        return "\n".join(lineas)
+    
+    
+    # 3. Buscar productos con stock bajo (1 a 4 unidades).
+    expresiones_stock_bajo = (
+        "stock bajo",
+        "bajo stock",
+        "existencia baja",
+        "existencias bajas",
+        "pocas existencias",
+        "pocas piezas",
+        "productos con poco stock",
+        "refacciones con poco stock",
+        "inventario bajo",
+    )
+
+    if any(
+        expresion in texto
+        for expresion in expresiones_stock_bajo
+    ):
+        productos_bajos = []
+
+        for producto in productos:
+            try:
+                existencia = int(producto.get("existencia"))
+            except (ValueError, TypeError):
+                continue
+
+            if 1 <= existencia < 5:
+                productos_bajos.append(producto)
+
+        if not productos_bajos:
+            return (
+                "Actualmente no hay productos con stock bajo "
+                "en el inventario de El Pistón."
+            )
+
+        lineas = ["Productos con stock bajo:"]
+
+        for producto in productos_bajos:
+            existencia = int(producto["existencia"])
+
+            lineas.append(
+                f"- {describir_producto(producto)}: "
+                f"{existencia} unidades."
+            )
+
+        total = len(productos_bajos)
+        lineas.append(
+            f"Total: {total} {'producto' if total == 1 else 'productos'}."
+        )
 
         return "\n".join(lineas)
 
-    # 3. Buscar productos por categoría.
+
+    # 4. Buscar productos por categoría.
     categorias = sorted({
         str(producto.get("categoria", "")).strip()
         for producto in productos
         if str(producto.get("categoria", "")).strip()
     }, key=len, reverse=True)
+    
+    # Categorías conocidas de la refaccionaria.
+    categorias_conocidas = (
+        "Aceites",
+        "Filtros",
+        "Frenos",
+        "Suspensión",
+        "Sistema eléctrico",
+        "Enfriamiento",
+        "Encendido",
+        "Escape",
+        "Iluminación",
+    )
+
+    # Combinar categorías registradas y conocidas.
+    categorias = sorted(
+        set(categorias) | set(categorias_conocidas),
+        key=len,
+        reverse=True,
+    )
 
     consulta_categoria = any(
         expresion in texto for expresion in (
@@ -385,6 +689,10 @@ def consultar_inventario_inteligente(
             "mostrar ",
             "que manejas de ",
             "que tienes de ",
+            "que refacciones tenemos de ",
+            "que productos tenemos de ",
+            "que refacciones tenemos en ",
+            "que productos tenemos en ",
         )
     )
 

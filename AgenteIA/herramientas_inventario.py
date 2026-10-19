@@ -7,33 +7,80 @@ def crear_herramientas_inventario(inventario_json: str):
     if not isinstance(productos, list):
         raise ValueError("El inventario debe ser una lista JSON.")
 
+    
+    
     def consultar_producto(busqueda: str) -> str:
-        
         print(
             f"[AUTOGEN] Se ejecuto consultar_producto('{busqueda}')",
             flush=True
         )
-        
-        termino = busqueda.strip().casefold()
+
+        import re
+        import unicodedata
+
+        def normalizar_busqueda(valor):
+            texto = unicodedata.normalize("NFKD", str(valor))
+            texto = "".join(
+                caracter for caracter in texto
+                if not unicodedata.combining(caracter)
+            )
+            return texto.casefold().strip()
+
+        termino = normalizar_busqueda(busqueda)
 
         if not termino:
             return json.dumps({
                 "error": "Debes indicar un producto o categoría."
             }, ensure_ascii=False)
 
-        encontrados = [
+        # 1. Prioridad a coincidencias exactas por código o nombre.
+        exactos = [
             producto
             for producto in productos
             if any(
-                termino in str(producto.get(campo, "")).casefold()
-                for campo in ("codigo", "nombre", "marca", "categoria")
+                normalizar_busqueda(producto.get(campo, "")) == termino
+                for campo in ("codigo", "nombre")
             )
         ]
+
+        if exactos:
+            encontrados = exactos
+
+        else:
+            # 2. Buscar frases completas dentro del nombre.
+            coincidencias_nombre = [
+                producto
+                for producto in productos
+                if re.search(
+                    r"(?<!\w)" + re.escape(termino) + r"(?!\w)",
+                    normalizar_busqueda(producto.get("nombre", ""))
+                )
+            ]
+
+            if coincidencias_nombre:
+                encontrados = coincidencias_nombre
+
+            else:
+                # 3. Mantener búsquedas por marca y categoría.
+                encontrados = [
+                    producto
+                    for producto in productos
+                    if any(
+                        termino in normalizar_busqueda(
+                            producto.get(campo, "")
+                        )
+                        for campo in ("marca", "categoria")
+                    )
+                ]
 
         if not encontrados:
             return json.dumps({
                 "encontrados": 0,
-                "mensaje": "No se encontraron productos activos."
+                "mensaje": (
+                    "No se encontró una refacción que coincida "
+                    "con la búsqueda solicitada. No utilices "
+                    "el precio de otro producto."
+                )
             }, ensure_ascii=False)
 
         return json.dumps({
