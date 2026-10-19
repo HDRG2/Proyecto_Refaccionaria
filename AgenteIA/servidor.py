@@ -8,18 +8,18 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from autogen_agentchat.agents import AssistantAgent
 from autogen_ext.models.ollama import OllamaChatCompletionClient
-from AgenteIA.conocimientos_mecanicos import CONOCIMIENTOS_MECANICOS
-from AgenteIA.buscador_mecanico import buscar_conocimiento
-from AgenteIA.herramientas_inventario import (
+from AgenteIA.mecanica.conocimientos_mecanicos import CONOCIMIENTOS_MECANICOS
+from AgenteIA.mecanica.buscador_mecanico import buscar_conocimiento
+from AgenteIA.inventario.herramientas_inventario import (
     crear_herramientas_inventario,
 )
-from AgenteIA.validador_inventario import (
+from AgenteIA.inventario.validador_inventario import (
     cargar_inventario,
     responder_existencia,
     responder_precio,
     responder_compatibilidad,
 )
-from AgenteIA.contexto_inventario import (
+from AgenteIA.inventario.contexto_inventario import (
     ContextoInventario,
     resolver_producto_contextual,
     obtener_producto_seleccionado,
@@ -29,7 +29,7 @@ from AgenteIA.contexto_inventario import (
     resolver_posicion_lista,
 )
 
-from AgenteIA.consultas_inteligentes import consultar_inventario_inteligente
+from AgenteIA.inventario.consultas_inteligentes import consultar_inventario_inteligente
 
 @asynccontextmanager
 async def ciclo_vida(app: FastAPI):

@@ -1,7 +1,7 @@
 
 import json
 
-from AgenteIA.herramientas_inventario import crear_herramientas_inventario
+from AgenteIA.inventario.herramientas_inventario import crear_herramientas_inventario
 
 
 # Inventario de ejemplo para comprobar la herramienta

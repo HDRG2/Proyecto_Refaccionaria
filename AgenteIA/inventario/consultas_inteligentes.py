@@ -1,7 +1,7 @@
 import re
 import unicodedata
 from decimal import Decimal, InvalidOperation
-from AgenteIA.validador_inventario import (
+from AgenteIA.inventario.validador_inventario import (
     normalizar_vehiculo,
     analizar_compatibilidad_registrada,
 )

@@ -1,6 +1,6 @@
 import unittest
 
-from AgenteIA.consultas_inteligentes import (
+from AgenteIA.inventario.consultas_inteligentes import (
     consultar_inventario_inteligente,
 )
 
