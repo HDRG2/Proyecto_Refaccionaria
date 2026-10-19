@@ -469,6 +469,7 @@ namespace Refaccionaria.Frontend.Views
         private const int MAX_MENSAJES_HISTORIAL = 20;
         private string? codigoProductoSeleccionado = null;
         private List<string> codigosProductosContexto = new();
+        private int paginaActualContexto = 1;
 
         // ABRIR CHATBOT
         private void AbrirChatbot_Click(
@@ -647,10 +648,13 @@ namespace Refaccionaria.Frontend.Views
                 TextWrapping = TextWrapping.Wrap,
                 Foreground = new SolidColorBrush(colorTexto),
                 FontSize = 14,
-                MaxWidth = 230,
+                MaxWidth = 270,
 
+                //Permitir seleccionar y copiar el texto del chatbot
+                IsTextSelectionEnabled = true,
+                
                 // Conservar saltos de línea y mejorar legibilidad.
-                LineHeight = 20,
+                LineHeight = 22,
                 LineStackingStrategy = LineStackingStrategy.BlockLineHeight
             };
 
@@ -658,9 +662,9 @@ namespace Refaccionaria.Frontend.Views
             {
                 Background = new SolidColorBrush(colorFondo),
                 CornerRadius = new CornerRadius(12),
-                Padding = new Thickness(12),
+                Padding = new Thickness(14),
                 Margin = new Thickness(0, 0, 0, 10),
-                MaxWidth = 254,
+                MaxWidth = 298,
                 VerticalAlignment = VerticalAlignment.Top,
 
                 HorizontalAlignment = esUsuario
@@ -754,7 +758,8 @@ namespace Refaccionaria.Frontend.Views
                 contexto = new
                 {
                     codigo_seleccionado = codigoProductoSeleccionado,
-                    codigos_lista = codigosProductosContexto
+                    codigos_lista = codigosProductosContexto,
+                    pagina_actual = paginaActualContexto
                 }
             };
 
@@ -863,6 +868,17 @@ namespace Refaccionaria.Frontend.Views
                         .Select(elemento => elemento.GetString()!)
                         .ToList();
                 }
+
+                // Recuperar la página actual del inventario
+                if (contextoRespuesta.TryGetProperty(
+                        "pagina_actual", out JsonElement pagina)
+                    && pagina.ValueKind == JsonValueKind.Number
+                    && pagina.TryGetInt32(out int numeroPagina)
+                    && numeroPagina >= 1)
+                {
+                    paginaActualContexto = numeroPagina;
+                }
+
             }
 
             // Guardar la conversación únicamente cuando hubo éxito
