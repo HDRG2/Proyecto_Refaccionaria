@@ -1,4 +1,4 @@
-from AgenteIA.validador_inventario import (
+from AgenteIA.inventario.validador_inventario import (
     responder_existencia,
     responder_precio,
     responder_compatibilidad,

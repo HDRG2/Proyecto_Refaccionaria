@@ -1,7 +1,7 @@
 import re
 import unicodedata
 
-from AgenteIA.documentacion_automotriz import DOCUMENTACION_AUTOMOTRIZ
+from AgenteIA.mecanica.documentacion_automotriz import DOCUMENTACION_AUTOMOTRIZ
 
 
 EXPRESIONES_EQUIVALENTES = {
