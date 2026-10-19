@@ -1,4 +1,4 @@
-from AgenteIA.contexto_inventario import (
+from AgenteIA.inventario.contexto_inventario import (
     ContextoInventario,
     resolver_posicion_lista,
 )

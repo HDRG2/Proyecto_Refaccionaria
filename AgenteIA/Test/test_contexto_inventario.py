@@ -1,7 +1,7 @@
 import unittest
 from types import SimpleNamespace
 
-from AgenteIA.contexto_inventario import (
+from AgenteIA.inventario.contexto_inventario import (
     ContextoInventario,
     crear_contexto_desde_productos,
     seleccionar_producto_contextual,
