@@ -12,6 +12,9 @@ class ContextoInventario:
     codigo_seleccionado: str | None = None
     codigos_lista: list[str] = field(default_factory=list)
     
+    # Con este atributo podremos recordar la página que está viendo el vendedor
+    pagina_actual: int = 1
+    
     #Contexto para recomendaciones de refaccionaria.
     categoria_consultada: str | None = None
     marca_vehiculo: str | None = None
@@ -142,10 +145,12 @@ def resolver_producto_contextual(
     texto = normalizar_contexto(pregunta)
 
     referencias_ordinales = {
+        "primer": 0,
         "primero": 0,
         "primera": 0,
         "segundo": 1,
         "segunda": 1,
+        "tercer": 2,
         "tercero": 2,
         "tercera": 2,
         "cuarto": 3,
@@ -346,9 +351,9 @@ def resolver_posicion_lista(
         return texto
 
     ordinales = {
-        "primero": 0, "primera": 0,
+        "primer": 0, "primero": 0, "primera": 0,
         "segundo": 1, "segunda": 1,
-        "tercero": 2, "tercera": 2,
+        "tercer": 2, "tercero": 2, "tercera": 2,
         "cuarto": 3, "cuarta": 3,
         "quinto": 4, "quinta": 4,
         "sexto": 5, "sexta": 5,
@@ -360,30 +365,62 @@ def resolver_posicion_lista(
 
     texto = limpiar(pregunta)
 
+    # 1. Buscar referencias escritas con palabras.
     coincidencia = re.search(
         r"\b(" + "|".join(
-            re.escape(palabra) for palabra in ordinales   
-            ) + r")\b",
+            re.escape(palabra) for palabra in ordinales
+        ) + r")\b",
         texto,
     )
 
-    if coincidencia is None:
+    posicion = None
+
+    if coincidencia is not None:
+        posicion = ordinales[coincidencia.group(1)]
+
+    # 2. Buscar referencias numéricas.
+    if posicion is None:
+        coincidencia_numero = re.search(
+            r"\b(?:producto|refaccion|articulo|numero|num|nro|n)"
+            r"\s*(?:numero|num|nro|n)?\s*[#°º.]?\s*(\d+)\b",
+            texto,
+        )
+
+        if coincidencia_numero is None:
+            coincidencia_numero = re.search(
+                r"\b(?:el|la|del|al)\s+(\d+)"
+                r"(?:\s*(?:er|ro|do|to|vo|mo))?\b",
+                texto,
+            )
+
+        if coincidencia_numero is not None:
+            numero = int(coincidencia_numero.group(1))
+
+            if numero < 1:
+                return "fuera_de_rango", None
+
+            posicion = numero - 1
+
+    # 3. Si no se mencionó ninguna posición.
+    if posicion is None:
         return "sin_referencia", None
 
-    posicion = ordinales[coincidencia.group(1)]
-
+    # 4. Verificar que exista una lista anterior.
     if not contexto.codigos_lista:
         return "sin_lista", None
 
+    # 5. Verificar que la posición esté dentro de la lista.
     if posicion >= len(contexto.codigos_lista):
         return "fuera_de_rango", None
 
+    # 6. Obtener el código del producto solicitado.
     codigo = contexto.codigos_lista[posicion]
 
     producto = next(
         (
             p for p in productos
-            if str(p.get("codigo")) == codigo
+            if str(p.get("codigo", "")).strip().casefold()
+            == str(codigo).strip().casefold()
         ),
         None,
     )

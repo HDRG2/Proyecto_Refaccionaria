@@ -52,5 +52,14 @@
     "Nombre": "Jacob",
     "Telefono": "2392193912",
     "Activo": false
+  },
+  {
+    "Id": 7,
+    "NombreUsuario": "JC2001",
+    "Password": "H1d2r3g?",
+    "Rol": "Vendedor",
+    "Nombre": "Juan Carlos Bodoque",
+    "Telefono": "8112636965",
+    "Activo": true
   }
 ]
