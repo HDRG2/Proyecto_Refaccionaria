@@ -2,11 +2,12 @@ import asyncio
 
 from autogen_agentchat.agents import AssistantAgent
 from autogen_ext.models.ollama import OllamaChatCompletionClient
+from AgenteIA.asistente.configuracion import MODELO
 
 
 async def main():
     modelo = OllamaChatCompletionClient(
-        model="qwen2.5:3b",
+        model=MODELO,
         model_info={
             "vision": False,
             "function_calling": False,

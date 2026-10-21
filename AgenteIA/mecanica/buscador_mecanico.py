@@ -15,6 +15,12 @@ EXPRESIONES_EQUIVALENTES = {
         "pierde refrigerante",
     ],
     "sistema_frenos": [
+        "al frenar",
+        "cuando freno",
+        "cuando frena",
+        "frenando",
+        "rechina",
+        "rechinan",
         "no frena",
         "frena poco",
         "chillan los frenos",
@@ -163,7 +169,8 @@ def seleccionar_documentacion(contenido: str, pregunta: str) -> str:
 
     # Priorizar apartados específicos del síntoma.
     equivalencias = {
-        "ruidos": ["chillan", "chirrido", "rechinan", "ruido"],
+        "ruidos": ["chillan", "chilla", "chirrido", "rechinan", "rechina",
+                   "rechinido", "ruido", "suena", "suenan", "truena"],
         "vibracion": ["vibracion", "vibra"],
         "rebotes": ["rebota", "rebotes"],
         "golpeteos": ["golpes", "golpeteos", "baches"],
@@ -277,7 +284,10 @@ def seleccionar_documentacion(contenido: str, pregunta: str) -> str:
 
 
 
-def buscar_conocimiento(pregunta: str) -> str | None:
+def buscar_conocimiento(
+    pregunta: str,
+    max_resultados: int = 2
+) -> str | None:
     
     pregunta_normalizada = normalizar_texto(pregunta)
     
@@ -343,6 +353,14 @@ def buscar_conocimiento(pregunta: str) -> str | None:
             ):
                 puntuacion += 3
 
+        # Frases típicas de cada sistema escritas en documentacion_automotriz
+        # ("ruido al frenar", "vibra a cierta velocidad"). Antes no se usaban.
+        for expresion in datos.get("expresiones", []):
+            if contiene_expresion(
+                pregunta_normalizada, expresion
+            ):
+                puntuacion += 3
+
         for palabra_clave in datos.get("palabras_clave", []):
             if contiene_expresion(
                 pregunta_normalizada, palabra_clave
@@ -370,7 +388,14 @@ def buscar_conocimiento(pregunta: str) -> str | None:
 
     # Seleccionar hasta dos sistemas con coincidencias reales.
     # Mantener primero el sistema con mayor puntuación.
-    mejores_resultados = coincidencias[:2]
+    # El segundo sistema solo se agrega si tiene al menos la mitad de la
+    # puntuación del mejor: "el volante vibra a alta velocidad" es de
+    # llantas; la palabra "volante" sola no debe traer la documentación
+    # de dirección (volante duro o chueco) y confundir al modelo.
+    mejores_resultados = [
+        resultado for resultado in coincidencias[:max(1, max_resultados)]
+        if resultado[0] * 2 >= mejor_puntuacion
+    ]
 
     
     documentacion = []
