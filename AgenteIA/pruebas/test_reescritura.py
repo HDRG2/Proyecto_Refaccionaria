@@ -49,8 +49,12 @@ SIN_NADA = SimpleNamespace(codigo_seleccionado=None, codigos_lista=[])
     ("esto no es un diccionario", VIENDO_ACEITE, None),
 ])
 def test_construir_frase(clasificacion, contexto, frase):
-    # La pregunta nombra los productos que usa cada caso.
-    pregunta = "precio y existencia de las balatas BAL-002"
+    # La pregunta nombra los productos que usa cada caso; las de página
+    # no nombran productos (si los nombraran, no serían cambio de página).
+    if isinstance(clasificacion, dict) and clasificacion.get("tipo") in ("pagina_siguiente", "posicion"):
+        pregunta = "pásame los que siguen"
+    else:
+        pregunta = "precio y existencia de las balatas BAL-002"
     assert construir_frase(clasificacion, INVENTARIO, contexto, pregunta) == frase
 
 
@@ -136,4 +140,15 @@ from AgenteIA.asistente.reescritura import leer_json_tolerante
 ])
 def test_leer_json_tolerante(contenido, esperado):
     assert leer_json_tolerante(contenido) == esperado
+
+
+@pytest.mark.parametrize("clasificacion, pregunta", [
+    ({"tipo": "pagina_anterior"}, "Motor"),
+    ({"tipo": "pagina_siguiente"}, "iluminación"),
+    ({"tipo": "posicion", "numero": "1"}, "Suspensión"),
+    ({"tipo": "precio", "codigo": ""}, "dímelo sin precios"),
+])
+def test_reescritura_no_acepta_clasificaciones_absurdas(clasificacion, pregunta):
+    assert construir_frase(clasificacion, INVENTARIO, VIENDO_ACEITE, pregunta) is None
+
 

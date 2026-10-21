@@ -127,6 +127,19 @@ def identificar_producto(pregunta: str, productos: list[dict]):
     return None # Sin condicion o con varios productos posibles
 
 
+# "¿Para qué autos sirve?", "¿a qué carros le queda?", "autos compatibles"
+PIDE_LISTA_VEHICULOS = (
+    r"\b(?:para|a|con|en)\s+(?:que|cuales|cual)\s+(?:autos?|carros?|coches?|"
+    r"vehiculos?|modelos?|camionetas?|marcas?)\b|"
+    r"\b(?:autos?|carros?|coches?|vehiculos?|modelos?)\s+(?:compatibles|que le quedan|"
+    r"que sirven|registrados)\b"
+)
+
+
+def pide_lista_vehiculos(pregunta: str) -> bool:
+    return re.search(PIDE_LISTA_VEHICULOS, normalizar(pregunta)) is not None
+
+
 def detectar_intencion(pregunta: str):
     texto = normalizar(pregunta)
         # Detectar preguntas sobre universalidad.
@@ -144,7 +157,9 @@ def detectar_intencion(pregunta: str):
     palabras_precio = r"\b(?:precios?|cuesta|cuestan|vale|valen|costos?)\b"
 
     palabras_compatibilidad = (
-        r"\b(?:compatibles?|compatibilidad|le queda|le sirve|funciona para)\b"
+        r"\b(?:compatibles?|compatibilidad|le queda|le sirve|funciona para)\b|"
+        # "¿para qué auto funciona el alternador?", "¿a qué carros le queda?"
+        + PIDE_LISTA_VEHICULOS
     )
 
     if re.search(palabras_compatibilidad, texto):
@@ -381,7 +396,10 @@ def lista_coincidencias(productos: list[dict]) -> str:
 _PALABRAS_INVENTARIO = (
     r"\b(?:inventario|producto|productos|refaccion|refacciones|"
     r"existencia|existencias|stock|precio|precios|pieza|piezas|"
-    r"codigo|venta|ventas|vender|marca|categoria)\b"
+    r"codigo|venta|ventas|vender|marca|categoria|"
+    # Preguntas de venta: "¿qué le ofrezco a un cliente?"
+    r"ofrezco|ofrecer|ofrecerle|ofrezca|ofrecemos|venderle|vendo|"
+    r"le doy|le vendo)\b"
 )
 
 
@@ -428,3 +446,180 @@ def respuesta_producto_no_encontrado(pregunta: str) -> str | None:
         "reviso. También puedes escribir \"¿qué tenemos en inventario?\" "
         "para ver la lista completa."
     )
+
+
+def normalizar_codigos(pregunta: str, productos: list[dict]) -> str:
+    # "MOT 001", "mot001", "MOT_001", "mot - 001" -> "MOT-001".
+    for producto in productos:
+        codigo = str(producto.get("codigo", "")).strip()
+        m = re.fullmatch(r"([A-Za-z]{2,5})-(\d{2,5})", codigo)
+        if not m:
+            continue
+        prefijo, numero = m.groups()
+        pregunta = re.sub(
+            r"(?<![\w-])" + re.escape(prefijo) + r"[\s_-]*" + re.escape(numero) + r"(?![\w-])",
+            codigo,
+            pregunta,
+            flags=re.IGNORECASE,
+        )
+    return pregunta
+
+
+# ---------------------------------------------------------------------
+# Códigos que no existen ("MOT 001" cuando no hay un MOT-001 activo)
+# ---------------------------------------------------------------------
+
+# Palabras que pueden ir junto al código: "el código MOT-001", "dame el ABC 12".
+_RELLENO_CODIGO = (
+    r"(?:el|la|del|de|codigo|clave|producto|refaccion|articulo|pieza|info|"
+    r"ficha|dame|dime|busca|buscame|muestrame|ensename|que es|cual es|y|"
+    r"precio|precio de|existencia de|cuanto cuesta|cuanto vale)"
+)
+
+# Palabras cortas que no son prefijo de código ("el 10", "pagina 20").
+_NO_PREFIJO = {
+    "el", "la", "los", "las", "del", "de", "al", "pag", "num", "no", "nro",
+    "item", "top", "mas", "menos", "hay", "son", "unos", "unas", "como",
+    "solo", "cada", "por", "con", "sin", "para", "total", "vendi", "vendo",
+}
+
+
+def _prefijos_y_modelos(productos: list[dict]) -> tuple[set, set]:
+    prefijos, nombres_vehiculo = set(), set()
+    for producto in productos:
+        m = re.fullmatch(r"([A-Za-z]{2,5})-\d{2,5}", str(producto.get("codigo", "")).strip())
+        if m:
+            prefijos.add(m.group(1).casefold())
+        compatibles = producto.get("vehiculosCompatibles") or []
+        if isinstance(compatibles, list):
+            for vehiculo in compatibles:
+                nombres_vehiculo.update(re.findall(r"[a-z]+", normalizar(str(vehiculo))))
+    return prefijos, nombres_vehiculo
+
+
+def codigo_no_registrado(pregunta: str, productos: list[dict]) -> str | None:
+    # Si el mensaje es SOLO un código ("MOT 001", "mot001", "el código
+    # XYZ-12") y ningún producto activo lo tiene, devuelve el código
+    # escrito en formato "MOT-001". Si no, None.
+    #
+    # Se cuida no confundir vehículos ni páginas: "versa 2015",
+    # "ram 1500", "página 2" o "el 10" no son códigos.
+    from AgenteIA.inventario.utilidades_inventario import MARCAS_CONOCIDAS
+
+    texto = normalizar(pregunta).strip(" ¿?¡!.,")
+    m = re.fullmatch(
+        rf"(?:{_RELLENO_CODIGO}\s+)*([a-z]{{2,5}})([\s_-]*)(\d{{1,5}})", texto
+    )
+    if not m:
+        return None
+
+    prefijo, separador, numero = m.groups()
+    codigo = f"{prefijo.upper()}-{numero}"
+
+    if any(
+        str(p.get("codigo", "")).strip().casefold() == codigo.casefold()
+        for p in productos
+    ):
+        return None
+
+    prefijos, nombres_vehiculo = _prefijos_y_modelos(productos)
+
+    if prefijo in _NO_PREFIJO or prefijo in MARCAS_CONOCIDAS or prefijo in nombres_vehiculo:
+        return None
+
+    con_guion = "-" in separador or "_" in separador
+    pegado = separador == ""
+    # "versa 2015": un año separado por espacio no es un código.
+    if not con_guion and not pegado and re.fullmatch(r"(?:19|20)\d{2}", numero):
+        return None
+
+    # Solo se toma como código si TIENE forma de código: guion o guion
+    # bajo, letras y números pegados, un cero al inicio ("001") o un
+    # prefijo que ya usan otros productos ("BAL 9").
+    if not (con_guion or pegado or numero.startswith("0") or prefijo in prefijos):
+        return None
+    # Un solo dígito ("BAL 9") solo si el prefijo ya existe o lleva guion.
+    if len(numero) == 1 and not (con_guion or prefijo in prefijos):
+        return None
+
+    return codigo
+
+
+def respuesta_codigo_no_registrado(codigo: str, productos: list[dict]) -> str:
+    prefijo, numero = codigo.split("-")
+    # Solo los del mismo prefijo ("MOT-002" para "MOT-001"); que solo
+    # coincida el número ("ACE-001") no le sirve al vendedor.
+    parecidos = [
+        p for p in productos
+        if str(p.get("codigo", "")).upper().startswith(prefijo + "-")
+    ]
+    texto = (
+        f"No hay ningún producto activo con el código {codigo} en el "
+        "inventario de El Pistón. Revisa que esté bien escrito; si el "
+        "producto se dio de baja, ya no aparece aquí."
+    )
+    if parecidos:
+        texto += "\n\nCódigos parecidos que sí existen:\n" + "\n".join(
+            f"• {etiqueta_producto(p)}" for p in parecidos[:6]
+        )
+    else:
+        texto += " También puedes buscarlo por su nombre."
+    return texto
+
+
+def vehiculos_registrados(producto: dict) -> str:
+    # Respuesta a "¿para qué autos sirve el alternador?".
+    etiqueta = etiqueta_producto(producto)
+    compatibles = producto.get("vehiculosCompatibles") or []
+    if not isinstance(compatibles, list):
+        compatibles = []
+    compatibles = [str(v).strip() for v in compatibles if str(v).strip()]
+
+    if producto.get("universal") is True:
+        texto = (
+            f"{etiqueta} está registrado como universal. Confirma las "
+            "especificaciones del vehículo antes de venderlo."
+        )
+        if compatibles:
+            texto += "\nVehículos registrados:\n" + "\n".join(f"• {v}" for v in compatibles)
+        return texto
+
+    if not compatibles:
+        return (
+            f"{etiqueta} no tiene vehículos compatibles registrados en el "
+            "inventario. Confirma marca, modelo, año y motor con el cliente y "
+            "verifica la especificación antes de venderlo."
+        )
+
+    return (
+        f"Vehículos compatibles registrados para {etiqueta}:\n"
+        + "\n".join(f"• {v}" for v in compatibles)
+        + "\n\nConfirma el motor y la versión del vehículo antes de venderlo."
+    )
+
+
+def es_solo_vehiculo(pregunta: str, productos: list[dict] | None = None) -> bool:
+    # "nissan", "nissan versa", "versa 2015", "toyota corolla 2014":
+    # el vendedor solo escribió un vehículo. Con el inventario también
+    # reconoce un modelo registrado solo: "versa", "corolla".
+    from AgenteIA.inventario.utilidades_inventario import MARCAS_CONOCIDAS
+
+    texto = normalizar(pregunta).strip(" ¿?¡!.,")
+    palabras = re.findall(r"[a-z0-9]+", texto)
+    if not palabras or len(palabras) > 5:
+        return False
+    if productos and len(palabras) <= 3:
+        _, modelos = _prefijos_y_modelos(productos)
+        modelos -= set(MARCAS_CONOCIDAS)
+        resto = [p for p in palabras if p not in modelos and p not in
+                 {"un", "una", "el", "la", "mi", "del", "modelo", "para", "de"}
+                 and not re.fullmatch(r"(?:19|20)\d{2}", p)]
+        if any(p in modelos for p in palabras) and not resto:
+            return True
+    tiene_marca = any(p in MARCAS_CONOCIDAS for p in palabras)
+    tiene_anio = any(re.fullmatch(r"(?:19|20)\d{2}", p) for p in palabras)
+    relleno = {"un", "una", "el", "la", "mi", "del", "modelo", "y", "para", "de"}
+    otras = [p for p in palabras if p not in MARCAS_CONOCIDAS and p not in relleno
+             and not re.fullmatch(r"(?:19|20)\d{2}", p)]
+    # Marca y/o año, y como mucho dos palabras más (el modelo).
+    return (tiene_marca or (tiene_anio and otras)) and len(otras) <= 2
