@@ -3,7 +3,7 @@ import json
 import re
 
 from AgenteIA.asistente.configuracion import MODELO, OLLAMA_HOST, modelo_piensa
-from AgenteIA.asistente.listados import CATEGORIAS_CONOCIDAS
+from AgenteIA.asistente.listados import CATEGORIAS_CONOCIDAS, menciona_categoria
 from AgenteIA.asistente.productos import buscar_por_palabra, productos_en_texto
 from AgenteIA.asistente.texto import normalizar
 
@@ -211,6 +211,20 @@ def construir_frase(
     producto = codigo or seleccionado
     del_producto = f" del {codigo}" if codigo else ""
 
+    # "Motor", "iluminación": el modelo a veces lo toma como cambio de
+    # página. Si el mensaje nombra una categoría o un producto, no lo es.
+    if tipo in ("pagina_siguiente", "pagina_anterior", "pagina_numero", "posicion") and (
+        menciona_categoria(pregunta, productos)
+        or _codigos_mencionados(pregunta, productos)
+        # "MOT 001": parece un código, no una página.
+        or re.search(r"\b[a-z]{2,5}[\s_-]*0\d{1,4}\b|\b[a-z]{2,5}[_-]\d{2,5}\b", normalizar(pregunta))
+    ):
+        return None
+
+    # "dímelo sin precios": no puede convertirse en una consulta de precio.
+    if tipo == "precio" and re.search(r"\bsin (?:el |los |sus )?precios?\b", normalizar(pregunta)):
+        return None
+
     if tipo == "pagina_siguiente":
         return "siguientes productos" if hay_lista else None
     if tipo == "pagina_anterior":
@@ -349,5 +363,7 @@ async def reescribir_pregunta(pregunta: str, productos: list[dict], contexto, hi
     if frase and normalizar(frase) == normalizar(pregunta):
         return None
     return frase
+
+
 
 

@@ -1,6 +1,8 @@
 import re
 import unicodedata
 
+from AgenteIA.asistente.coloquial import traducir_coloquial
+
 
 def normalizar(texto: str) -> str:
     # Minúsculas, sin espacios repetidos y sin acentos,
@@ -123,7 +125,9 @@ def preparar_pregunta(texto: str) -> str:
     # 2. Reducir letras repetidas exageradas ("holaaaaa" -> "holaa").
     texto = re.sub(r"([a-zA-ZáéíóúüñÁÉÍÓÚÑ])\1{2,}", r"\1\1", texto)
 
-    # 3. Traducir expresiones coloquiales o en inglés.
+    # 3. Traducir modismos, apodos y abreviaturas (ver coloquial.py)
+    #    y expresiones en inglés.
+    texto = traducir_coloquial(texto)
     for frase, reemplazo in EQUIVALENCIAS_REGISTRO:
         texto = re.sub(
             _patron_flexible(frase), reemplazo, texto,

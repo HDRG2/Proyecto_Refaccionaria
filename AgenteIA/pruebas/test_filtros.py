@@ -471,3 +471,143 @@ def test_recomendacion_en_categoria_vacia():
     assert mostrados == []
 
 
+
+# ---------------------------------------------------------------------
+# Compatibilidad, códigos, vehículos e idiomas (pruebas del 21 de octubre)
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.idioma import contiene_escritura_extranjera
+from AgenteIA.asistente.productos import (
+    es_solo_vehiculo,
+    normalizar_codigos,
+    pide_lista_vehiculos,
+    vehiculos_registrados,
+)
+
+
+@pytest.mark.parametrize("pregunta", [
+    "para que auto funciona el alternador",
+    "autos compatibles para esa pieza?",
+    "¿a qué carros le queda?",
+])
+def test_pide_lista_de_vehiculos(pregunta):
+    assert pide_lista_vehiculos(pregunta)
+    assert detectar_intencion(pregunta) == "compatibilidad"
+
+
+def test_vehiculos_registrados():
+    producto = {"codigo": "PRU-009", "nombre": "Alternador",
+                "vehiculosCompatibles": ["Nissan Versa 2012-2019"]}
+    assert "• Nissan Versa 2012-2019" in vehiculos_registrados(producto)
+    sin_registro = {"codigo": "X-01", "nombre": "Pieza"}
+    assert "no tiene vehículos compatibles registrados" in vehiculos_registrados(sin_registro)
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("MOT 001", "MOT 001"),          # MOT-001 no está en este inventario
+    ("ace 001", "ACE-001"),
+    ("dame el bal001", "dame el BAL-001"),
+    ("tengo 001 piezas", "tengo 001 piezas"),
+])
+def test_normalizar_codigos(texto, esperado):
+    assert normalizar_codigos(texto, INVENTARIO) == esperado
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("nissan", True),
+    ("nissan versa 2015", True),
+    ("toyota 2014", True),
+    ("hola", False),
+    ("mi carro no arranca", False),
+    ("¿cuánto cuesta el ACE-001?", False),
+])
+def test_es_solo_vehiculo(texto, esperado):
+    assert es_solo_vehiculo(texto) is esperado
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("hablame en guyarati", True),
+    ("habla en sueco", True),
+    ("¿hablas en serio?", False),
+    ("háblame en español", False),
+])
+def test_hablar_en_otro_idioma(texto, esperado):
+    assert detectar_cambio_idioma(texto) is esperado
+
+
+def test_escritura_griega():
+    assert contiene_escritura_extranjera("Γειά σου")
+    assert not contiene_escritura_extranjera("¿Cuánto cuesta?")
+
+
+# ---------------------------------------------------------------------
+# Categoría sola y "solo el nombre" (pruebas del amigo)
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.listados import es_solo_categoria, pide_solo_nombre
+
+
+@pytest.mark.parametrize("mensaje, categoria", [
+    ("Motor", "Motor"),
+    ("iluminacion", "Iluminación"),
+    ("Suspensión", "Suspensión"),
+    ("dime solo los de escape", "Escape"),
+    ("Dime filtros", "Filtros"),
+    ("sistema eléctrico", "Sistema eléctrico"),
+    ("¿cuánto cuesta el ACE-001?", None),
+    ("mi motor se sobrecalienta", None),
+    ("el segundo", None),
+])
+def test_es_solo_categoria(mensaje, categoria):
+    assert es_solo_categoria(mensaje, INVENTARIO) == categoria
+
+
+@pytest.mark.parametrize("mensaje, esperado", [
+    ("solo dime el nombre", True),
+    ("dímelo sin precios", True),
+    ("¿cómo se llama?", True),
+    ("solo dime los nombres", True),
+    ("¿cuánto cuesta?", False),
+    ("dime el precio", False),
+])
+def test_pide_solo_nombre(mensaje, esperado):
+    assert pide_solo_nombre(mensaje) is esperado
+
+
+# ---------------------------------------------------------------------
+# Códigos que no existen y vehículos escritos solos
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.productos import codigo_no_registrado
+
+
+@pytest.mark.parametrize("mensaje, esperado", [
+    ("MOT 001", "MOT-001"),
+    ("mot001", "MOT-001"),
+    ("el código XYZ-12", "XYZ-12"),
+    ("BAL 9", "BAL-9"),
+    ("ACE-001", None),            # existe
+    ("ace 001", None),            # existe, escrito distinto
+    ("versa 2015", None),         # vehículo
+    ("ram 1500", None),           # marca
+    ("página 2", None),
+    ("el 10", None),
+    ("dame 5", None),
+    ("¿cuánto cuesta el ACE-001?", None),
+])
+def test_codigo_no_registrado(mensaje, esperado):
+    assert codigo_no_registrado(mensaje, INVENTARIO) == esperado
+
+
+def test_vehiculo_solo_con_modelo_registrado():
+    inventario = INVENTARIO + [{"codigo": "AMO-005", "nombre": "Amortiguador",
+                                "vehiculosCompatibles": ["Toyota Corolla (2014-2019)"]}]
+    assert es_solo_vehiculo("corolla", inventario) is True
+    assert es_solo_vehiculo("toyota corolla", inventario) is True
+    assert es_solo_vehiculo("corolla", INVENTARIO) is False
+    assert es_solo_vehiculo("amortiguador corolla", inventario) is False
+
+
+
+
+

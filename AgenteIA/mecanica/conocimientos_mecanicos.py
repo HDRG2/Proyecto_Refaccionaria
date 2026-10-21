@@ -97,6 +97,24 @@ CONOCIMIENTOS_MECANICOS = {
         "termostato esté dañado."
     ),
 
+    "funcion_alternador": (
+        "El alternador genera electricidad mientras el motor está "
+        "funcionando: alimenta los sistemas eléctricos del vehículo (luces, "
+        "computadora, estéreo) y recarga la batería. No es el que arranca el "
+        "motor; eso lo hace el motor de arranque (marcha) con la energía de "
+        "la batería. Una falla del alternador suele notarse con el testigo "
+        "de batería encendido, luces débiles o una batería que se descarga "
+        "aunque sea nueva."
+    ),
+
+    "funcion_marcha": (
+        "El motor de arranque (marcha) hace girar el motor para encenderlo, "
+        "usando la energía de la batería. Si al girar la llave solo se "
+        "escucha un clic o el motor gira muy lento, puede ser la batería, "
+        "las conexiones o la propia marcha. La marcha no recarga la batería; "
+        "eso lo hace el alternador."
+    ),
+
     "funcion_abs": (
         "El ABS (sistema antibloqueo de frenos) evita que las ruedas se "
         "bloqueen durante un frenado fuerte, para que el conductor conserve "
@@ -178,6 +196,19 @@ CONOCIMIENTOS_MECANICOS = {
         "de llantas y rines antes de cambiar otras piezas."
     ),
 
+    "causas_sobrecalentamiento": (
+        "Que el motor se caliente de más suele relacionarse con el sistema "
+        "de enfriamiento: nivel bajo o fugas de refrigerante, termostato "
+        "atascado, radiador tapado, ventilador que no enciende, bomba de "
+        "agua dañada o mangueras en mal estado. Una temperatura alta no "
+        "confirma por sí sola cuál pieza falla; conviene revisar primero "
+        "el nivel de refrigerante y buscar fugas con el motor frío.\n\n"
+        "Por seguridad: si la aguja sube o sale vapor, detenerse en un "
+        "lugar seguro y apagar el motor. No abrir la tapa del radiador ni "
+        "del depósito mientras esté caliente, porque el sistema está a "
+        "presión y puede causar quemaduras."
+    ),
+
     "que_hacer_testigo_aceite": (
         "Si se enciende el testigo de presión de aceite con el motor "
         "funcionando, detente en un lugar seguro y apaga el motor. Puede "
@@ -216,6 +247,15 @@ PREGUNTAS_FRECUENTES = [
        "se calento", "calentando", "sale vapor", "echa vapor"],
       ["que hago", "que debo hacer", "que hacer", "puedo seguir",
        "puedo manejar", "es peligroso"]]),
+
+    # "mi carro se calienta", "se sobrecalienta el motor": síntoma sin
+    # pregunta de qué hacer. No aplica si habla de otra pieza que se
+    # calienta (frenos, aceite, batería...); ver _EXCLUSIONES.
+    ("causas_sobrecalentamiento",
+     [["sobrecalienta", "sobrecalento", "sobrecalientan", "sobrecalentamiento",
+       "se calienta", "se calento", "se esta calentando", "calentando",
+       "sube la temperatura", "sube la aguja", "sale vapor", "echa vapor",
+       "temperatura alta", "temperatura muy alta"]]),
 
     ("que_hacer_testigo_aceite",
      [["testigo de aceite", "testigo del aceite", "foco del aceite",
@@ -279,10 +319,25 @@ PREGUNTAS_FRECUENTES = [
                    "cuando se cambia", "cuando debo cambiar", "cuanto dura"]]),
 
     ("funcion_termostato", [["termostato"], _FUNCION]),
+    ("funcion_alternador", [["alternador"], _FUNCION]),
+    ("funcion_marcha", [["marcha", "motor de arranque"], _FUNCION]),
     ("funcion_abs", [["abs"], _FUNCION + _QUE_HAGO]),
     ("funcion_filtro_aceite", [["filtro de aceite"], _FUNCION]),
     ("funcion_bujias", [["bujia", "bujias"], _FUNCION]),
 ]
+
+
+# Si la pregunta menciona alguna de estas palabras, esa respuesta rápida
+# no se usa (y la pregunta sigue al buscador de documentación).
+_EXCLUSIONES = {
+    "causas_sobrecalentamiento": [
+        "freno", "frenos", "balata", "balatas", "disco", "discos", "llanta",
+        "llantas", "aceite", "clutch", "embrague", "transmision", "bateria",
+        "alternador", "escape", "catalizador", "mofle", "cable", "cables",
+        "foco", "focos", "faro", "faros", "marcha", "motor de arranque",
+        "clima", "aire acondicionado", "compresor", "asiento", "volante",
+    ],
+}
 
 
 def _normalizar(texto: str) -> str:
@@ -309,8 +364,11 @@ def buscar_respuesta_rapida(pregunta: str) -> str | None:
         return None
 
     for clave, grupos in PREGUNTAS_FRECUENTES:
+        if any(_contiene(texto, p) for p in _EXCLUSIONES.get(clave, ())):
+            continue
         if all(any(_contiene(texto, palabra) for palabra in grupo) for grupo in grupos):
             return CONOCIMIENTOS_MECANICOS[clave]
 
     return None
+
 

@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
 from AgenteIA.asistente.configuracion import MODELO, OLLAMA_HOST, modelo_piensa
+from AgenteIA.asistente.coloquial import registrar_no_entendida
 from AgenteIA.asistente.reescritura import reescribir_pregunta
 from AgenteIA.inventario.contexto_inventario import contexto_a_diccionario
 from AgenteIA.asistente.etapas import (
@@ -15,18 +16,23 @@ from AgenteIA.asistente.etapas import (
     etapa_conteo,
     etapa_calculadora,
     etapa_recomendacion_venta,
+    etapa_solo_categoria,
     etapa_consultas_inteligentes,
     etapa_ranking,
     etapa_listado_general,
     etapa_identificar_producto,
     etapa_paginacion,
+    etapa_solo_nombre,
     etapa_posicion_en_lista,
     etapa_referencias_contexto,
     etapa_productos_universales,
     etapa_consulta_ambigua,
     etapa_respuestas_validadas,
+    etapa_solo_vehiculo,
     etapa_respuestas_rapidas,
     etapa_modelo,
+    MENSAJE_NO_ENTENDI,
+    MENSAJE_SIN_DOCUMENTACION,
 )
 
 
@@ -138,16 +144,19 @@ ETAPAS = (
     etapa_conteo,
     etapa_calculadora,
     etapa_recomendacion_venta,
+    etapa_solo_categoria,
     etapa_consultas_inteligentes,
     etapa_ranking,
     etapa_listado_general,
     etapa_identificar_producto,
     etapa_paginacion,
+    etapa_solo_nombre,
     etapa_posicion_en_lista,
     etapa_referencias_contexto,
     etapa_productos_universales,
     etapa_consulta_ambigua,
     etapa_respuestas_validadas,
+    etapa_solo_vehiculo,
     etapa_respuestas_rapidas,
 )
 
@@ -175,7 +184,31 @@ def _correr_etapas(datos: Consulta):
     return None, estado
 
 
+# Respuestas finales que indican que el asistente no supo qué contestar.
+# Esas preguntas se guardan en registro/preguntas_no_entendidas.txt.
+RESPUESTAS_NO_ENTENDIDAS = RESPUESTAS_DE_DUDA + (
+    MENSAJE_NO_ENTENDI[:40],
+    MENSAJE_SIN_DOCUMENTACION[:40],
+)
+
+
 async def procesar_consulta(datos: Consulta):
+    pregunta = datos.pregunta
+    seguimiento = {"reescrita": None}
+    resultado = await _procesar_consulta(datos, seguimiento)
+
+    texto = resultado.get("respuesta", "") if isinstance(resultado, dict) else ""
+    if texto.startswith(RESPUESTAS_NO_ENTENDIDAS):
+        registrar_no_entendida(pregunta, "sin respuesta", seguimiento["reescrita"])
+    elif seguimiento["reescrita"]:
+        # Se entendió, pero solo gracias al modelo: sirve para agregar
+        # la palabra al diccionario coloquial y ahorrar esa llamada.
+        registrar_no_entendida(pregunta, "reescrita", seguimiento["reescrita"])
+
+    return resultado
+
+
+async def _procesar_consulta(datos: Consulta, seguimiento: dict):
     # Copia del mensaje tal como llegó (las etapas modifican "datos").
     original = datos.model_copy(deep=True)
 
@@ -201,6 +234,7 @@ async def procesar_consulta(datos: Consulta):
     )
 
     if frase:
+        seguimiento["reescrita"] = frase
         segunda = original.model_copy(deep=True)
         segunda.pregunta = frase
         respuesta_2, estado_2 = _correr_etapas(segunda)
@@ -219,4 +253,7 @@ async def procesar_consulta(datos: Consulta):
 
     # 3. Ninguna regla aplicó: se consulta al modelo como antes.
     return await etapa_modelo(estado)
+
+
+
 

@@ -16,6 +16,7 @@ from AgenteIA.asistente.filtros_respuesta import (
 from AgenteIA.asistente.idioma import (
     MENSAJE_SOLO_ESPANOL,
     REGLA_IDIOMA,
+    contiene_escritura_extranjera,
     detectar_cambio_idioma,
     es_texto_en_espanol,
 )
@@ -23,8 +24,10 @@ from AgenteIA.asistente.listados import (
     detectar_cambio_pagina,
     categoria_sin_productos,
     es_solicitud_listado,
+    es_solo_categoria,
     filtrar_listado,
     mensaje_categoria_vacia,
+    pide_solo_nombre,
     respuesta_conteo,
     respuesta_ranking,
     respuesta_recomendacion_venta,
@@ -46,8 +49,15 @@ from AgenteIA.asistente.productos import (
     identificar_producto,
     lista_coincidencias,
     menciona_inventario,
+    es_solo_vehiculo,
+    normalizar_codigos,
+    codigo_no_registrado,
+    respuesta_codigo_no_registrado,
     obtener_existencia,
+    pide_lista_vehiculos,
     respuesta_producto_no_encontrado,
+    ultimo_mensaje_asistente,
+    vehiculos_registrados,
 )
 from AgenteIA.asistente.respuestas import (
     crear_respuesta_con_contexto,
@@ -59,6 +69,7 @@ from AgenteIA.asistente.seguridad import (
     detectar_modificacion_inventario,
 )
 from AgenteIA.asistente.social import respuesta_social
+from AgenteIA.asistente.coloquial import corregir_ortografia
 from AgenteIA.asistente.texto import (
     normalizar,
     normalizar_terminos_automotrices,
@@ -102,6 +113,13 @@ MENSAJE_SIN_DOCUMENTACION = (
     "seguridad. Revisa el manual o la ficha del fabricante, o consúltalo "
     "con un mecánico. Si es sobre un producto, dime su nombre o código y "
     "te doy sus datos del inventario."
+)
+
+
+MENSAJE_NO_ENTENDI = (
+    "No entendí tu mensaje. Escríbeme tu consulta sobre refacciones, "
+    "inventario, precios o mecánica automotriz. Por ejemplo: "
+    "\"¿cuánto cuesta el ACE-001?\" o \"mi carro rechina al frenar\"."
 )
 
 
@@ -152,7 +170,7 @@ def etapa_filtros_iniciales(estado_consulta: EstadoConsulta):
         )
 
     # PROTECCIÓN DE IDIOMA: siempre en español.
-    if detectar_cambio_idioma(datos.pregunta):
+    if detectar_cambio_idioma(datos.pregunta) or contiene_escritura_extranjera(datos.pregunta):
         print("[IDIOMA] Solicitud de cambio de idioma bloqueada.", flush=True)
 
         return respuesta_sin_cambios(MENSAJE_SOLO_ESPANOL, datos)
@@ -221,6 +239,24 @@ def etapa_cargar_inventario(estado_consulta: EstadoConsulta):
         ) from error
 
     estado_consulta.productos_actuales = productos_actuales
+
+    # "MOT 001", "mot001" -> "MOT-001"
+    datos.pregunta = normalizar_codigos(datos.pregunta, productos_actuales)
+
+    # Errores de dedo: "valatas" -> "balatas", "corrolla" -> "corolla".
+    corregida = corregir_ortografia(datos.pregunta, productos_actuales)
+    if corregida != datos.pregunta:
+        print(f"[ORTOGRAFIA] {datos.pregunta!r} -> {corregida!r}", flush=True)
+        datos.pregunta = corregida
+
+    # "MOT 001" cuando no existe un MOT-001 activo: se avisa sin adivinar
+    # (antes el modelo lo tomaba como "página 1").
+    codigo = codigo_no_registrado(datos.pregunta, productos_actuales)
+    if codigo:
+        print(f"[CÓDIGO] {codigo} no está en el inventario activo.", flush=True)
+        return respuesta_sin_cambios(
+            respuesta_codigo_no_registrado(codigo, productos_actuales), datos
+        )
     return None
 
 
@@ -294,6 +330,39 @@ def etapa_recomendacion_venta(estado_consulta: EstadoConsulta):
     )
 
     return crear_respuesta_con_contexto(respuesta, contexto_calculo)
+
+
+def etapa_solo_categoria(estado_consulta: EstadoConsulta):
+    """"Motor", "iluminación", "dime solo los de escape"."""
+    datos = estado_consulta.datos
+    productos_actuales = estado_consulta.productos_actuales
+
+    categoria = es_solo_categoria(datos.pregunta, productos_actuales)
+    if categoria is None:
+        return None
+
+    respuesta = consultar_inventario_inteligente(
+        f"¿qué productos de la categoría {categoria} tenemos?",
+        productos_actuales,
+        estado_consulta.contexto_calculo,
+        datos.historial,
+    )
+
+    # La categoría existe en el programa pero no tiene productos.
+    if respuesta is None or not respuesta.startswith("Productos de la categoría"):
+        respuesta = mensaje_categoria_vacia(categoria)
+
+    # Recordar la lista para "el tercero", "solo dime el nombre"...
+    contexto = estado_consulta.contexto_calculo
+    mostrados = obtener_productos_mencionados(respuesta, productos_actuales)
+    contexto.codigos_lista = [str(p["codigo"]) for p in mostrados]
+    contexto.pagina_actual = 1
+    contexto.codigo_seleccionado = (
+        str(mostrados[0]["codigo"]) if len(mostrados) == 1 else None
+    )
+
+    print(f"[CATEGORÍA] {categoria}", flush=True)
+    return crear_respuesta_con_contexto(respuesta, contexto)
 
 
 def etapa_consultas_inteligentes(estado_consulta: EstadoConsulta):
@@ -728,6 +797,39 @@ def etapa_paginacion(estado_consulta: EstadoConsulta):
         "\n".join(lineas),
         contexto,
     )
+
+
+def etapa_solo_nombre(estado_consulta: EstadoConsulta):
+    """"Solo dime el nombre", "sin precios": nombre y código, sin datos extra."""
+    contexto = estado_consulta.contexto
+    datos = estado_consulta.datos
+    productos_actuales = estado_consulta.productos_actuales
+
+    if not pide_solo_nombre(datos.pregunta):
+        return None
+
+    producto = estado_consulta.producto or obtener_producto_seleccionado(
+        contexto, productos_actuales
+    )
+
+    if producto is not None:
+        respuesta = f"{producto.get('nombre')} ({producto.get('codigo')})"
+    elif contexto.codigos_lista:
+        por_codigo = {str(p.get("codigo")): p for p in productos_actuales}
+        nombres = [
+            f"{i}. {por_codigo[c].get('nombre')} ({c})"
+            for i, c in enumerate(contexto.codigos_lista, start=1)
+            if c in por_codigo
+        ]
+        respuesta = "\n".join(nombres) if nombres else None
+    else:
+        respuesta = None
+
+    if respuesta is None:
+        respuesta = "¿De qué producto? Dime su nombre o código, por ejemplo ACE-001."
+
+    print("[VALIDADOR] Solo nombres.", flush=True)
+    return crear_respuesta_con_contexto(respuesta, contexto, producto)
 
 
 def etapa_posicion_en_lista(estado_consulta: EstadoConsulta):
@@ -1260,14 +1362,24 @@ def etapa_respuestas_validadas(estado_consulta: EstadoConsulta):
     if producto is not None and intencion == "compatibilidad":
         vehiculo = extraer_vehiculo(datos.pregunta)
 
+        # "¿Para qué autos sirve?", "autos compatibles para esa pieza":
+        # se listan los vehículos registrados del producto.
+        if vehiculo is None and pide_lista_vehiculos(datos.pregunta):
+            print(f"[VALIDADOR] Vehículos registrados: {producto.get('codigo')}", flush=True)
+            return crear_respuesta_con_contexto(
+                vehiculos_registrados(producto),
+                contexto,
+                producto,
+            )
+
         # Si no lo dijo, usar el vehículo recordado de la conversación.
         if vehiculo is None:
             vehiculo = describir_vehiculo_contexto(contexto)
 
+        # Sin vehículo: mostrar los registrados en lugar de solo pedirlo.
         if vehiculo is None:
             return crear_respuesta_con_contexto(
-                "Indícame la marca, modelo y año del vehículo. "
-                "Por ejemplo: Toyota Corolla 2016.",
+                vehiculos_registrados(producto),
                 contexto,
                 producto,
             )
@@ -1310,6 +1422,42 @@ def etapa_respuestas_validadas(estado_consulta: EstadoConsulta):
         )
 
     return None
+
+
+def etapa_solo_vehiculo(estado_consulta: EstadoConsulta):
+    """"nissan versa 2015": refacciones registradas para ese vehículo."""
+    datos = estado_consulta.datos
+    contexto = estado_consulta.contexto
+
+    if not es_solo_vehiculo(datos.pregunta, estado_consulta.productos_actuales):
+        return None
+
+    # "¿le queda al ACE-001?" -> "toyota 2014": sigue la pregunta anterior
+    # de compatibilidad de ESE producto (la atiende la reescritura).
+    # Si lo anterior fue una lista de vehículos o de refacciones por
+    # vehículo, "nissan versa" es una búsqueda nueva.
+    ultimo = normalizar(ultimo_mensaje_asistente(datos.historial))
+    seleccionado = normalizar(contexto.codigo_seleccionado or "")
+    if (
+        seleccionado
+        and "compatib" in ultimo
+        and seleccionado in ultimo
+        and "en estos modelos" not in ultimo
+        and "con compatibilidad registrada para" not in ultimo
+    ):
+        return None
+
+    respuesta = consultar_inventario_inteligente(
+        f"¿qué refacciones tienes para un {datos.pregunta.strip(' ¿?¡!.,')}?",
+        estado_consulta.productos_actuales,
+        contexto,
+        datos.historial,
+    )
+    if respuesta is None:
+        return None
+
+    print("[VEHÍCULO] Refacciones para el vehículo.", flush=True)
+    return crear_respuesta_con_contexto(respuesta, contexto)
 
 
 def etapa_respuestas_rapidas(estado_consulta: EstadoConsulta):
@@ -1448,8 +1596,11 @@ async def etapa_modelo(estado_consulta: EstadoConsulta):
             if conocimiento is None and seguimiento_mecanico is None:
                 print("[MECÁNICA] Sin documentación: respuesta fija.", flush=True)
 
+                # "Hallo", "asd qwe": no es una pregunta de mecánica.
+                corto = len(re.findall(r"\w+", datos.pregunta)) <= 2
+
                 return crear_respuesta_con_contexto(
-                    MENSAJE_SIN_DOCUMENTACION,
+                    MENSAJE_NO_ENTENDI if corto else MENSAJE_SIN_DOCUMENTACION,
                     contexto,
                 )
 
@@ -1599,6 +1750,9 @@ async def etapa_modelo(estado_consulta: EstadoConsulta):
 
     finally:
         await modelo.close()
+
+
+
 
 
 

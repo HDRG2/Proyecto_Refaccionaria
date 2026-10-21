@@ -32,7 +32,11 @@ _IDIOMAS = (
     r"otro idioma|otra lengua|otro lenguaje|another language|"
     r"other language|idioma|idiomas|lengua extranjera|language|"
     r"binario|binary|morse|hexadecimal|base64|cifrado|al reves|"
-    r"leet|jerigonza|codigo secreto|emojis?"
+    r"leet|jerigonza|codigo secreto|emojis?|"
+    r"gujarati|guyarati|guajarati|sueco|holandes|neerlandes|polaco|turco|"
+    r"vietnamita|tailandes|indonesio|tagalo|persa|farsi|urdu|bengali|"
+    r"punjabi|tamil|swahili|suajili|quechua|zapoteco|mixteco|purepecha|"
+    r"danes|noruego|finlandes|checo|rumano|hungaro|ucraniano|esperanto"
 )
 
 
@@ -74,6 +78,12 @@ def detectar_cambio_idioma(pregunta: str) -> bool:
     if re.search(_INICIO_IDIOMA, texto):
         return True
 
+    # "háblame en guyaratí", "habla en klingon": "hablar en X" siempre es
+    # pedir otro idioma (salvo español).
+    m = re.search(r"\b(?:habla|hablame|hablas|hablar|hablemos|platica|platicame)\s+en\s+([a-z]+)\b", texto)
+    if m and m.group(1) not in ("espanol", "castellano", "mexicano", "corto", "serio", "breve"):
+        return True
+
     # Mensaje que solo nombra el idioma: "english", "english please".
     resto = re.sub(r"\b(?:" + _IDIOMAS + r")\b", " ", texto)
     resto = re.sub(r"\b(?:please|por favor|plis|pls|porfa|only|solo)\b", " ", resto)
@@ -113,7 +123,11 @@ def contiene_escritura_extranjera(texto: str) -> bool:
     for c in texto:
         codigo = ord(c)
         if (
-            0x0400 <= codigo <= 0x04FF      # cirílico
+            0x0370 <= codigo <= 0x03FF      # griego
+            or 0x0590 <= codigo <= 0x05FF   # hebreo
+            or 0x0900 <= codigo <= 0x0DFF   # devanagari, gujarati, tamil...
+            or 0x0E00 <= codigo <= 0x0E7F   # tailandés
+            or 0x0400 <= codigo <= 0x04FF   # cirílico
             or 0x0600 <= codigo <= 0x06FF   # árabe
             or 0x3040 <= codigo <= 0x30FF   # japonés
             or 0x3400 <= codigo <= 0x9FFF   # chino
@@ -165,3 +179,4 @@ def es_texto_en_espanol(texto: str) -> bool:
         return False
 
     return True
+

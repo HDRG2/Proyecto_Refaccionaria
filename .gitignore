@@ -75,3 +75,5 @@ ServidorIA.spec
 __pycache__/
 *.pyc
 AgenteIA_respaldo/
+
+AgenteIA/registro/
