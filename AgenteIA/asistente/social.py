@@ -187,6 +187,9 @@ def respuesta_social(pregunta: str) -> str | None:
     def es_teclazo(p: str) -> bool:
         if p.isdigit():
             return False
+        # "mot001", "bal_002": es un código, no un teclazo.
+        if re.fullmatch(r"[a-z]{2,5}[_-]?\d{2,5}", p):
+            return False
         vocales = len(re.findall(r"[aeiouy]", p))
         if vocales == 0:
             return True

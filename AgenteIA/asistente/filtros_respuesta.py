@@ -178,7 +178,30 @@ _SINTOMAS_SOBRECALENTAMIENTO = (
     "motor muy caliente",
     "temperatura del motor alta",
     "temperatura alta",
+    "se calienta",
+    "se calento",
+    "se esta calentando",
+    "sube la temperatura",
+    "sube la aguja",
+    "sale vapor",
+    "echa vapor",
 )
+
+
+def hablar_directo(respuesta: str) -> str:
+    # El modelo a veces habla del vendedor en tercera persona porque así
+    # viene en las instrucciones: "El vendedor debe revisar el nivel..."
+    # -> "Conviene revisar el nivel...".
+    def cambiar(m: re.Match) -> str:
+        return "Conviene" if m.group(1)[0].isupper() else "conviene"
+
+    respuesta = re.sub(
+        r"\b([Ee]l vendedor|[Ee]l empleado|[Ee]l usuario)\s+"
+        r"(?:debe|deber[ií]a|tiene que|puede|podr[ií]a|necesita)\s+",
+        lambda m: cambiar(m) + " ",
+        respuesta,
+    )
+    return respuesta
 
 
 def hay_sobrecalentamiento(pregunta: str) -> bool:
@@ -196,6 +219,7 @@ def ajustar_respuesta_mecanica(respuesta: str, pregunta: str, tema: str, conocim
     # Evitar una advertencia genérica de emergencia
     # en consultas mecánicas sin riesgo de sobrecalentamiento.
     respuesta = quitar_reglas_repetidas(respuesta)
+    respuesta = hablar_directo(respuesta)
     respuesta = corregir_minimizacion_de_riesgo(respuesta, tema)
     respuesta = aclarar_banda_o_cadena(respuesta)
     sobrecalentamiento = hay_sobrecalentamiento(pregunta)
@@ -356,5 +380,6 @@ def ajustar_respuesta_mecanica(respuesta: str, pregunta: str, tema: str, conocim
                 )
 
     return respuesta
+
 
 

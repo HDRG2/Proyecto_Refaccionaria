@@ -334,3 +334,70 @@ def detectar_cambio_pagina(pregunta: str, productos: list[dict] | None = None):
     return None
 
 
+
+# ---------------------------------------------------------------------
+# Mensaje que es solo una categoría: "Motor", "iluminación",
+# "dime solo los de escape", "productos de suspensión".
+# ---------------------------------------------------------------------
+
+_RELLENO_CATEGORIA = {
+    "dime", "dame", "muestrame", "ensename", "pasame", "quiero", "ver",
+    "mostrar", "solo", "solamente", "nada", "mas", "nomas", "los", "las",
+    "el", "la", "lo", "de", "del", "en", "y", "a", "que", "hay", "tenemos",
+    "tienes", "tienen", "productos", "producto", "refacciones", "refaccion",
+    "piezas", "categoria", "porfa", "por", "favor", "ahora", "y", "unos",
+    "unas", "algo",
+}
+
+
+def es_solo_categoria(pregunta: str, productos: list[dict]) -> str | None:
+    # Devuelve el nombre de la categoría si el mensaje solo la nombra.
+    texto = normalizar(pregunta)
+    palabras = [p for p in re.findall(r"[a-z]+", texto) if p not in _RELLENO_CATEGORIA]
+    if not palabras or len(palabras) > 3:
+        return None
+    resto = " ".join(palabras)
+
+    del_inventario = {
+        normalizar(str(p.get("categoria", ""))): str(p.get("categoria", "")).strip()
+        for p in productos if p.get("categoria")
+    }
+    conocidas = {normalizar(c): c for c in CATEGORIAS_CONOCIDAS}
+    for normal, nombre in {**conocidas, **del_inventario}.items():
+        singular = normal[:-1] if normal.endswith("s") else normal
+        if resto in (normal, singular, singular + "es", normal + "s"):
+            return nombre
+    return None
+
+
+def menciona_categoria(pregunta: str, productos: list[dict]) -> bool:
+    # True si el texto nombra alguna categoría (del inventario o del programa).
+    texto = normalizar(pregunta)
+    nombres = {normalizar(c) for c in CATEGORIAS_CONOCIDAS} | {
+        normalizar(str(p.get("categoria", ""))) for p in productos if p.get("categoria")
+    }
+    for nombre in nombres:
+        singular = nombre[:-1] if nombre.endswith("s") else nombre
+        if nombre and re.search(
+            r"(?<!\w)(?:" + re.escape(nombre) + "|" + re.escape(singular) + r")(?:es|s)?(?!\w)", texto
+        ):
+            return True
+    return False
+
+
+# ---------------------------------------------------------------------
+# "Solo dime el nombre", "sin precios", "¿cómo se llama?"
+# ---------------------------------------------------------------------
+
+_PIDE_SOLO_NOMBRE = (
+    r"\b(?:solo|solamente|nada mas|nomas|unicamente)\b.{0,20}\bnombres?\b|"
+    r"\bsin (?:el |los |sus )?precios?\b|"
+    r"\bcomo se llaman?\b|\bcual es (?:su|el) nombre\b|\bque nombre tiene\b"
+)
+
+
+def pide_solo_nombre(pregunta: str) -> bool:
+    return re.search(_PIDE_SOLO_NOMBRE, normalizar(pregunta)) is not None
+
+
+

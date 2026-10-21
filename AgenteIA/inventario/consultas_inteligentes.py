@@ -1,5 +1,6 @@
 import re
 from decimal import Decimal
+from difflib import SequenceMatcher
 
 from AgenteIA.inventario.utilidades_inventario import (
     LIMITE_STOCK_BAJO,
@@ -223,6 +224,12 @@ def es_busqueda_inventario_vehiculo(pregunta: str) -> bool:
         "sirve para", "sirven para", "quedan para",
         "para ese carro", "para el mismo carro", "para ese vehiculo",
         "para mi carro", "para el carro",
+        # "toyota corolla piezas compatibles de mi inventario"
+        "piezas compatibles", "refacciones compatibles",
+        "productos compatibles", "partes compatibles",
+        "compatibles de mi inventario", "compatibles del inventario",
+        "compatibles en el inventario", "que tengo para", "que tengo compatible",
+        "que le quede", "que le queden", "que le sirva", "que le sirvan",
     )
 
     if any(expresion in texto for expresion in expresiones):
@@ -428,17 +435,27 @@ def buscar_refacciones_por_vehiculo(
     # 2. Modelo registrado mencionado en la pregunta.
     modelos_registrados = _modelos_registrados(productos)
 
+    palabras_texto = re.findall(r"[a-z0-9]+", texto)
+
+    def parecido(a: str, b: str) -> bool:
+        # "corrolla" ~ "corolla", "tzuru" ~ "tsuru" (errores de dedo).
+        return len(a) >= 4 and len(b) >= 4 and SequenceMatcher(None, a, b).ratio() >= 0.85
+
     def menciona_modelo(modelo: str) -> bool:
         # Acepta "nissan versa" y también solo "versa".
         formas = [modelo]
         partes = modelo.split()
         if len(partes) > 1:
             formas.append(" ".join(partes[1:]))
-        return any(
+        if any(
             len(forma) >= 2
             and re.search(r"(?<!\w)" + re.escape(forma) + r"(?!\w)", texto)
             for forma in formas
-        )
+        ):
+            return True
+        # Modelo de una palabra escrito con un error ("corrolla").
+        nombre = partes[-1] if partes else ""
+        return any(parecido(p, nombre) for p in palabras_texto)
 
     modelos_detectados = [
         modelo for modelo in modelos_registrados
@@ -486,6 +503,7 @@ def buscar_refacciones_por_vehiculo(
     vehiculo_mencionado = (
         modelo_solicitado is not None
         or anio is not None
+        or marca_en_texto is not None
         or re.search(r"\b(?:para|a)\s+(?:un|una|el|la|mi)\s+[a-z]{3,}", texto_normal)
     )
     if not vehiculo_mencionado:
@@ -1135,6 +1153,10 @@ def consultar_inventario_inteligente(
 
     # No es una consulta reconocida por este módulo.
     return None
+
+
+
+
 
 
 
