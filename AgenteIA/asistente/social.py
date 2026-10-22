@@ -109,6 +109,10 @@ _TEMA_GENERAL = (
     # Salud, dinero, suerte
     r"bajar de peso|bajo de peso|subir de peso|adelgazar|dieta|ejercicio|gimnasio|gym|medicina|enfermedad|doctor|"
     r"loteria|apuesta|apuestas|casino|invertir|inversion|acciones de|"
+    # Personas y deportes: "¿quién es Checo Pérez?", "¿quién ganó la F1?"
+    r"quien es|quien fue|quien era|quienes son|quien gano|quien invento|"
+    r"quien creo|quien canta|biografia|formula 1|formula uno|\bf1\b|nascar|"
+    r"piloto|pilotos|gran premio|boxeo|"
     # Clima del día (no el aire acondicionado)
     r"clima (?:de )?hoy|clima de manana|el tiempo hoy|va a llover|pronostico|"
     r"temperatura afuera|noticias)\b"
@@ -248,6 +252,11 @@ def respuesta_social(pregunta: str) -> str | None:
         # Siglas cortas como "NGK", "LTH", "BMW" son marcas, no teclazos.
         if vocales == 0 and len(p) <= 4:
             return False
+        # "clutch" tiene una sola vocal pero es una palabra real que el
+        # asistente conoce (está en la documentación de mecánica).
+        from AgenteIA.asistente.coloquial import _conocidas
+        if p in _conocidas():
+            return False
         if vocales == 0:
             return True
         return len(p) >= 6 and vocales / len(p) < 0.2
@@ -259,6 +268,11 @@ def respuesta_social(pregunta: str) -> str | None:
         )
 
     return None
+
+
+
+
+
 
 
 

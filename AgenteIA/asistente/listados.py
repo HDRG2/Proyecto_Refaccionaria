@@ -161,6 +161,12 @@ def respuesta_conteo(pregunta: str, productos: list[dict]) -> str | None:
     if productos_en_texto(texto, productos):
         return None
 
+    # "¿Cuántos productos hay de frenos?", "¿cuántas marcas?": por grupo.
+    from AgenteIA.asistente.consultas_extra import conteo_por_grupo
+    por_grupo = conteo_por_grupo(pregunta, productos)
+    if por_grupo is not None:
+        return por_grupo
+
     if re.search(
         r"\bcuant[oa]s\s+(?:productos|refacciones|articulos|tipos de "
         r"productos|productos distintos)\b.{0,25}\b(?:hay|tenemos|tienes|"
@@ -234,11 +240,108 @@ def respuesta_ranking(pregunta: str, productos: list[dict]) -> str | None:
 # "¿Qué le puedo vender para el cambio de aceite?"
 _PIDE_RECOMENDACION_VENTA = (
     r"\b(?:ofrezco|ofrecer|ofrecerle|ofrezca|ofrecemos|le vendo|venderle|"
-    r"le doy|que le recomiendo|que le sugiero|que le puedo vender)\b"
+    r"le doy|que le recomiendo|que le sugiero|que le puedo vender|"
+    r"que mas le vendo|que mas le ofrezco|que va junto|que van juntos|"
+    r"que se vende junto|que mas necesita|que mas lleva|complementos?|"
+    r"que pieza le vendo|que refaccion le vendo|que le puedo ofrecer|"
+    r"que mas puedo vender|que necesita para)\b"
 )
 
 
-def respuesta_recomendacion_venta(pregunta: str, productos: list[dict]) -> tuple[str | None, list[dict]]:
+# Servicios comunes y las piezas que se venden para cada uno. Las piezas
+# se buscan por nombre en el inventario real; solo se ofrece lo que hay.
+_SERVICIOS = (
+    ("una afinación", r"\bafinacion\w*|\bafinar\b|\btune ?up\b",
+     ("bujia", "cables de bujia", "bobina", "filtro de aire", "filtro de combustible",
+      "aceite", "filtro de aceite")),
+    ("un cambio de aceite", r"\bcambio de aceite\b|\bcambiar (?:el )?aceite\b",
+     ("aceite", "filtro de aceite")),
+    ("el servicio de frenos", r"\bfren\w*|\bbalata\w*|\bpastilla\w*|\bdisco de freno\b",
+     ("balata", "disco", "bomba de freno", "liquido de frenos", "zapata")),
+    ("el sistema de enfriamiento", r"\bse calienta\b|\bsobrecalien\w*|\benfriamiento\b|"
+     r"\bradiador\w*|\btermostato\w*|\banticongelante\b|\brefrigerante\b|\bmanguera\w*",
+     ("termostato", "radiador", "bomba de agua", "anticongelante", "manguera")),
+    ("la suspensión", r"\bsuspension\b|\bamortiguador\w*|\brebota\b|\bbaches\b",
+     ("amortiguador", "rotula", "buje", "horquilla", "resorte")),
+    ("el sistema eléctrico", r"\bno arranca\b|\bno prende\b|\bbateria\b|\balternador\b|"
+     r"\bmarcha\b|\belectrico\b|\bse descarga\b",
+     ("bateria", "alternador", "marcha", "terminal")),
+    ("el escape", r"\bescape\b|\bmofle\b|\bcatalizador\b|\bhumo\b|\bsilenciador\b",
+     ("silenciador", "mofle", "catalizador", "sensor de oxigeno")),
+)
+
+
+def _servicio_en(texto: str):
+    for nombre, patron, piezas in _SERVICIOS:
+        if re.search(patron, texto):
+            return nombre, piezas
+    return None
+
+
+def _piezas_del_servicio(piezas: tuple, productos: list[dict], quitar: str = "") -> list[dict]:
+    encontrados = []
+    for pieza in piezas:
+        raiz = " ".join(w[:5] for w in normalizar(pieza).split())
+        if quitar and raiz.split()[0] == quitar[:5]:
+            continue
+        for p in productos:
+            nombre = " ".join(w[:5] for w in normalizar(str(p.get("nombre", ""))).split())
+            if raiz in nombre and all(p is not e for e in encontrados):
+                encontrados.append(p)
+    return encontrados
+
+
+def recomendacion_por_servicio(pregunta: str, productos: list[dict], historial=None):
+    """"Va a hacer afinación, ¿qué le vendo?", "quiere balatas, ¿qué más
+    le vendo?", o "¿qué pieza le vendo?" después de un síntoma."""
+    from AgenteIA.inventario.contexto_inventario import rol_mensaje, texto_mensaje
+
+    texto = normalizar(pregunta)
+    servicio = _servicio_en(texto)
+    if servicio is None:
+        # El tema de la conversación: "mi carro se calienta" -> enfriamiento.
+        anteriores = [
+            normalizar(texto_mensaje(m)) for m in list(historial or [])[-6:]
+            if rol_mensaje(m) == "user"
+        ]
+        for anterior in reversed(anteriores):
+            servicio = _servicio_en(anterior)
+            if servicio:
+                break
+    if servicio is None:
+        return None, []
+
+    nombre, piezas = servicio
+    # "Quiere cambiar balatas, ¿qué MÁS le vendo?": no repetir las balatas.
+    quitar = ""
+    m = re.search(
+        r"\b(?:quiere\s+|va a\s+)?(?:cambiar|comprar|lleva|llevar|compro|compra|quiere)\s+"
+        r"(?:el |la |los |las |unas? |unos )?([a-z]{4,})"
+        r"|\bjunto con (?:el |la |los |las )?([a-z]{4,})",
+        texto,
+    )
+    if re.search(r"\bque mas\b|\bjunto\b|\bcomplement", texto) and m:
+        quitar = m.group(1) or m.group(2) or ""
+
+    encontrados = [p for p in _piezas_del_servicio(piezas, productos, quitar)
+                   if (obtener_existencia(p) or 0) > 0]
+    if not encontrados:
+        return f"Para {nombre} no tengo piezas con existencia en el inventario en este momento.", []
+
+    lineas = [f"Para {nombre} puedes ofrecerle:"]
+    for p in encontrados[:8]:
+        precio = obtener_precio(p)
+        lineas.append(
+            f"• {etiqueta_producto(p)}: "
+            f"{dinero(precio) + ' sin IVA' if precio is not None else 'sin precio registrado'}"
+            f" — {obtener_existencia(p)} piezas"
+        )
+    lineas.append("")
+    lineas.append("Confirma con el cliente marca, modelo y año del vehículo antes de venderle la pieza.")
+    return "\n".join(lineas), encontrados[:8]
+
+
+def respuesta_recomendacion_venta(pregunta: str, productos: list[dict], historial=None) -> tuple[str | None, list[dict]]:
     # Responde con los productos reales de la categoría (o marca, o
     # palabra) que mencionó el vendedor, sin pasar por el modelo.
     # Devuelve (respuesta, productos mostrados) o (None, []) si no aplica.
@@ -250,6 +353,15 @@ def respuesta_recomendacion_venta(pregunta: str, productos: list[dict]) -> tuple
     # Si nombró un producto concreto, lo atienden las otras etapas.
     if productos_en_texto(texto, productos):
         return None, []
+
+    # Servicio o complemento ("afinación", "¿qué más le vendo?").
+    respuesta, mostrados = recomendacion_por_servicio(pregunta, productos, historial)
+    if respuesta is not None and (
+        re.search(r"\bque mas\b|\bjunto\b|\bcomplement|\bque pieza\b|\bque refaccion\b", texto)
+        or _servicio_en(texto) is not None and not re.search(
+            r"\b(?:categoria|de frenos|de suspension|de escape|de motor)\b", texto)
+    ):
+        return respuesta, mostrados
 
     filtrados, descripcion = filtrar_listado(pregunta, productos)
     if descripcion is None or not filtrados:
@@ -417,6 +529,8 @@ _PIDE_SOLO_NOMBRE = (
 
 def pide_solo_nombre(pregunta: str) -> bool:
     return re.search(_PIDE_SOLO_NOMBRE, normalizar(pregunta)) is not None
+
+
 
 
 

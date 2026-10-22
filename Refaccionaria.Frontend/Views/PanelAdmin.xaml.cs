@@ -109,9 +109,10 @@ public sealed partial class PanelAdmin : Page
         
         // Agregar elementos
         Validaciones.SoloLetras(TxtElemAutoMarca);
+        Validaciones.Busqueda(TxtElemAutoModelo);
         Validaciones.SoloNumeros(TxtElemAutoAnioInicio);
         Validaciones.SoloNumeros(TxtElemAutoAnioFin);
-        Validaciones.Busqueda(TxtElemMarca);
+        Validaciones.SoloLetras(TxtElemMarca);
         Validaciones.SoloLetras(TxtElemCategoria);
 
         productoService = new ProductoService(

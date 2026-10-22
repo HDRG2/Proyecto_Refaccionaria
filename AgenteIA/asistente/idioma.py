@@ -180,3 +180,107 @@ def es_texto_en_espanol(texto: str) -> bool:
 
     return True
 
+
+# Palabras típicas de idiomas cercanos (inglés, italiano, portugués,
+# francés, catalán, gallego) que NO existen en español. Sirven para frases
+# donde varias palabras se parecen al español ("quanto costa questo").
+_MARCAS_EXTRANJERAS = set("""
+the how much many what where when why who which is are was were do does did
+you your my it this that these those with for from have has can could would
+should will please thanks need want there here and or not of to on at be an
+about get any some price cost
+il gli della delle degli dello questo questa quello quella sono che non anche
+molto perche quanti mio miei tuo voglio posso puoi ho hai per macchina freni
+olio grazie
+voce nao sao meu minha tambem obrigado quanto custa custam freio freios oleo
+pneu pneus preco
+quant quants costen amb meva cotxe aquest aquesta tinc vull els frens fre
+custan freo miña
+des une est sont pour avec mon combien voiture freins je vous nous quel
+quelle merci bonjour
+""".split())
+
+
+def _marcas_extranjeras(palabras: list[str], conocidas: set[str]) -> bool:
+    marcas = sum(1 for p in palabras if p in _MARCAS_EXTRANJERAS)
+    espanol = sum(1 for p in palabras if p in conocidas and p not in _MARCAS_EXTRANJERAS)
+    return marcas >= 2 and marcas >= espanol
+
+
+def parece_otro_idioma(texto: str, vocabulario: set[str] | None = None) -> bool:
+    """Mensaje escrito en otro idioma con letras latinas ("Kwalok ñan ña
+    bwebwenato..."). Solo si casi ninguna palabra es conocida: así el
+    español con modismos o errores de dedo no se confunde."""
+    from AgenteIA.asistente.coloquial import _conocidas
+
+    palabras = re.findall(r"[a-zñ]+", quitar_acentos(texto.lower()))
+    largas = [p for p in palabras if len(p) >= 3]
+    if len(palabras) >= 3 and not re.search(r"\d", texto) and _marcas_extranjeras(
+        palabras, _PALABRAS_ES | _COMUNES_ES
+    ):
+        return True
+    if len(palabras) < 4 or len(largas) < 3 or re.search(r"\d", texto):
+        return False
+
+    if contiene_portugues(texto):
+        return True
+
+    conocidas = _PALABRAS_ES | _COMUNES_ES | _conocidas() | (vocabulario or set())
+
+    # Las palabras cortas ("la", "del", "in", "a") se repiten entre idiomas
+    # ("Raccontami LA storia DEL Signore..."); las largas son las que
+    # distinguen. Si hay al menos 3 palabras de 4+ letras, se usan esas.
+    importantes = [p for p in palabras if len(p) >= 4]
+    revisar = importantes if len(importantes) >= 3 else palabras
+    reconocidas = sum(1 for p in revisar if p in conocidas or _forma_espanola(p))
+    proporcion = reconocidas / len(revisar)
+    # Portugués: "nh"/"lh" ("Senhor", "olho") no existen en español.
+    portugues = any(re.search(r"nh|lh", p) for p in revisar)
+    return proporcion < 0.25 or (portugues and proporcion <= 0.25)
+
+
+# Terminaciones típicas del español: una palabra que no está en el
+# vocabulario pero termina así ("matematicas", "presidente", "ayudas",
+# "revolucion") casi seguro es español.
+_TERMINACION_ESPANOLA = re.compile(
+    r"(?:cion|ciones|sion|siones|mente|ado|ada|ados|adas|ido|ida|idos|idas|"
+    r"ando|iendo|amos|emos|imos|aste|iste|aba|aban|ia|ias|dad|dades|"
+    r"oso|osa|osos|osas|ico|ica|icos|icas|ista|istas|eza|ente|entes|"
+    r"ante|antes|ario|aria|orio|oria|able|ible|ivo|iva|ivos|ivas|"
+    r"dor|dora|dores|tor|tora|tores|ar|er|ir|as|es|os)$"
+)
+
+# Combinaciones que el español casi nunca usa: "k", "w", "sh", "th",
+# "ck", "gli", "gn" (italiano), "ou", "oi" (francés)...
+_LETRAS_NO_ESPANOLAS = re.compile(r"[kw]|sh|th|ck|gli|gn|nh|lh|ou|oi|eu|ae|ee|oo|tt|ss|cc[^ie]|ll$")
+
+# Palabras muy frecuentes del español que no siempre aparecen en la
+# documentación de mecánica.
+_COMUNES_ES = set("""
+sigue seguir tema anterior siguiente ahora antes despues luego todavia
+siempre nunca tambien tampoco quiero quiere quieres puedo puede puedes
+tengo tiene tienes hago hace haces digo dice dices dime dame sabes sabe
+opinas opina piensas piensa crees cree eres soy somos estoy esta estas
+ayuda ayudas ayudame favor gracias hola buenas buenos tardes noches dias
+partir pirata familia amigos amigo amiga empresa correo factura cliente
+clientes señor senor señora senora joven mañana manana hoy ayer semana
+mes año ano años anos hora horas tiempo cosa cosas algo nada todo todos
+mucho mucha poco poca bien mal mejor peor grande chico nuevo nueva viejo
+casa trabajo dinero pago pagar cobrar precio precios caro barato tienda
+pregunta preguntas respuesta tarea escuela historia cuento resumen
+uno dos tres cuatro cinco seis siete ocho nueve diez once doce quince
+veinte treinta cuarenta cincuenta sesenta setenta ochenta noventa cien
+ciento cientos doscientos trescientos quinientos mil millon mas menos
+por entre como cuando donde porque aunque mientras
+""".split())
+
+
+def _forma_espanola(palabra: str) -> bool:
+    return (
+        len(palabra) >= 4
+        and _TERMINACION_ESPANOLA.search(palabra) is not None
+        and _LETRAS_NO_ESPANOLAS.search(palabra) is None
+    )
+
+
+

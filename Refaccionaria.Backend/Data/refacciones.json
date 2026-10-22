@@ -50,7 +50,8 @@
     "EsUniversal": false,
     "AutosCompatibles": [
       1,
-      2
+      2,
+      13
     ],
     "MarcaNombre": "Brembo",
     "CategoriaNombre": "Frenos",

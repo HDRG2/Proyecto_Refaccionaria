@@ -972,6 +972,27 @@ def _rango_existencia(texto: str, productos: list[dict]) -> str | None:
     return "\n".join(lineas)
 
 
+def _con_tema(funcion, texto: str, productos: list[dict]) -> str | None:
+    # Aplica la consulta solo a la categoría o marca nombrada, si hay una.
+    respuesta_total = funcion(texto, productos)
+    if respuesta_total is None:
+        return None
+    categoria = detectar_categoria(texto, productos)
+    marca = None if categoria else detectar_marca_producto(texto, productos)
+    if categoria is None and marca is None:
+        return respuesta_total
+    campo, valor = ("categoria", categoria) if categoria else ("marca", marca)
+    del_grupo = [p for p in productos if normalizar_texto(p.get(campo, "")) == normalizar_texto(valor)]
+    respuesta = funcion(texto, del_grupo)
+    etiqueta = f"de la categoría {valor}" if categoria else f"de la marca {valor}"
+    if respuesta is None:
+        return None
+    if respuesta.startswith("Actualmente no hay"):
+        return respuesta.replace("en el inventario de El Pistón", f"{etiqueta} en el inventario")
+    primera, _, resto = respuesta.partition("\n")
+    return f"{primera.rstrip(':')} {etiqueta}:\n{resto}" if resto else respuesta
+
+
 def _agotados(texto: str, productos: list[dict]) -> str | None:
     if not re.search(
         r"\bagotad[oa]s?\b|\bsin (?:existencias?|stock|piezas)\b|"
@@ -1157,8 +1178,9 @@ def consultar_inventario_inteligente(
         lambda: _rango_precio(texto, productos, contexto),
         lambda: _mas_barato_o_caro(texto, productos, contexto),
         lambda: _rango_existencia(texto, productos),
-        lambda: _agotados(texto, productos),
-        lambda: _stock_bajo(texto, productos),
+        # "¿qué está por agotarse de frenos?": solo esa categoría o marca.
+        lambda: _con_tema(_agotados, texto, productos),
+        lambda: _con_tema(_stock_bajo, texto, productos),
         lambda: _lista_categorias_o_marcas(texto, productos),
         lambda: _por_categoria_o_marca(texto, productos, contexto),
     ):
@@ -1168,6 +1190,8 @@ def consultar_inventario_inteligente(
 
     # No es una consulta reconocida por este módulo.
     return None
+
+
 
 
 

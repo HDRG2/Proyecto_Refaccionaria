@@ -82,5 +82,12 @@
     "Modelo": "Mazda 3",
     "AnioInicio": 2008,
     "AnioFin": 2027
+  },
+  {
+    "Id": 13,
+    "Marca": "Yamaha",
+    "Modelo": "Banshee",
+    "AnioInicio": 1987,
+    "AnioFin": 2006
   }
 ]
