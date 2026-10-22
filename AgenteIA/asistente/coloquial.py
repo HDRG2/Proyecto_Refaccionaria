@@ -135,7 +135,8 @@ REFACCIONES = [
     ("liga de frenos", "liquido de frenos"),
     ("liga del freno", "liquido de frenos"),
     ("agua del radiador", "refrigerante"),
-    ("agua verde", "anticongelante"),
+    ("agua verde", "anticongelante"), ("liquido verde", "anticongelante"),
+    ("liquido rosa", "anticongelante"), ("liquido naranja", "anticongelante"),
     ("foquito del motor", "check engine"), ("foco del motor", "check engine"),
     ("luz del motor", "check engine"), ("foquitos", "focos"),
     ("foquito", "foco"),
@@ -529,7 +530,7 @@ ARCHIVO_NO_ENTENDIDAS = CARPETA_REGISTRO / "preguntas_no_entendidas.txt"
 
 
 def registrar_no_entendida(pregunta: str, motivo: str, reescrita: str | None = None) -> None:
-    # Agrega una línea al registro. Nunca interrumpe la consulta."""
+    """Agrega una línea al registro. Nunca interrumpe la consulta."""
     # Las pruebas automáticas no escriben en el registro real.
     if os.environ.get("PISTON_SIN_REGISTRO"):
         return
@@ -545,4 +546,5 @@ def registrar_no_entendida(pregunta: str, motivo: str, reescrita: str | None = N
             archivo.write(linea)
     except OSError:
         pass
+
 

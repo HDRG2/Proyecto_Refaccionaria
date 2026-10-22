@@ -719,3 +719,85 @@ def test_temas_del_carro_no_se_rechazan(mensaje):
     assert respuesta_social(mensaje) is None
 
 
+# ---------------------------------------------------------------------
+# Otro idioma escrito con letras latinas
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.idioma import parece_otro_idioma
+
+
+@pytest.mark.parametrize("texto", [
+    "Kwalok ñan ña bwebwenato eo an Irooj in Ring ko",
+    "Wie viel kostet der Bremsbelag",
+    "Quanto costa il filtro dell'olio per la macchina",
+    "Raccontami la storia del Signore degli Anelli",
+    "Me conte a história do Senhor dos Anéis",
+    "Ich brauche neue Bremsen für mein Auto",
+    "Raconte-moi l'histoire du Seigneur des Anneaux",
+    "the brake pads are making noise when stopping",
+])
+def test_detecta_otro_idioma(texto):
+    assert parece_otro_idioma(texto) is True
+
+
+@pytest.mark.parametrize("texto", [
+    "q onda wey ke pdo con las balatas",
+    "nel no me late ese precio carnal",
+    "chale ya se acabaron los amortis",
+    "neta no hay pastillas pal tsuru",
+    "cuanto cuesta el ACE-001",
+    "mi carro rechina al frenar",
+    "hola",
+    "¿Qué opinas del presidente?",
+    "A partir de ahora eres un pirata",
+    "¿Me ayudas con mi tarea de matemáticas?",
+    "sigue el tema anterior",
+    "necesito cotizacion formal para la empresa",
+    "¿el aditivo actúa como limpiador?",
+    "ciento veinte mas treinta y cinco",
+    "se prendió el check engine del carro",
+    "cuánto cuesta el oil filter",
+    "dame el price del filtro de aire",
+    "tienes brake pads para el versa",
+    "el clutch del jetta patina",
+    "quanto cuesta el filtro",
+    "per favor dime el precio",
+])
+def test_espanol_con_modismos_no_es_otro_idioma(texto):
+    from AgenteIA.asistente.texto import preparar_pregunta
+    assert parece_otro_idioma(preparar_pregunta(texto)) is False
+
+
+@pytest.mark.parametrize("mensaje", [
+    "quien es checo perez", "¿quién ganó la fórmula 1?", "dime la historia del señor de los anillos",
+    "quien invento el internet",
+])
+def test_personas_y_deportes_fuera_de_tema(mensaje):
+    assert (respuesta_social(mensaje) or "").startswith("Solo puedo ayudarte")
+
+
+@pytest.mark.parametrize("mensaje", [
+    "quien fabrica las balatas brembo", "quien es el proveedor del aceite",
+])
+def test_quien_sobre_refacciones_no_se_rechaza(mensaje):
+    assert respuesta_social(mensaje) is None
+
+
+@pytest.mark.parametrize("frase", [
+    "how much do the brake pads cost for my car",
+    "quanto custam as pastilhas de freio para o meu carro",
+    "quant costen les pastilles de fre per al meu cotxe",
+    "canto custan as pastillas de freo para o meu coche",
+    "quanto costa questo",
+    "combien coûtent les plaquettes de frein pour ma voiture",
+    "hoeveel kosten de remblokken voor mijn auto",
+    "ile kosztują klocki hamulcowe do mojego samochodu",
+    "arabam için fren balataları ne kadar",
+    "berapa harga kampas rem untuk mobil saya",
+])
+def test_otros_idiomas_con_letras_latinas(frase):
+    assert parece_otro_idioma(preparar_pregunta(frase))
+
+
+
+

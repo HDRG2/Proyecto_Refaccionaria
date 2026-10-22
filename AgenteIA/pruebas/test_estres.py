@@ -345,3 +345,151 @@ def test_no_confunde_cada_cuanto_ni_vehiculos(pregunta, esperado):
     assert esperado in texto, texto
 
 
+# ---------------------------------------------------------------------
+# Vender TODO un grupo: categoría completa o la lista anterior
+# ---------------------------------------------------------------------
+
+def _conversar(preguntas, contexto=None):
+    historial, contexto, respuestas = [], dict(contexto or {}), []
+    for pregunta in preguntas:
+        texto, contexto = _turno(pregunta, historial, contexto)
+        respuestas.append(texto)
+        historial += [{"rol": "user", "texto": pregunta}, {"rol": "assistant", "texto": texto}]
+    return respuestas
+
+
+@pytest.mark.parametrize("pregunta, categoria", [
+    ("si vendo todo de escape", "Escape"),
+    ("vendo todo el encendido", "Encendido"),
+    ("suma todo de encendido", "Encendido"),
+    ("vender todo de categoría enfriamiento", "Enfriamiento"),
+    ("escape total", "Escape"),
+])
+def test_vender_toda_una_categoria(pregunta, categoria):
+    # Aunque haya un producto viejo seleccionado, se usa la categoría.
+    texto = _conversar([pregunta], {"codigo_seleccionado": "ACE-001"})[0]
+    assert texto.startswith(f"Venta de toda la existencia de la categoría {categoria}"), texto
+    assert "ACE-001" not in texto
+
+
+def test_vender_todo_de_la_lista_anterior():
+    respuestas = _conversar(["encendido", "vendo todo"])
+    assert respuestas[1].startswith("Venta de toda la existencia de los productos de la lista anterior")
+    assert "PRU-015" in respuestas[1] and "BUJ-003" in respuestas[1]
+
+
+def test_total_despues_de_lista_no_suma_precios_unitarios():
+    respuestas = _conversar(["frenos", "escape total"])
+    assert "Suma de las cantidades" not in respuestas[1]
+    assert "categoría Escape" in respuestas[1]
+
+
+def test_cuanto_gano_aclara_que_falta_el_costo():
+    respuestas = _conversar(["encendido", "si los vendo todo cuanto gano"])
+    assert "costo de compra" in respuestas[1]
+
+
+def test_venderlo_todo_tras_un_producto():
+    respuestas = _conversar(["filtros", "termostato", "venderlo todo"])
+    assert respuestas[2].startswith("Cálculo para Termostato de Motor (PRU-014)")
+
+
+@pytest.mark.parametrize("pregunta", ["vendo todo de llantas", "si vendo todo de carroceria"])
+def test_vender_todo_de_algo_que_no_hay(pregunta):
+    texto = _conversar([pregunta])[0]
+    assert texto.startswith("No hay productos registrados"), texto
+
+
+# ---------------------------------------------------------------------
+# Tipos de pregunta: comparar, contar por grupo, suficiencia, lista
+# mostrada, recomendaciones por servicio y correcciones
+# ---------------------------------------------------------------------
+
+@pytest.mark.parametrize("pregunta, empieza", [
+    ("cual es mas barato el termostato o el radiador", "El más barato es Termostato de Motor (PRU-014)"),
+    ("que es mas caro la bateria o el alternador", "El más caro es Alternador (PRU-009)"),
+    ("compara el BUJ-003 y el PRU-015", "El más barato es Bujia de encendido (BUJ-003)"),
+])
+def test_comparar_productos(pregunta, empieza):
+    texto, _ = _turno(pregunta)
+    assert texto.startswith(empieza), texto
+
+
+def test_comparar_los_dos_ultimos_vistos():
+    respuestas = _conversar(["bateria", "y el alternador?", "cual es mas barato"])
+    assert respuestas[2].startswith("El más barato es Batería de 12V (PRU-008)")
+
+
+@pytest.mark.parametrize("pregunta, debe", [
+    ("cuantos productos hay de filtros", "En la categoría Filtros hay 3 productos"),
+    ("cuantas piezas hay en total de encendido", "En la categoría Encendido hay 2 productos"),
+    ("cuantas marcas manejamos", "Se manejan"),
+    ("cuantos productos tenemos en total", "Actualmente hay 15 productos"),
+    ("cuantas piezas de aceite quedan", "ACE-001"),
+])
+def test_contar_por_grupo(pregunta, debe):
+    texto, _ = _turno(pregunta)
+    assert debe in texto, texto
+
+
+@pytest.mark.parametrize("pregunta, empieza", [
+    ("hay suficiente bateria para vender 10", "No alcanza: solo hay 8 piezas"),
+    ("me alcanza el stock para 20 bujias", "Sí alcanza: hay 40 piezas"),
+])
+def test_suficiencia(pregunta, empieza):
+    texto, _ = _turno(pregunta)
+    assert texto.startswith(empieza), texto
+
+
+def test_sobre_la_lista_mostrada():
+    respuestas = _conversar(["filtros", "el mas barato de esos", "cuantos quedan"])
+    assert respuestas[1].startswith("El más barato de esa lista es Filtro de Aceite (FIL-001)")
+    assert "FIL-001" in respuestas[2]
+
+
+def test_existencias_de_esa_lista():
+    respuestas = _conversar(["balatas para versa 2015", "y de esas cuantas hay"])
+    assert respuestas[1].startswith("Existencia de los productos de esa lista")
+
+
+@pytest.mark.parametrize("pregunta, servicio", [
+    ("un cliente va a hacer afinacion que le vendo", "Para una afinación"),
+    ("que le ofrezco a un cliente que quiere frenar mejor", "Para el servicio de frenos"),
+])
+def test_recomendacion_por_servicio(pregunta, servicio):
+    texto, _ = _turno(pregunta)
+    assert texto.startswith(servicio), texto
+    assert "Para hacer el cálculo" not in texto
+
+
+def test_que_pieza_le_vendo_usa_el_tema():
+    respuestas = _conversar(["mi carro se calienta", "que pieza le vendo"])
+    assert respuestas[1].startswith("Para el sistema de enfriamiento")
+    assert "PRU-014" in respuestas[1]
+
+
+def test_correcciones_en_la_conversacion():
+    respuestas = _conversar(["termostato", "no, el radiador", "cuanto cuesta"])
+    assert "PRU-010" in respuestas[1] and "PRU-010" in respuestas[2]
+    respuestas = _conversar(["si vendo 3 termostatos", "mejor 5", "quitale el iva"])
+    assert "Cantidad: 5 piezas" in respuestas[1] and "Cantidad: 5 piezas" in respuestas[2]
+
+
+def test_stock_bajo_de_una_categoria():
+    texto, _ = _turno("que productos estan por agotarse de enfriamiento")
+    assert "de la categoría Enfriamiento" in texto
+    assert "ACE-001" not in texto
+
+
+@pytest.mark.parametrize("pregunta", [
+    "por que huele a quemado mi carro", "el carro hace ruido al dar vuelta",
+    "el carro tiembla en neutral", "gotea liquido verde debajo del carro",
+    "se escucha un chillido al arrancar",
+])
+def test_sintomas_nuevos_tienen_documentacion(pregunta):
+    texto, _ = _turno(pregunta)
+    assert _cumple("MEC", texto, pregunta), texto
+
+
+
+

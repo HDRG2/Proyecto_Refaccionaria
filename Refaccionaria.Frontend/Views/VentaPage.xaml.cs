@@ -732,6 +732,12 @@ namespace Refaccionaria.Frontend.Views
             string inventarioActual =
                 await ObtenerInventarioActualizadoParaIAAsync();
 
+            // Marcas, categorías y autos registrados, aunque todavía no
+            // tengan productos ("Ultra 8", "Ford Focus"). Así el asistente
+            // también los reconoce.
+            var catalogoActual =
+                await ObtenerCatalogoParaIAAsync();
+
             System.IO.File.WriteAllText(
                 System.IO.Path.Combine(
                     System.IO.Path.GetTempPath(),
@@ -754,6 +760,7 @@ namespace Refaccionaria.Frontend.Views
                 pregunta = pregunta,
                 inventario = inventarioActual,
                 historial = historial,
+                catalogo = catalogoActual,
 
                 contexto = new
                 {
@@ -1055,6 +1062,49 @@ namespace Refaccionaria.Frontend.Views
                 .ToList();
 
             return JsonSerializer.Serialize(productos);
+        }
+
+        // =====================================================
+        // CATÁLOGO COMPLETO PARA EL ASISTENTE
+        // =====================================================
+        // Todo lo registrado en "Agregar elementos", tenga o no
+        // productos. Se llama después de ObtenerInventarioActualizado...,
+        // que ya recargó los repositorios.
+
+        private async Task<object> ObtenerCatalogoParaIAAsync()
+        {
+            List<string> marcas =
+                (await repoMarcas.GetAllAsync())
+                .Select(m => m.Nombre)
+                .Where(n => !string.IsNullOrWhiteSpace(n))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            List<string> categorias =
+                (await repoCategorias.GetAllAsync())
+                .Select(c => c.Nombre)
+                .Where(n => !string.IsNullOrWhiteSpace(n))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            var autos =
+                (await repoAutos.GetAllAsync())
+                .Where(a => !string.IsNullOrWhiteSpace(a.Modelo))
+                .Select(a => new
+                {
+                    marca = a.Marca,
+                    modelo = a.Modelo,
+                    anio_inicio = a.AnioInicio,
+                    anio_fin = a.AnioFin
+                })
+                .ToList();
+
+            return new
+            {
+                marcas,
+                categorias,
+                autos
+            };
         }
     }
 }

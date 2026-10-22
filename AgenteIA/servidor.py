@@ -14,9 +14,11 @@ from AgenteIA.asistente.etapas import (
     etapa_filtros_iniciales,
     etapa_cargar_inventario,
     etapa_conteo,
+    etapa_consultas_extra,
     etapa_calculadora,
     etapa_recomendacion_venta,
     etapa_solo_categoria,
+    etapa_catalogo,
     etapa_solo_pieza,
     etapa_consultas_inteligentes,
     etapa_ranking,
@@ -109,6 +111,10 @@ class Consulta(BaseModel):
         default_factory=EstadoContexto
     )
 
+    # Marcas, categorías y autos registrados en el programa, aunque todavía
+    # no tengan productos (ver asistente/catalogo.py). Es opcional.
+    catalogo: dict = Field(default_factory=dict)
+
 
 @app.get("/salud")
 async def salud():
@@ -143,9 +149,11 @@ ETAPAS = (
     etapa_filtros_iniciales,
     etapa_cargar_inventario,
     etapa_conteo,
+    etapa_consultas_extra,
     etapa_calculadora,
     etapa_recomendacion_venta,
     etapa_solo_categoria,
+    etapa_catalogo,
     etapa_solo_pieza,
     etapa_consultas_inteligentes,
     etapa_ranking,
@@ -255,6 +263,8 @@ async def _procesar_consulta(datos: Consulta, seguimiento: dict):
 
     # 3. Ninguna regla aplicó: se consulta al modelo como antes.
     return await etapa_modelo(estado)
+
+
 
 
 

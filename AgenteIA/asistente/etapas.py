@@ -19,6 +19,7 @@ from AgenteIA.asistente.idioma import (
     contiene_escritura_extranjera,
     detectar_cambio_idioma,
     es_texto_en_espanol,
+    parece_otro_idioma,
 )
 from AgenteIA.asistente.listados import (
     detectar_cambio_pagina,
@@ -71,7 +72,13 @@ from AgenteIA.asistente.seguridad import (
     detectar_modificacion_inventario,
 )
 from AgenteIA.asistente.social import respuesta_social
+from AgenteIA.asistente.catalogo import (
+    entradas_para_vocabulario,
+    leer_catalogo,
+    respuesta_catalogo,
+)
 from AgenteIA.asistente.coloquial import corregir_ortografia
+from AgenteIA.asistente.consultas_extra import consulta_extra
 from AgenteIA.asistente.texto import (
     normalizar,
     normalizar_terminos_automotrices,
@@ -145,6 +152,7 @@ class EstadoConsulta:
     productos_actuales: Any = None
     seguimiento_mecanico: Any = None
     solicitud_listado: Any = None
+    catalogo: Any = None
 
 
 def etapa_filtros_iniciales(estado_consulta: EstadoConsulta):
@@ -252,11 +260,31 @@ def etapa_cargar_inventario(estado_consulta: EstadoConsulta):
     # "MOT 001", "mot001" -> "MOT-001"
     datos.pregunta = normalizar_codigos(datos.pregunta, productos_actuales)
 
+    # Catálogo completo (marcas, categorías y autos registrados aunque no
+    # tengan productos). Si WinUI no lo manda, queda vacío.
+    estado_consulta.catalogo = leer_catalogo(getattr(datos, "catalogo", None))
+
     # Errores de dedo: "valatas" -> "balatas", "corrolla" -> "corolla".
-    corregida = corregir_ortografia(datos.pregunta, productos_actuales)
+    # También conoce los nombres del catálogo ("fokus" -> "focus").
+    corregida = corregir_ortografia(
+        datos.pregunta,
+        productos_actuales + entradas_para_vocabulario(estado_consulta.catalogo),
+    )
     if corregida != datos.pregunta:
         print(f"[ORTOGRAFIA] {datos.pregunta!r} -> {corregida!r}", flush=True)
         datos.pregunta = corregida
+
+    # Otro idioma con letras latinas ("Kwalok ñan ña bwebwenato…"): se
+    # revisa aquí porque ya se conocen los nombres del inventario.
+    vocabulario = {
+        palabra
+        for p in productos_actuales + entradas_para_vocabulario(estado_consulta.catalogo)
+        for campo in ("nombre", "marca", "categoria")
+        for palabra in re.findall(r"[a-zñ]+", normalizar(str(p.get(campo, ""))))
+    }
+    if parece_otro_idioma(datos.pregunta, vocabulario):
+        print("[IDIOMA] Mensaje en otro idioma.", flush=True)
+        return respuesta_sin_cambios(MENSAJE_SOLO_ESPANOL, datos)
 
     # "MOT 001" cuando no existe un MOT-001 activo: se avisa sin adivinar
     # (antes el modelo lo tomaba como "página 1").
@@ -286,6 +314,23 @@ def etapa_conteo(estado_consulta: EstadoConsulta):
         return respuesta_sin_cambios(respuesta_de_conteo, datos)
 
     return None
+
+
+def etapa_consultas_extra(estado_consulta: EstadoConsulta):
+    """Comparar productos, contar por grupo, preguntas sobre la lista mostrada y suficiencia."""
+    datos = estado_consulta.datos
+    contexto = contexto_desde_estado(datos.contexto)
+    respuesta = consulta_extra(
+        datos.pregunta, estado_consulta.productos_actuales, contexto, datos.historial
+    )
+    if respuesta is None:
+        return None
+    print("[CONSULTA EXTRA] Respuesta del inventario.", flush=True)
+    # Si la respuesta habla de un solo producto, queda seleccionado.
+    mencionados = obtener_productos_mencionados(respuesta, estado_consulta.productos_actuales)
+    return crear_respuesta_con_contexto(
+        respuesta, contexto, mencionados[0] if len(mencionados) == 1 else None
+    )
 
 
 def etapa_calculadora(estado_consulta: EstadoConsulta):
@@ -325,6 +370,7 @@ def etapa_recomendacion_venta(estado_consulta: EstadoConsulta):
     respuesta, mostrados = respuesta_recomendacion_venta(
         datos.pregunta,
         estado_consulta.productos_actuales,
+        datos.historial,
     )
 
     if respuesta is None:
@@ -371,6 +417,24 @@ def etapa_solo_categoria(estado_consulta: EstadoConsulta):
     )
 
     print(f"[CATEGORÍA] {categoria}", flush=True)
+    return crear_respuesta_con_contexto(respuesta, contexto)
+
+
+def etapa_catalogo(estado_consulta: EstadoConsulta):
+    """"ultra 8", "mobil", "focus 2018", "clutch": marca, categoría o auto del catálogo."""
+    datos = estado_consulta.datos
+    respuesta, mostrados = respuesta_catalogo(
+        datos.pregunta,
+        estado_consulta.productos_actuales,
+        estado_consulta.catalogo or leer_catalogo(None),
+    )
+    if respuesta is None:
+        return None
+    print("[CATÁLOGO] Marca, categoría o auto registrado.", flush=True)
+    contexto = estado_consulta.contexto_calculo
+    contexto.codigos_lista = [str(p["codigo"]) for p in mostrados]
+    contexto.pagina_actual = 1
+    contexto.codigo_seleccionado = str(mostrados[0]["codigo"]) if len(mostrados) == 1 else None
     return crear_respuesta_con_contexto(respuesta, contexto)
 
 
@@ -1833,6 +1897,10 @@ async def etapa_modelo(estado_consulta: EstadoConsulta):
 
     finally:
         await modelo.close()
+
+
+
+
 
 
 
