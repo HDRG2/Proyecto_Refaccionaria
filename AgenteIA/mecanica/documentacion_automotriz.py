@@ -424,6 +424,7 @@ DOCUMENTACION_AUTOMOTRIZ = {
             "temperatura del motor", "ventilador", "ventiladores",
             "fuga de refrigerante", "deposito de refrigerante",
             "mangueras del radiador", "tapon del radiador",
+            "manguera", "mangueras",
         ],
         "expresiones": [
             "se calienta", "se calienta el motor", "se sobrecalienta",
@@ -889,6 +890,7 @@ DOCUMENTACION_AUTOMOTRIZ = {
             "revision general", "filtro de aire", "banda de distribucion",
             "cadena de distribucion", "correa de distribucion",
             "banda de accesorios", "correa de accesorios", "fluidos",
+            "banda", "bandas", "correa", "correas",
             "carretera", "viaje", "salir a carretera",
         ],
         "expresiones": [

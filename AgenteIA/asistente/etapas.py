@@ -51,6 +51,8 @@ from AgenteIA.asistente.productos import (
     menciona_inventario,
     es_solo_vehiculo,
     normalizar_codigos,
+    busqueda_solo_pieza,
+    mensaje_pieza_sin_productos,
     codigo_no_registrado,
     respuesta_codigo_no_registrado,
     obtener_existencia,
@@ -105,7 +107,14 @@ from AgenteIA.inventario.validador_inventario import (
     responder_precio,
 )
 from AgenteIA.mecanica.buscador_mecanico import buscar_conocimiento
-from AgenteIA.mecanica.conocimientos_mecanicos import buscar_respuesta_rapida
+from AgenteIA.mecanica.validador_mecanica import (
+    respuesta_desde_documentacion,
+    terminos_inventados,
+)
+from AgenteIA.mecanica.conocimientos_mecanicos import (
+    buscar_respuesta_rapida,
+    respuesta_falla_sin_sintoma,
+)
 
 
 MENSAJE_SIN_DOCUMENTACION = (
@@ -363,6 +372,36 @@ def etapa_solo_categoria(estado_consulta: EstadoConsulta):
 
     print(f"[CATEGORÍA] {categoria}", flush=True)
     return crear_respuesta_con_contexto(respuesta, contexto)
+
+
+def etapa_solo_pieza(estado_consulta: EstadoConsulta):
+    """"termostato", "sensor", "bujias del inventario": busca la pieza."""
+    datos = estado_consulta.datos
+    productos_actuales = estado_consulta.productos_actuales
+
+    resultado = busqueda_solo_pieza(datos.pregunta, productos_actuales)
+    if resultado is None:
+        return None
+
+    contexto = estado_consulta.contexto_calculo
+    estado, valor = resultado
+
+    if estado == "sin_productos":
+        print(f"[PIEZA] Sin productos: {valor}", flush=True)
+        return crear_respuesta_con_contexto(mensaje_pieza_sin_productos(valor), contexto)
+
+    encontrados = valor
+    contexto.codigos_lista = [str(p["codigo"]) for p in encontrados]
+    contexto.pagina_actual = 1
+
+    if len(encontrados) == 1:
+        contexto.codigo_seleccionado = str(encontrados[0]["codigo"])
+        print(f"[PIEZA] {encontrados[0]['codigo']}", flush=True)
+        return crear_respuesta_con_contexto(ficha_producto(encontrados[0]), contexto)
+
+    contexto.codigo_seleccionado = None
+    print(f"[PIEZA] {len(encontrados)} coincidencias", flush=True)
+    return crear_respuesta_con_contexto(lista_coincidencias(encontrados), contexto)
 
 
 def etapa_consultas_inteligentes(estado_consulta: EstadoConsulta):
@@ -966,8 +1005,27 @@ def etapa_referencias_contexto(estado_consulta: EstadoConsulta):
         "sirve para",
     )
 
+    # Preguntas cortas que solo traen palabras de precio/existencia:
+    # "y su precio", "y cuánto", "¿cuántos tienes?", "precio con iva".
+    _solo_funcion = {
+        "y", "el", "la", "los", "las", "su", "sus", "de", "del", "cuanto",
+        "cuanta", "cuantos", "cuantas", "cuesta", "cuestan", "vale", "valen",
+        "precio", "precios", "pieza", "piezas", "quedan", "queda", "hay",
+        "tiene", "tienes", "tenemos", "existencia", "existencias", "stock",
+        "es", "universal", "que", "cual", "con", "sin", "iva", "unidades",
+        "disponibles", "entonces", "oye", "pero", "ahora", "mismo", "ese",
+        "esa", "este", "esta", "dime", "dame", "me", "lo", "sale", "cobro",
+        "a", "como", "en", "le", "y?", "todavia", "aun", "quedaron",
+    }
+    palabras_contextuales = re.findall(r"[a-z0-9]+", pregunta_contextual)
+    solo_palabras_de_consulta = (
+        0 < len(palabras_contextuales) <= 6
+        and all(p in _solo_funcion for p in palabras_contextuales)
+    )
+
     es_continuacion_contextual = (
-        pregunta_contextual in referencias_producto_anterior
+        solo_palabras_de_consulta
+        or pregunta_contextual in referencias_producto_anterior
         or any(
             referencia in pregunta_contextual
             for referencia in referencias_explicitas
@@ -1044,6 +1102,8 @@ def etapa_referencias_contexto(estado_consulta: EstadoConsulta):
 
         pide_producto = (
             intencion in ("precio", "existencia")
+            # "¿para qué autos sirve el amortiguador?"
+            or (intencion == "compatibilidad" and pide_lista_vehiculos(datos.pregunta))
             or (
                 re.search(PEDIR_PRODUCTO, texto_busqueda) is not None
                 and re.search(PREGUNTA_MECANICA, texto_busqueda) is None
@@ -1493,6 +1553,12 @@ def etapa_respuestas_rapidas(estado_consulta: EstadoConsulta):
                 contexto,
             )
 
+        # "Falla mi volante": sin síntoma, se pregunta cuál (sin inventar).
+        respuesta_falla = respuesta_falla_sin_sintoma(datos.pregunta)
+        if respuesta_falla is not None:
+            print("[MECÁNICA] Falla sin síntoma: se pide el síntoma.", flush=True)
+            return crear_respuesta_con_contexto(respuesta_falla, contexto)
+
     estado_consulta.seguimiento_mecanico = seguimiento_mecanico
     return None
 
@@ -1707,6 +1773,23 @@ async def etapa_modelo(estado_consulta: EstadoConsulta):
                 respuesta, datos.pregunta, texto_busqueda, conocimiento
             )
 
+            # Si el modelo mencionó síntomas o piezas que no vienen de la
+            # pregunta ni de la documentación, inventó: se contesta con la
+            # documentación revisada (ver validador_mecanica.py).
+            if conocimiento:
+                inventados = terminos_inventados(
+                    respuesta, f"{datos.pregunta} {texto_busqueda}", conocimiento
+                )
+                if inventados:
+                    respaldo = respuesta_desde_documentacion(conocimiento)
+                    if respaldo:
+                        print(
+                            "[VALIDADOR MECÁNICA] Respuesta descartada; inventó: "
+                            + ", ".join(inventados),
+                            flush=True,
+                        )
+                        respuesta = respaldo
+
         # Conservar el contexto cuando Ollama genera una lista.
         pregunta_lista = normalizar(datos.pregunta)
 
@@ -1750,6 +1833,8 @@ async def etapa_modelo(estado_consulta: EstadoConsulta):
 
     finally:
         await modelo.close()
+
+
 
 
 
