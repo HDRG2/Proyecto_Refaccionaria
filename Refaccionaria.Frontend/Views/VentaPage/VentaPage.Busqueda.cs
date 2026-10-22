@@ -239,35 +239,23 @@ namespace Refaccionaria.Frontend.Views
             if (!string.IsNullOrWhiteSpace(
                     texto))
             {
+                /*
+                 * Se busca palabra por palabra: "aveo 2023" o
+                 * "bujia aveo" encuentran la pieza aunque esas
+                 * palabras no estén juntas. Cada palabra debe
+                 * aparecer en algún dato de la refacción.
+                 */
+                string[] palabras =
+                    texto.Split(
+                        ' ',
+                        StringSplitOptions.RemoveEmptyEntries
+                    );
+
                 lista =
                     lista.Where(
-                        r =>
-                            Contiene(
-                                r.Nombre,
-                                texto
-                            ) ||
-
-                            Contiene(
-                                r.Codigo,
-                                texto
-                            ) ||
-
-                            Contiene(
-                                r.MarcaNombre,
-                                texto
-                            ) ||
-
-                            Contiene(
-                                r.CategoriaNombre,
-                                texto
-                            ) ||
-
-                            r.AutosDescripciones.Any(
-                                a => Contiene(
-                                    a,
-                                    texto
-                                )
-                            )
+                        r => palabras.All(
+                            p => CoincidePalabra(r, p)
+                        )
                     );
             }
 
@@ -383,6 +371,57 @@ namespace Refaccionaria.Frontend.Views
 
 
             // -----------------------------------------------------
+            // AÑO
+            // -----------------------------------------------------
+
+            /*
+             * Solo quedan las refacciones registradas para un vehículo
+             * de ese año. Si también se eligió un modelo, el MISMO
+             * vehículo debe cumplir ambos: "Corolla" + 2016 no muestra
+             * una pieza que solo es del Corolla 2010 y del Versa 2016.
+             *
+             * Las universales no se muestran aquí porque no tienen un
+             * año registrado; aparecen con "Cualquier año".
+             */
+
+            if (CmbAnio.SelectedItem is int anio)
+            {
+                IEnumerable<ModeloAuto> vehiculosAnio =
+                    _autos.Where(
+                        a => a.AnioInicio <= anio &&
+                             anio <= a.AnioFin
+                    );
+
+                if (modelo != TODOS_MODELOS)
+                {
+                    vehiculosAnio =
+                        vehiculosAnio.Where(
+                            a => string.Equals(
+                                a.Modelo,
+                                modelo,
+                                StringComparison.OrdinalIgnoreCase
+                            ));
+                }
+
+                HashSet<int> autosAnio =
+                    vehiculosAnio
+                    .Select(a => a.Id)
+                    .ToHashSet();
+
+
+                lista =
+                    lista.Where(
+                        r =>
+                            r.AutosCompatibles != null &&
+                            r.AutosCompatibles.Any(
+                                id =>
+                                    autosAnio.Contains(id)
+                            )
+                    );
+            }
+
+
+            // -----------------------------------------------------
             // ORDEN
             // -----------------------------------------------------
 
@@ -433,6 +472,49 @@ namespace Refaccionaria.Frontend.Views
         }
 
 
+        // =========================================================
+        // ¿LA PALABRA COINCIDE CON LA REFACCIÓN?
+        // =========================================================
+
+        private bool CoincidePalabra(
+            Refaccion r,
+            string palabra)
+        {
+            if (Contiene(r.Nombre, palabra) ||
+                Contiene(r.Codigo, palabra) ||
+                Contiene(r.MarcaNombre, palabra) ||
+                Contiene(r.CategoriaNombre, palabra) ||
+                r.AutosDescripciones.Any(
+                    a => Contiene(a, palabra)
+                ))
+            {
+                return true;
+            }
+
+            /*
+             * Un año ("2023") coincide si algún auto compatible
+             * lo cubre en su rango: "Aveo (2018-2024)" sí es 2023,
+             * aunque el texto "2023" no aparezca escrito.
+             */
+            if (palabra.Length == 4 &&
+                int.TryParse(palabra, out int anio) &&
+                anio >= 1950 &&
+                anio <= 2100 &&
+                r.AutosCompatibles != null)
+            {
+                return r.AutosCompatibles.Any(
+                    id => _autos.Any(
+                        a => a.Id == id &&
+                             a.AnioInicio <= anio &&
+                             anio <= a.AnioFin
+                    )
+                );
+            }
+
+            return false;
+        }
+
+
         private static bool Contiene(
             string? origen,
             string texto)
@@ -444,9 +526,27 @@ namespace Refaccionaria.Frontend.Views
             }
 
 
-            return origen
+            // Sin acentos ni mayúsculas: "bateria" encuentra "Batería".
+            return SinAcentos(origen)
+                .Contains(SinAcentos(texto));
+        }
+
+
+        private static string SinAcentos(
+            string texto)
+        {
+            string descompuesto =
+                texto
                 .ToLowerInvariant()
-                .Contains(texto);
+                .Normalize(System.Text.NormalizationForm.FormD);
+
+            return new string(
+                descompuesto
+                .Where(c =>
+                    CharUnicodeInfo.GetUnicodeCategory(c) !=
+                    UnicodeCategory.NonSpacingMark)
+                .ToArray()
+            );
         }
 
 
@@ -548,6 +648,10 @@ namespace Refaccionaria.Frontend.Views
 
             CmbModelo.SelectedIndex =
                 0;
+
+            // Regresa el año a "Cualquier año" y vuelve a llenar
+            // la lista con todos los años registrados.
+            LlenarAnios();
 
             CmbOrden.SelectedIndex =
                 0;
