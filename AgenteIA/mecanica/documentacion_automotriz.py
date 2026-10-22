@@ -18,7 +18,8 @@ DOCUMENTACION_AUTOMOTRIZ = {
             "pedal esponjoso", "pedal aguado", "pedal suave",
             "el pedal se va hasta el fondo", "pedal hasta el piso",
             "huele a quemado al frenar", "foco del abs", "testigo del abs",
-            "testigo de frenos",
+            "testigo de frenos", "huele a quemado", "olor a quemado",
+            "huele a quemado mi carro",
         ],
         "apartados": {
             "FUNCIÓN": (
@@ -298,7 +299,9 @@ DOCUMENTACION_AUTOMOTRIZ = {
             "le cuesta arrancar", "hace clic y no arranca", "hace click",
             "luces parpadean", "luces debiles", "luces tenues",
             "se apagan las luces", "foco de la bateria",
-            "testigo de bateria",
+            "testigo de bateria", "chilla al arrancar", "chillido al arrancar",
+            "rechina al arrancar", "rechina al encender", "chilla al encender",
+            "chilla la banda", "rechina la banda",
         ],
         "apartados": {
             "FUNCIÓN": (
@@ -367,6 +370,8 @@ DOCUMENTACION_AUTOMOTRIZ = {
         ],
         "expresiones": [
             "se jalonea", "da tirones", "jalonea", "cascabelea",
+            "tiembla en neutral", "tiembla en neutro", "vibra en neutral",
+            "tiembla en los altos", "tiembla cuando esta parado", "tiembla en marcha minima",
             "cascabeleo", "tiembla en ralenti", "tiembla parado",
             "vibra en marcha minima", "falla un cilindro", "se ahoga",
             "check engine parpadea", "check engine parpadeando",
@@ -648,6 +653,8 @@ DOCUMENTACION_AUTOMOTRIZ = {
             "el clutch esta duro", "da tirones al cambiar",
             "tarda en cambiar", "se queda en una velocidad",
             "problemas al cambiar de marcha", "truena al dar vuelta",
+            "ruido al dar vuelta", "hace ruido al dar vuelta", "suena al dar vuelta",
+            "truena al girar", "olor a quemado", "huele a quemado",
         ],
         "apartados": {
             "FUNCIONAMIENTO": (

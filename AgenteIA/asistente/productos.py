@@ -422,6 +422,8 @@ _RELLENO_PIEZA = {
     "consigues", "vendes", "venden", "vendemos", "tendras", "tienes",
     "mas", "otra", "otro", "otros", "otras", "ese", "esa", "este", "esta",
     "cosas", "cosa", "articulo",
+    # Correcciones: "no, el radiador", "mejor el termostato", "perdón, digo la batería".
+    "no", "mejor", "perdon", "digo", "era", "osea", "bien", "quise", "decir",
 }
 
 # Palabras que describen la pieza ("discos DE FRENO", "balatas
@@ -771,6 +773,8 @@ def es_solo_vehiculo(pregunta: str, productos: list[dict] | None = None) -> bool
              and not re.fullmatch(r"(?:19|20)\d{2}", p)]
     # Marca y/o año, y como mucho dos palabras más (el modelo).
     return (tiene_marca or (tiene_anio and otras)) and len(otras) <= 2
+
+
 
 
 
