@@ -874,5 +874,32 @@
       "CategoriaNombre": "Aceites",
       "AutosDescripciones": []
     }
+  },
+  {
+    "Subtotal": 2150.00,
+    "Id": 33,
+    "VentaId": 24,
+    "RefaccionId": 25,
+    "Cantidad": 1,
+    "PrecioUnitario": 2150.00,
+    "Refaccion": {
+      "Id": 25,
+      "Codigo": "ELE-001",
+      "Nombre": "Bater\u00EDa Placas",
+      "MarcaId": 10,
+      "CategoriaId": 8,
+      "Precio": 2150.00,
+      "Stock": 6,
+      "StockBajo": false,
+      "Activo": true,
+      "EsUniversal": false,
+      "AutosCompatibles": [
+        6,
+        11
+      ],
+      "MarcaNombre": "LTH",
+      "CategoriaNombre": "Sistema el\u00E9ctrico",
+      "AutosDescripciones": []
+    }
   }
 ]

@@ -443,13 +443,13 @@
     "MarcaId": 10,
     "CategoriaId": 8,
     "Precio": 2150.00,
-    "Stock": 6,
-    "StockBajo": false,
+    "Stock": 5,
+    "StockBajo": true,
     "Activo": true,
     "EsUniversal": false,
     "AutosCompatibles": [
-      3,
-      6
+      6,
+      11
     ],
     "MarcaNombre": "LTH",
     "CategoriaNombre": "Sistema el\u00E9ctrico",

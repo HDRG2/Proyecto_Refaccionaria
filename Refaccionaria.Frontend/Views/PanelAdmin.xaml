@@ -340,6 +340,30 @@
 
                     </RadioButton>
 
+                    
+                    <!-- AGREGAR ELEMENTOS (autos, marcas, categorías) -->
+
+                    <RadioButton
+                        x:Name="MenuAgregarElementos"
+                        Style="{StaticResource BotonMenuAdmin}"
+                        Checked="Menu_Checked">
+
+                        <StackPanel
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="➕"
+                                FontSize="15"
+                                Width="30"
+                                Foreground="{StaticResource AmarilloRefaccionaria}"/>
+
+                            <TextBlock
+                                Text="Agregar elementos"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </RadioButton>
 
                     <Border
                         Height="1"
@@ -2369,6 +2393,289 @@
                             </Grid>
 
                         </Border>
+
+                    </Grid>
+                        <!-- ================================================= -->
+                        <!-- AGREGAR ELEMENTOS (AUTOS, MARCAS, CATEGORÍAS) -->
+                        <!-- ================================================= -->
+
+                        <Grid
+                        x:Name="VistaAgregarElementos"
+                        Visibility="Collapsed">
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="Auto"/>
+
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <StackPanel Margin="0,0,0,20">
+
+                            <TextBlock
+                                Text="Agregar elementos"
+                                FontSize="30"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource GrisMuyOscuro}"/>
+
+                            <TextBlock
+                                Text="Registra nuevos autos, marcas de piezas y categorías. Aparecerán al agregar o editar un producto."
+                                FontSize="13"
+                                Foreground="#777777"/>
+
+                        </StackPanel>
+
+
+                        <ScrollViewer
+                            Grid.Row="1"
+                            VerticalScrollBarVisibility="Auto">
+
+                            <Grid
+                                ColumnSpacing="18">
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+
+
+                                <!-- ===================================== -->
+                                <!-- TARJETA 1: AUTO -->
+                                <!-- ===================================== -->
+
+                                <Border
+                                    Grid.Column="0"
+                                    Background="White"
+                                    BorderBrush="#D5D5D5"
+                                    BorderThickness="1"
+                                    CornerRadius="7"
+                                    Padding="20"
+                                    VerticalAlignment="Top">
+
+                                    <StackPanel>
+
+                                        <TextBlock
+                                            Text="🚗  Nuevo auto"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource GrisMuyOscuro}"
+                                            Margin="0,0,0,14"/>
+
+                                        <TextBlock
+                                            Text="Marca del auto *"
+                                            FontWeight="SemiBold"/>
+
+                                        <TextBox
+                                            x:Name="TxtElemAutoMarca"
+                                            PlaceholderText="Ej. Nissan"
+                                            MaxLength="20"
+                                            Margin="0,5,0,10"/>
+
+                                        <TextBlock
+                                            Text="Modelo *"
+                                            FontWeight="SemiBold"/>
+
+                                        <TextBox
+                                            x:Name="TxtElemAutoModelo"
+                                            PlaceholderText="Ej. Tsuru, CR-V, Mazda 3"
+                                            MaxLength="25"
+                                            Margin="0,5,0,10"/>
+
+                                        <Grid ColumnSpacing="10">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+
+                                                <TextBlock
+                                                    Text="Año inicio *"
+                                                    FontWeight="SemiBold"/>
+
+                                                <TextBox
+                                                    x:Name="TxtElemAutoAnioInicio"
+                                                    PlaceholderText="2015"
+                                                    MaxLength="4"
+                                                    Margin="0,5,0,10"/>
+
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1">
+
+                                                <TextBlock
+                                                    Text="Año fin *"
+                                                    FontWeight="SemiBold"/>
+
+                                                <TextBox
+                                                    x:Name="TxtElemAutoAnioFin"
+                                                    PlaceholderText="2020"
+                                                    MaxLength="4"
+                                                    Margin="0,5,0,10"/>
+
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                        <Button
+                                            Content="+  AGREGAR AUTO"
+                                            Style="{StaticResource BotonAmarillo}"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="0,6,0,16"
+                                            Click="AgregarAuto_Click"/>
+
+                                        <TextBlock
+                                            x:Name="TxtElemTotalAutos"
+                                            Text="Autos registrados"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Foreground="#777777"
+                                            Margin="0,0,0,6"/>
+
+                                        <ListView
+                                            x:Name="LstElemAutos"
+                                            Height="240"
+                                            SelectionMode="None"
+                                            BorderBrush="#E0E0E0"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            DisplayMemberPath="DescripcionCompleta"/>
+
+                                    </StackPanel>
+
+                                </Border>
+
+
+                                <!-- ===================================== -->
+                                <!-- TARJETA 2: MARCA DE PIEZAS -->
+                                <!-- ===================================== -->
+
+                                <Border
+                                    Grid.Column="1"
+                                    Background="White"
+                                    BorderBrush="#D5D5D5"
+                                    BorderThickness="1"
+                                    CornerRadius="7"
+                                    Padding="20"
+                                    VerticalAlignment="Top">
+
+                                    <StackPanel>
+
+                                        <TextBlock
+                                            Text="🏷  Nueva marca de pieza"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource GrisMuyOscuro}"
+                                            Margin="0,0,0,14"/>
+
+                                        <TextBlock
+                                            Text="Nombre de la marca *"
+                                            FontWeight="SemiBold"/>
+
+                                        <TextBox
+                                            x:Name="TxtElemMarca"
+                                            PlaceholderText="Ej. ACDelco, Wagner, Champion"
+                                            MaxLength="25"
+                                            Margin="0,5,0,10"/>
+
+                                        <Button
+                                            Content="+  AGREGAR MARCA"
+                                            Style="{StaticResource BotonAmarillo}"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="0,6,0,16"
+                                            Click="AgregarMarca_Click"/>
+
+                                        <TextBlock
+                                            x:Name="TxtElemTotalMarcas"
+                                            Text="Marcas registradas"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Foreground="#777777"
+                                            Margin="0,0,0,6"/>
+
+                                        <ListView
+                                            x:Name="LstElemMarcas"
+                                            Height="240"
+                                            SelectionMode="None"
+                                            BorderBrush="#E0E0E0"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            DisplayMemberPath="Nombre"/>
+
+                                    </StackPanel>
+
+                                </Border>
+
+
+                                <!-- ===================================== -->
+                                <!-- TARJETA 3: CATEGORÍA -->
+                                <!-- ===================================== -->
+
+                                <Border
+                                    Grid.Column="2"
+                                    Background="White"
+                                    BorderBrush="#D5D5D5"
+                                    BorderThickness="1"
+                                    CornerRadius="7"
+                                    Padding="20"
+                                    VerticalAlignment="Top">
+
+                                    <StackPanel>
+
+                                        <TextBlock
+                                            Text="📂  Nueva categoría"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource GrisMuyOscuro}"
+                                            Margin="0,0,0,14"/>
+
+                                        <TextBlock
+                                            Text="Nombre de la categoría *"
+                                            FontWeight="SemiBold"/>
+
+                                        <TextBox
+                                            x:Name="TxtElemCategoria"
+                                            PlaceholderText="Ej. Clutch, Inyección"
+                                            MaxLength="25"
+                                            Margin="0,5,0,10"/>
+
+                                        <Button
+                                            Content="+  AGREGAR CATEGORÍA"
+                                            Style="{StaticResource BotonAmarillo}"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="0,6,0,16"
+                                            Click="AgregarCategoria_Click"/>
+
+                                        <TextBlock
+                                            x:Name="TxtElemTotalCategorias"
+                                            Text="Categorías registradas"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Foreground="#777777"
+                                            Margin="0,0,0,6"/>
+
+                                        <ListView
+                                            x:Name="LstElemCategorias"
+                                            Height="240"
+                                            SelectionMode="None"
+                                            BorderBrush="#E0E0E0"
+                                            BorderThickness="1"
+                                            CornerRadius="5"
+                                            DisplayMemberPath="Nombre"/>
+
+                                    </StackPanel>
+
+                                </Border>
+
+                            </Grid>
+
+                        </ScrollViewer>
 
                     </Grid>
 
