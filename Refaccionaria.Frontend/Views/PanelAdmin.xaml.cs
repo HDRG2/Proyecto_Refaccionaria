@@ -106,6 +106,13 @@ public sealed partial class PanelAdmin : Page
         // Buscadores
         Validaciones.Busqueda(TxtBuscar);
         Validaciones.Busqueda(TxtBuscarEditar);
+        
+        // Agregar elementos
+        Validaciones.SoloLetras(TxtElemAutoMarca);
+        Validaciones.SoloNumeros(TxtElemAutoAnioInicio);
+        Validaciones.SoloNumeros(TxtElemAutoAnioFin);
+        Validaciones.Busqueda(TxtElemMarca);
+        Validaciones.SoloLetras(TxtElemCategoria);
 
         productoService = new ProductoService(
             repoRefacciones 
@@ -607,6 +614,8 @@ public sealed partial class PanelAdmin : Page
 
         VistaReportes.Visibility = Visibility.Collapsed;
 
+        VistaAgregarElementos.Visibility = Visibility.Collapsed;
+
         Formulario.Visibility = Visibility.Collapsed;
     }
 
@@ -626,6 +635,8 @@ public sealed partial class PanelAdmin : Page
         VistaEmpleados.Visibility = Visibility.Collapsed;
 
         VistaReportes.Visibility = Visibility.Collapsed;
+
+        VistaAgregarElementos.Visibility = Visibility.Collapsed;
 
         Formulario.Visibility = Visibility.Collapsed;
 
@@ -648,6 +659,7 @@ public sealed partial class PanelAdmin : Page
         VistaProductosRetirados.Visibility = Visibility.Visible;
         VistaEmpleados.Visibility = Visibility.Collapsed;
         VistaReportes.Visibility = Visibility.Collapsed;
+        VistaAgregarElementos.Visibility = Visibility.Collapsed;
         Formulario.Visibility = Visibility.Collapsed;
 
         ActualizarProductosRetirados();
@@ -670,6 +682,8 @@ public sealed partial class PanelAdmin : Page
 
         VistaReportes.Visibility = Visibility.Collapsed;
 
+        VistaAgregarElementos.Visibility = Visibility.Collapsed;
+
         Formulario.Visibility = Visibility.Collapsed;
     }
 
@@ -689,6 +703,8 @@ public sealed partial class PanelAdmin : Page
         VistaEmpleados.Visibility = Visibility.Collapsed;
 
         VistaReportes.Visibility = Visibility.Visible;
+
+        VistaAgregarElementos.Visibility = Visibility.Collapsed;
 
         Formulario.Visibility = Visibility.Collapsed;
 
@@ -761,6 +777,13 @@ public sealed partial class PanelAdmin : Page
         if (ReferenceEquals(opcion, MenuEliminarProducto))
         {
             MostrarProductosRetirados();
+            return;
+        }
+
+        // AGREGAR ELEMENTOS (autos, marcas, categorías)
+        if (ReferenceEquals(opcion, MenuAgregarElementos))
+        {
+            MostrarAgregarElementos();
             return;
         }
 
