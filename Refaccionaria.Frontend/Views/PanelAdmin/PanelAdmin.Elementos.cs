@@ -12,14 +12,19 @@ using Refaccionaria.Frontend.Models;
 namespace Refaccionaria.Frontend.Views;
 
 // =============================================================
-// AGREGAR ELEMENTOS
+// AGREGAR / EDITAR ELEMENTOS
 //
-// Registra nuevos autos (autos.json), marcas de piezas
+// Registra o corrige autos (autos.json), marcas de piezas
 // (marcas.json) y categorías (categorias.json).
 //
-// Se agregan a las MISMAS colecciones (autos, marcas,
-// categorias) que usa el formulario de producto, así que
-// aparecen de inmediato en "Agregar producto" y "Editar".
+// Se trabaja sobre las MISMAS colecciones (autos, marcas,
+// categorias) que usa el formulario de producto, así que los
+// cambios aparecen de inmediato en "Agregar producto" y
+// "Editar producto".
+//
+// Al EDITAR solo cambia el nombre: el Id se conserva, por eso
+// los productos y las ventas que ya usan ese auto, marca o
+// categoría siguen ligados y muestran el nombre corregido.
 // =============================================================
 
 public sealed partial class PanelAdmin : Page
@@ -42,100 +47,37 @@ public sealed partial class PanelAdmin : Page
 
         VistaAgregarElementos.Visibility = Visibility.Visible;
 
+        LimpiarCamposAuto();
+        LimpiarCamposMarca();
+        LimpiarCamposCategoria();
+
         RefrescarListasElementos();
     }
 
 
-    // =========================================================
+    // #########################################################
+    //                          AUTOS
+    // #########################################################
+
+    // ---------------------------------------------------------
     // AGREGAR AUTO
-    // =========================================================
+    // ---------------------------------------------------------
 
     private async void AgregarAuto_Click(
         object sender,
         RoutedEventArgs e)
     {
-        string marcaAuto = LimpiarEspacios(TxtElemAutoMarca.Text);
-        string modelo = LimpiarEspacios(TxtElemAutoModelo.Text);
+        var datos = await LeerDatosAutoAsync(idExcluir: 0);
 
-        // ---------------- Validaciones ----------------
-
-        if (string.IsNullOrWhiteSpace(marcaAuto) ||
-            string.IsNullOrWhiteSpace(modelo))
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Escribe la marca y el modelo del auto."
-            );
+        if (!datos.Ok)
             return;
-        }
-
-        // Modelo: letras, números, espacios y guion (CR-V, Mazda 3)
-        if (!Regex.IsMatch(modelo, @"^[\p{L}0-9 \-]+$"))
-        {
-            await MostrarMensaje(
-                "Modelo no válido",
-                "El modelo solo puede tener letras, números, espacios y guion (-)."
-            );
-            return;
-        }
-
-        int anioMaximo = DateTime.Now.Year + 1;
-
-        if (!int.TryParse(TxtElemAutoAnioInicio.Text, out int anioInicio) ||
-            !int.TryParse(TxtElemAutoAnioFin.Text, out int anioFin) ||
-            anioInicio < ANIO_MINIMO_AUTO || anioInicio > anioMaximo ||
-            anioFin < ANIO_MINIMO_AUTO || anioFin > anioMaximo)
-        {
-            await MostrarMensaje(
-                "Años no válidos",
-                $"Los años deben estar entre {ANIO_MINIMO_AUTO} y {anioMaximo}."
-            );
-            return;
-        }
-
-        if (anioInicio > anioFin)
-        {
-            await MostrarMensaje(
-                "Años no válidos",
-                "El año de inicio no puede ser mayor que el año de fin."
-            );
-            return;
-        }
-
-        // Si la marca del auto ya existe ("nissan" -> "Nissan"),
-        // se usa la escritura que ya está registrada.
-        string? marcaExistente = autos
-            .Select(a => a.Marca)
-            .FirstOrDefault(m => string.Equals(
-                m, marcaAuto, StringComparison.OrdinalIgnoreCase));
-
-        marcaAuto = marcaExistente ?? Capitalizar(marcaAuto);
-
-        // Mismo auto con los mismos años = duplicado.
-        // (Mismo modelo con OTROS años sí se permite: otra generación.)
-        bool duplicado = autos.Any(a =>
-            a.Marca.Equals(marcaAuto, StringComparison.OrdinalIgnoreCase) &&
-            a.Modelo.Equals(modelo, StringComparison.OrdinalIgnoreCase) &&
-            a.AnioInicio == anioInicio &&
-            a.AnioFin == anioFin);
-
-        if (duplicado)
-        {
-            await MostrarMensaje(
-                "Auto repetido",
-                $"{marcaAuto} {modelo} ({anioInicio}-{anioFin}) ya está registrado."
-            );
-            return;
-        }
-
-        // ---------------- Guardar ----------------
 
         ModeloAuto nuevo = new()
         {
-            Marca = marcaAuto,
-            Modelo = modelo,
-            AnioInicio = anioInicio,
-            AnioFin = anioFin
+            Marca = datos.Marca,
+            Modelo = datos.Modelo,
+            AnioInicio = datos.Inicio,
+            AnioFin = datos.Fin
         };
 
         bool guardado = await GuardarElementoAsync(
@@ -150,11 +92,7 @@ public sealed partial class PanelAdmin : Page
         // que usa LstFormAutos (lista de autos compatibles).
         autos.Add(nuevo);
 
-        TxtElemAutoMarca.Text = string.Empty;
-        TxtElemAutoModelo.Text = string.Empty;
-        TxtElemAutoAnioInicio.Text = string.Empty;
-        TxtElemAutoAnioFin.Text = string.Empty;
-
+        LimpiarCamposAuto();
         RefrescarListasElementos();
 
         await MostrarMensaje(
@@ -164,34 +102,233 @@ public sealed partial class PanelAdmin : Page
     }
 
 
-    // =========================================================
-    // AGREGAR MARCA DE PIEZA
-    // =========================================================
+    // ---------------------------------------------------------
+    // EDITAR AUTO
+    // ---------------------------------------------------------
+
+    private async void EditarAuto_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (LstElemAutos.SelectedItem is not ModeloAuto auto)
+        {
+            await MostrarMensaje(
+                "Selecciona un auto",
+                "Primero elige en la lista el auto que quieres corregir."
+            );
+            return;
+        }
+
+        var datos = await LeerDatosAutoAsync(idExcluir: auto.Id);
+
+        if (!datos.Ok)
+            return;
+
+        bool sinCambios =
+            auto.Marca == datos.Marca &&
+            auto.Modelo == datos.Modelo &&
+            auto.AnioInicio == datos.Inicio &&
+            auto.AnioFin == datos.Fin;
+
+        if (sinCambios)
+        {
+            await MostrarMensaje(
+                "Sin cambios",
+                "No modificaste ningún dato del auto."
+            );
+            return;
+        }
+
+        string antes = auto.DescripcionCompleta;
+
+        // Guardar valores anteriores por si falla la escritura
+        string marcaAnterior = auto.Marca;
+        string modeloAnterior = auto.Modelo;
+        int inicioAnterior = auto.AnioInicio;
+        int finAnterior = auto.AnioFin;
+
+        auto.Marca = datos.Marca;
+        auto.Modelo = datos.Modelo;
+        auto.AnioInicio = datos.Inicio;
+        auto.AnioFin = datos.Fin;
+
+        bool guardado = await GuardarElementoAsync(
+            () => repoAutos.UpdateAsync(auto),
+            "autos.json"
+        );
+
+        if (!guardado)
+        {
+            auto.Marca = marcaAnterior;
+            auto.Modelo = modeloAnterior;
+            auto.AnioInicio = inicioAnterior;
+            auto.AnioFin = finAnterior;
+            return;
+        }
+
+        LimpiarCamposAuto();
+        RefrescarTrasEdicion();
+
+        await MostrarMensaje(
+            "Auto actualizado",
+            $"{antes}  →  {auto.DescripcionCompleta}\n\n" +
+            "Los productos compatibles con este auto ya muestran el dato corregido."
+        );
+    }
+
+
+    // ---------------------------------------------------------
+    // ELEGIR AUTO DE LA LISTA (carga sus datos para editar)
+    // ---------------------------------------------------------
+
+    private void ElemAuto_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
+    {
+        if (LstElemAutos.SelectedItem is not ModeloAuto auto)
+        {
+            BtnEditarAuto.IsEnabled = false;
+            return;
+        }
+
+        TxtElemAutoMarca.Text = auto.Marca;
+        TxtElemAutoModelo.Text = auto.Modelo;
+        TxtElemAutoAnioInicio.Text = auto.AnioInicio.ToString();
+        TxtElemAutoAnioFin.Text = auto.AnioFin.ToString();
+
+        BtnEditarAuto.IsEnabled = true;
+    }
+
+
+    // ---------------------------------------------------------
+    // LEER Y VALIDAR DATOS DEL AUTO
+    //
+    // idExcluir = 0 al agregar; al editar es el Id del auto
+    // que se corrige (para no marcarlo como duplicado de sí mismo).
+    // ---------------------------------------------------------
+
+    private async Task<(bool Ok, string Marca, string Modelo, int Inicio, int Fin)>
+        LeerDatosAutoAsync(int idExcluir)
+    {
+        var fallo = (false, string.Empty, string.Empty, 0, 0);
+
+        string marcaAuto = LimpiarEspacios(TxtElemAutoMarca.Text);
+        string modelo = LimpiarEspacios(TxtElemAutoModelo.Text);
+
+        if (string.IsNullOrWhiteSpace(marcaAuto) ||
+            string.IsNullOrWhiteSpace(modelo))
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Escribe la marca y el modelo del auto."
+            );
+            return fallo;
+        }
+
+        // Marca del auto: solo letras y espacios
+        if (!Validaciones.EsLetras(marcaAuto))
+        {
+            await MostrarMensaje(
+                "Marca no válida",
+                "La marca del auto solo puede tener letras."
+            );
+            return fallo;
+        }
+
+        // Modelo: letras, números y espacios. Sin caracteres especiales.
+        if (!Regex.IsMatch(modelo, @"^[\p{L}0-9 ]+$"))
+        {
+            await MostrarMensaje(
+                "Modelo no válido",
+                "El modelo solo puede tener letras, números y espacios. " +
+                "No se aceptan caracteres especiales (- . / # etc.)."
+            );
+            return fallo;
+        }
+
+        int anioMaximo = DateTime.Now.Year + 1;
+
+        if (!int.TryParse(TxtElemAutoAnioInicio.Text, out int anioInicio) ||
+            !int.TryParse(TxtElemAutoAnioFin.Text, out int anioFin) ||
+            anioInicio < ANIO_MINIMO_AUTO || anioInicio > anioMaximo ||
+            anioFin < ANIO_MINIMO_AUTO || anioFin > anioMaximo)
+        {
+            await MostrarMensaje(
+                "Años no válidos",
+                $"Los años deben estar entre {ANIO_MINIMO_AUTO} y {anioMaximo}."
+            );
+            return fallo;
+        }
+
+        if (anioInicio > anioFin)
+        {
+            await MostrarMensaje(
+                "Años no válidos",
+                "El año de inicio no puede ser mayor que el año de fin."
+            );
+            return fallo;
+        }
+
+        // Si la marca del auto ya existe en OTRO auto ("nissan" ->
+        // "Nissan"), se usa la escritura que ya está registrada.
+        string? marcaExistente = autos
+            .Where(a => a.Id != idExcluir)
+            .Select(a => a.Marca)
+            .FirstOrDefault(m => string.Equals(
+                m, marcaAuto, StringComparison.OrdinalIgnoreCase));
+
+        marcaAuto = marcaExistente ?? Capitalizar(marcaAuto);
+
+        // Mismo auto con los mismos años = duplicado.
+        // (Mismo modelo con OTROS años sí se permite: otra generación.)
+        bool duplicado = autos.Any(a =>
+            a.Id != idExcluir &&
+            a.Marca.Equals(marcaAuto, StringComparison.OrdinalIgnoreCase) &&
+            a.Modelo.Equals(modelo, StringComparison.OrdinalIgnoreCase) &&
+            a.AnioInicio == anioInicio &&
+            a.AnioFin == anioFin);
+
+        if (duplicado)
+        {
+            await MostrarMensaje(
+                "Auto repetido",
+                $"{marcaAuto} {modelo} ({anioInicio}-{anioFin}) ya está registrado."
+            );
+            return fallo;
+        }
+
+        return (true, marcaAuto, modelo, anioInicio, anioFin);
+    }
+
+
+    private void LimpiarCamposAuto()
+    {
+        TxtElemAutoMarca.Text = string.Empty;
+        TxtElemAutoModelo.Text = string.Empty;
+        TxtElemAutoAnioInicio.Text = string.Empty;
+        TxtElemAutoAnioFin.Text = string.Empty;
+
+        LstElemAutos.SelectedItem = null;
+        BtnEditarAuto.IsEnabled = false;
+    }
+
+
+    // #########################################################
+    //                    MARCAS DE PIEZAS
+    // #########################################################
+
+    // ---------------------------------------------------------
+    // AGREGAR MARCA
+    // ---------------------------------------------------------
 
     private async void AgregarMarca_Click(
         object sender,
         RoutedEventArgs e)
     {
-        string nombre = LimpiarEspacios(TxtElemMarca.Text);
+        string? nombre = await LeerNombreMarcaAsync(idExcluir: 0);
 
-        if (string.IsNullOrWhiteSpace(nombre))
-        {
-            await MostrarMensaje(
-                "Datos incompletos",
-                "Escribe el nombre de la marca."
-            );
+        if (nombre == null)
             return;
-        }
-
-        if (marcas.Any(m => m.Nombre.Equals(
-                nombre, StringComparison.OrdinalIgnoreCase)))
-        {
-            await MostrarMensaje(
-                "Marca repetida",
-                $"La marca \"{nombre}\" ya está registrada."
-            );
-            return;
-        }
 
         Marca nueva = new()
         {
@@ -209,8 +346,7 @@ public sealed partial class PanelAdmin : Page
         // Misma colección que usan CmbFormMarca y CmbMarca.
         marcas.Add(nueva);
 
-        TxtElemMarca.Text = string.Empty;
-
+        LimpiarCamposMarca();
         RefrescarListasElementos();
 
         await MostrarMensaje(
@@ -220,36 +356,147 @@ public sealed partial class PanelAdmin : Page
     }
 
 
-    // =========================================================
-    // AGREGAR CATEGORÍA
-    // =========================================================
+    // ---------------------------------------------------------
+    // EDITAR MARCA
+    // ---------------------------------------------------------
 
-    private async void AgregarCategoria_Click(
+    private async void EditarMarca_Click(
         object sender,
         RoutedEventArgs e)
     {
-        string nombre = LimpiarEspacios(TxtElemCategoria.Text);
+        if (LstElemMarcas.SelectedItem is not Marca marca)
+        {
+            await MostrarMensaje(
+                "Selecciona una marca",
+                "Primero elige en la lista la marca que quieres corregir."
+            );
+            return;
+        }
+
+        string? nombre = await LeerNombreMarcaAsync(idExcluir: marca.Id);
+
+        if (nombre == null)
+            return;
+
+        if (nombre == marca.Nombre)
+        {
+            await MostrarMensaje(
+                "Sin cambios",
+                "No modificaste el nombre de la marca."
+            );
+            return;
+        }
+
+        string anterior = marca.Nombre;
+
+        marca.Nombre = nombre;
+
+        bool guardado = await GuardarElementoAsync(
+            () => repoMarcas.UpdateAsync(marca),
+            "marcas.json"
+        );
+
+        if (!guardado)
+        {
+            marca.Nombre = anterior;
+            return;
+        }
+
+        LimpiarCamposMarca();
+        RefrescarTrasEdicion();
+
+        int productos = todasLasRefacciones.Count(r => r.MarcaId == marca.Id);
+
+        await MostrarMensaje(
+            "Marca actualizada",
+            $"\"{anterior}\"  →  \"{marca.Nombre}\"\n\n" +
+            $"{productos} producto(s) de esta marca ya muestran el nombre corregido."
+        );
+    }
+
+
+    private void ElemMarca_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
+    {
+        if (LstElemMarcas.SelectedItem is not Marca marca)
+        {
+            BtnEditarMarca.IsEnabled = false;
+            return;
+        }
+
+        TxtElemMarca.Text = marca.Nombre;
+
+        BtnEditarMarca.IsEnabled = true;
+    }
+
+
+    // Devuelve el nombre válido, o null si hubo un problema
+    // (el mensaje ya se mostró).
+    private async Task<string?> LeerNombreMarcaAsync(int idExcluir)
+    {
+        string nombre = LimpiarEspacios(TxtElemMarca.Text);
 
         if (string.IsNullOrWhiteSpace(nombre))
         {
             await MostrarMensaje(
                 "Datos incompletos",
-                "Escribe el nombre de la categoría."
+                "Escribe el nombre de la marca."
             );
-            return;
+            return null;
         }
 
-        nombre = Capitalizar(nombre, soloPrimera: true);
-
-        if (categorias.Any(c => c.Nombre.Equals(
-                nombre, StringComparison.OrdinalIgnoreCase)))
+        // Marca de pieza: solo letras y espacios (sin números)
+        if (!Validaciones.EsLetras(nombre))
         {
             await MostrarMensaje(
-                "Categoría repetida",
-                $"La categoría \"{nombre}\" ya está registrada."
+                "Marca no válida",
+                "El nombre de la marca solo puede tener letras. " +
+                "No se aceptan números ni caracteres especiales."
             );
-            return;
+            return null;
         }
+
+        if (marcas.Any(m =>
+                m.Id != idExcluir &&
+                m.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
+        {
+            await MostrarMensaje(
+                "Marca repetida",
+                $"La marca \"{nombre}\" ya está registrada."
+            );
+            return null;
+        }
+
+        return nombre;
+    }
+
+
+    private void LimpiarCamposMarca()
+    {
+        TxtElemMarca.Text = string.Empty;
+
+        LstElemMarcas.SelectedItem = null;
+        BtnEditarMarca.IsEnabled = false;
+    }
+
+
+    // #########################################################
+    //                       CATEGORÍAS
+    // #########################################################
+
+    // ---------------------------------------------------------
+    // AGREGAR CATEGORÍA
+    // ---------------------------------------------------------
+
+    private async void AgregarCategoria_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        string? nombre = await LeerNombreCategoriaAsync(idExcluir: 0);
+
+        if (nombre == null)
+            return;
 
         Categoria nueva = new()
         {
@@ -267,8 +514,7 @@ public sealed partial class PanelAdmin : Page
         // Misma colección que usa CmbFormCategoria.
         categorias.Add(nueva);
 
-        TxtElemCategoria.Text = string.Empty;
-
+        LimpiarCamposCategoria();
         RefrescarListasElementos();
 
         await MostrarMensaje(
@@ -278,9 +524,136 @@ public sealed partial class PanelAdmin : Page
     }
 
 
-    // =========================================================
+    // ---------------------------------------------------------
+    // EDITAR CATEGORÍA
+    // ---------------------------------------------------------
+
+    private async void EditarCategoria_Click(
+        object sender,
+        RoutedEventArgs e)
+    {
+        if (LstElemCategorias.SelectedItem is not Categoria categoria)
+        {
+            await MostrarMensaje(
+                "Selecciona una categoría",
+                "Primero elige en la lista la categoría que quieres corregir."
+            );
+            return;
+        }
+
+        string? nombre = await LeerNombreCategoriaAsync(idExcluir: categoria.Id);
+
+        if (nombre == null)
+            return;
+
+        if (nombre == categoria.Nombre)
+        {
+            await MostrarMensaje(
+                "Sin cambios",
+                "No modificaste el nombre de la categoría."
+            );
+            return;
+        }
+
+        string anterior = categoria.Nombre;
+
+        categoria.Nombre = nombre;
+
+        bool guardado = await GuardarElementoAsync(
+            () => repoCategorias.UpdateAsync(categoria),
+            "categorias.json"
+        );
+
+        if (!guardado)
+        {
+            categoria.Nombre = anterior;
+            return;
+        }
+
+        LimpiarCamposCategoria();
+        RefrescarTrasEdicion();
+
+        int productos = todasLasRefacciones.Count(r => r.CategoriaId == categoria.Id);
+
+        await MostrarMensaje(
+            "Categoría actualizada",
+            $"\"{anterior}\"  →  \"{categoria.Nombre}\"\n\n" +
+            $"{productos} producto(s) de esta categoría ya muestran el nombre corregido."
+        );
+    }
+
+
+    private void ElemCategoria_SelectionChanged(
+        object sender,
+        SelectionChangedEventArgs e)
+    {
+        if (LstElemCategorias.SelectedItem is not Categoria categoria)
+        {
+            BtnEditarCategoria.IsEnabled = false;
+            return;
+        }
+
+        TxtElemCategoria.Text = categoria.Nombre;
+
+        BtnEditarCategoria.IsEnabled = true;
+    }
+
+
+    private async Task<string?> LeerNombreCategoriaAsync(int idExcluir)
+    {
+        string nombre = LimpiarEspacios(TxtElemCategoria.Text);
+
+        if (string.IsNullOrWhiteSpace(nombre))
+        {
+            await MostrarMensaje(
+                "Datos incompletos",
+                "Escribe el nombre de la categoría."
+            );
+            return null;
+        }
+
+        if (!Validaciones.EsLetras(nombre))
+        {
+            await MostrarMensaje(
+                "Categoría no válida",
+                "El nombre de la categoría solo puede tener letras."
+            );
+            return null;
+        }
+
+        nombre = Capitalizar(nombre, soloPrimera: true);
+
+        if (categorias.Any(c =>
+                c.Id != idExcluir &&
+                c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
+        {
+            await MostrarMensaje(
+                "Categoría repetida",
+                $"La categoría \"{nombre}\" ya está registrada."
+            );
+            return null;
+        }
+
+        return nombre;
+    }
+
+
+    private void LimpiarCamposCategoria()
+    {
+        TxtElemCategoria.Text = string.Empty;
+
+        LstElemCategorias.SelectedItem = null;
+        BtnEditarCategoria.IsEnabled = false;
+    }
+
+
+    // #########################################################
+    //                      COMPARTIDO
+    // #########################################################
+
+    // ---------------------------------------------------------
     // GUARDAR CON MANEJO DE ERRORES
-    // =========================================================
+    // ---------------------------------------------------------
 
     private async Task<bool> GuardarElementoAsync(
         Func<Task> guardar,
@@ -302,9 +675,9 @@ public sealed partial class PanelAdmin : Page
     }
 
 
-    // =========================================================
+    // ---------------------------------------------------------
     // REFRESCAR LISTAS (vista + filtros del inventario)
-    // =========================================================
+    // ---------------------------------------------------------
 
     private void RefrescarListasElementos()
     {
@@ -342,9 +715,48 @@ public sealed partial class PanelAdmin : Page
     }
 
 
-    // =========================================================
+    // ---------------------------------------------------------
+    // REFRESCAR TODO DESPUÉS DE EDITAR UN NOMBRE
+    //
+    // Los productos guardan el Id, pero en pantalla muestran el
+    // nombre (MarcaNombre, CategoriaNombre, AutosDescripciones).
+    // Se recalculan para que las tarjetas muestren lo corregido.
+    // ---------------------------------------------------------
+
+    private void RefrescarTrasEdicion()
+    {
+        foreach (Refaccion refaccion in todasLasRefacciones)
+        {
+            CompletarDatosRefaccion(refaccion);
+        }
+
+        // Volver a asignar las fuentes obliga a redibujar los
+        // nombres en los combos y en la lista de autos compatibles.
+        CmbFormMarca.ItemsSource = null;
+        CmbFormMarca.ItemsSource = marcas;
+
+        CmbFormCategoria.ItemsSource = null;
+        CmbFormCategoria.ItemsSource = categorias;
+
+        LstFormAutos.ItemsSource = null;
+        LstFormAutos.ItemsSource = autos;
+
+        CmbMarca.ItemsSource = null;
+        CmbMarca.ItemsSource = marcas;
+
+        ListaProductosRetirados.ItemsSource = null;
+
+        RefrescarListasElementos();
+
+        ActualizarTodo();
+
+        AplicarFiltrosInventario();
+    }
+
+
+    // ---------------------------------------------------------
     // UTILIDADES DE TEXTO
-    // =========================================================
+    // ---------------------------------------------------------
 
     private static string LimpiarEspacios(string? texto) =>
         Regex.Replace(texto ?? string.Empty, @"\s+", " ").Trim();

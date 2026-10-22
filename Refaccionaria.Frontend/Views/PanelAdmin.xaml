@@ -2400,19 +2400,19 @@
                         <!-- ================================================= -->
 
                         <Grid
-                        x:Name="VistaAgregarElementos"
-                        Visibility="Collapsed">
+                            x:Name="VistaAgregarElementos"
+                            Visibility="Collapsed">
 
-                        <Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
 
                             <RowDefinition Height="Auto"/>
 
                             <RowDefinition Height="*"/>
 
-                        </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
 
 
-                        <StackPanel Margin="0,0,0,20">
+                            <StackPanel Margin="0,0,0,20">
 
                             <TextBlock
                                 Text="Agregar elementos"
@@ -2421,14 +2421,14 @@
                                 Foreground="{StaticResource GrisMuyOscuro}"/>
 
                             <TextBlock
-                                Text="Registra nuevos autos, marcas de piezas y categorías. Aparecerán al agregar o editar un producto."
+                                Text="Registra o corrige autos, marcas de piezas y categorías. Los cambios aparecen al agregar o editar un producto."
                                 FontSize="13"
                                 Foreground="#777777"/>
 
-                        </StackPanel>
+                            </StackPanel>
 
 
-                        <ScrollViewer
+                            <ScrollViewer
                             Grid.Row="1"
                             VerticalScrollBarVisibility="Auto">
 
@@ -2460,7 +2460,7 @@
                                     <StackPanel>
 
                                         <TextBlock
-                                            Text="🚗  Nuevo auto"
+                                            Text="🚗  Autos"
                                             FontSize="18"
                                             FontWeight="Bold"
                                             Foreground="{StaticResource GrisMuyOscuro}"
@@ -2482,7 +2482,7 @@
 
                                         <TextBox
                                             x:Name="TxtElemAutoModelo"
-                                            PlaceholderText="Ej. Tsuru, CR-V, Mazda 3"
+                                            PlaceholderText="Ej. Tsuru, CRV, Mazda 3"
                                             MaxLength="25"
                                             Margin="0,5,0,10"/>
 
@@ -2527,8 +2527,28 @@
                                             Content="+  AGREGAR AUTO"
                                             Style="{StaticResource BotonAmarillo}"
                                             HorizontalAlignment="Stretch"
-                                            Margin="0,6,0,16"
+                                            Margin="0,6,0,0"
                                             Click="AgregarAuto_Click"/>
+
+                                        <Button
+                                            x:Name="BtnEditarAuto"
+                                            Content="✎  EDITAR AUTO"
+                                            Background="{StaticResource GrisMuyOscuro}"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            CornerRadius="6"
+                                            Padding="18,10"
+                                            HorizontalAlignment="Stretch"
+                                            IsEnabled="False"
+                                            Margin="0,8,0,4"
+                                            Click="EditarAuto_Click"/>
+
+                                        <TextBlock
+                                            Text="Para editar: elige un auto de la lista, corrige los datos y presiona Editar."
+                                            FontSize="11"
+                                            Foreground="#999999"
+                                            TextWrapping="Wrap"
+                                            Margin="0,0,0,14"/>
 
                                         <TextBlock
                                             x:Name="TxtElemTotalAutos"
@@ -2541,11 +2561,12 @@
                                         <ListView
                                             x:Name="LstElemAutos"
                                             Height="240"
-                                            SelectionMode="None"
+                                            SelectionMode="Single"
                                             BorderBrush="#E0E0E0"
                                             BorderThickness="1"
                                             CornerRadius="5"
-                                            DisplayMemberPath="DescripcionCompleta"/>
+                                            DisplayMemberPath="DescripcionCompleta"
+                                            SelectionChanged="ElemAuto_SelectionChanged"/>
 
                                     </StackPanel>
 
@@ -2568,7 +2589,7 @@
                                     <StackPanel>
 
                                         <TextBlock
-                                            Text="🏷  Nueva marca de pieza"
+                                            Text="🏷  Marcas de piezas"
                                             FontSize="18"
                                             FontWeight="Bold"
                                             Foreground="{StaticResource GrisMuyOscuro}"
@@ -2588,8 +2609,28 @@
                                             Content="+  AGREGAR MARCA"
                                             Style="{StaticResource BotonAmarillo}"
                                             HorizontalAlignment="Stretch"
-                                            Margin="0,6,0,16"
+                                            Margin="0,6,0,0"
                                             Click="AgregarMarca_Click"/>
+
+                                        <Button
+                                            x:Name="BtnEditarMarca"
+                                            Content="✎  EDITAR MARCA"
+                                            Background="{StaticResource GrisMuyOscuro}"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            CornerRadius="6"
+                                            Padding="18,10"
+                                            HorizontalAlignment="Stretch"
+                                            IsEnabled="False"
+                                            Margin="0,8,0,4"
+                                            Click="EditarMarca_Click"/>
+
+                                        <TextBlock
+                                            Text="Para editar: elige una marca de la lista, corrige el nombre y presiona Editar."
+                                            FontSize="11"
+                                            Foreground="#999999"
+                                            TextWrapping="Wrap"
+                                            Margin="0,0,0,14"/>
 
                                         <TextBlock
                                             x:Name="TxtElemTotalMarcas"
@@ -2602,11 +2643,12 @@
                                         <ListView
                                             x:Name="LstElemMarcas"
                                             Height="240"
-                                            SelectionMode="None"
+                                            SelectionMode="Single"
                                             BorderBrush="#E0E0E0"
                                             BorderThickness="1"
                                             CornerRadius="5"
-                                            DisplayMemberPath="Nombre"/>
+                                            DisplayMemberPath="Nombre"
+                                            SelectionChanged="ElemMarca_SelectionChanged"/>
 
                                     </StackPanel>
 
@@ -2629,7 +2671,7 @@
                                     <StackPanel>
 
                                         <TextBlock
-                                            Text="📂  Nueva categoría"
+                                            Text="📂  Categorías"
                                             FontSize="18"
                                             FontWeight="Bold"
                                             Foreground="{StaticResource GrisMuyOscuro}"
@@ -2649,8 +2691,28 @@
                                             Content="+  AGREGAR CATEGORÍA"
                                             Style="{StaticResource BotonAmarillo}"
                                             HorizontalAlignment="Stretch"
-                                            Margin="0,6,0,16"
+                                            Margin="0,6,0,0"
                                             Click="AgregarCategoria_Click"/>
+
+                                        <Button
+                                            x:Name="BtnEditarCategoria"
+                                            Content="✎  EDITAR CATEGORÍA"
+                                            Background="{StaticResource GrisMuyOscuro}"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            CornerRadius="6"
+                                            Padding="18,10"
+                                            HorizontalAlignment="Stretch"
+                                            IsEnabled="False"
+                                            Margin="0,8,0,4"
+                                            Click="EditarCategoria_Click"/>
+
+                                        <TextBlock
+                                            Text="Para editar: elige una categoría de la lista, corrige el nombre y presiona Editar."
+                                            FontSize="11"
+                                            Foreground="#999999"
+                                            TextWrapping="Wrap"
+                                            Margin="0,0,0,14"/>
 
                                         <TextBlock
                                             x:Name="TxtElemTotalCategorias"
@@ -2663,11 +2725,12 @@
                                         <ListView
                                             x:Name="LstElemCategorias"
                                             Height="240"
-                                            SelectionMode="None"
+                                            SelectionMode="Single"
                                             BorderBrush="#E0E0E0"
                                             BorderThickness="1"
                                             CornerRadius="5"
-                                            DisplayMemberPath="Nombre"/>
+                                            DisplayMemberPath="Nombre"
+                                            SelectionChanged="ElemCategoria_SelectionChanged"/>
 
                                     </StackPanel>
 
@@ -2677,7 +2740,7 @@
 
                         </ScrollViewer>
 
-                    </Grid>
+                    </Grid> 
 
                 </Grid>
 
