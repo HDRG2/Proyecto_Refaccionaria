@@ -262,5 +262,781 @@
     "MarcaNombre": "NGK",
     "CategoriaNombre": "Encendido",
     "AutosDescripciones": []
+  },
+  {
+    "Id": 16,
+    "Codigo": "MOT-001",
+    "Nombre": "Buj\u00EDas de Iridio",
+    "MarcaId": 3,
+    "CategoriaId": 6,
+    "Precio": 680.00,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2,
+      3
+    ],
+    "MarcaNombre": "NGK",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 17,
+    "Codigo": "MOT-002",
+    "Nombre": "Banda de Distribuci\u00F3n",
+    "MarcaId": 7,
+    "CategoriaId": 6,
+    "Precio": 890.00,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7,
+      6
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 18,
+    "Codigo": "MOT-003",
+    "Nombre": "Bomba de Aceite",
+    "MarcaId": 6,
+    "CategoriaId": 6,
+    "Precio": 1225.00,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      10
+    ],
+    "MarcaNombre": "Fram",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 19,
+    "Codigo": "FRE-001",
+    "Nombre": "Balatas Delanteras Cer\u00E1micas",
+    "MarcaId": 2,
+    "CategoriaId": 3,
+    "Precio": 1000.00,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 20,
+    "Codigo": "FRE-002",
+    "Nombre": "Disco de Freno Ventilado",
+    "MarcaId": 9,
+    "CategoriaId": 3,
+    "Precio": 659.00,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      9
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 21,
+    "Codigo": "FRE-003",
+    "Nombre": "Bomba de Freno",
+    "MarcaId": 10,
+    "CategoriaId": 3,
+    "Precio": 980.00,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      3,
+      9
+    ],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 22,
+    "Codigo": "SUS-001",
+    "Nombre": "Amortiguador Trasero",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 1380.00,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      7,
+      8
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 23,
+    "Codigo": "SUS-002",
+    "Nombre": "R\u00F3tula Inferior",
+    "MarcaId": 7,
+    "CategoriaId": 4,
+    "Precio": 680.00,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      7
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Suspensi\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 24,
+    "Codigo": "SUS-003",
+    "Nombre": "Resorte Delantero",
+    "MarcaId": 6,
+    "CategoriaId": 1,
+    "Precio": 1190.00,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      9,
+      10,
+      8
+    ],
+    "MarcaNombre": "Fram",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 25,
+    "Codigo": "ELE-001",
+    "Nombre": "Bater\u00EDa Placas",
+    "MarcaId": 10,
+    "CategoriaId": 8,
+    "Precio": 2150.00,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3,
+      6
+    ],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 26,
+    "Codigo": "ELE-002",
+    "Nombre": "Alternador A",
+    "MarcaId": 5,
+    "CategoriaId": 8,
+    "Precio": 3450.00,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      7
+    ],
+    "MarcaNombre": "Castrol",
+    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 27,
+    "Codigo": "ELE-003",
+    "Nombre": "Motor de Arranque",
+    "MarcaId": 1,
+    "CategoriaId": 8,
+    "Precio": 2890,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      1,
+      2,
+      8
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 28,
+    "Codigo": "TRA-001",
+    "Nombre": "Kit de Clutch",
+    "MarcaId": 4,
+    "CategoriaId": 7,
+    "Precio": 3200.00,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      5,
+      6
+    ],
+    "MarcaNombre": "Mobil",
+    "CategoriaNombre": "Transmisi\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 29,
+    "Codigo": "TRA-002",
+    "Nombre": "Aceite ATF Multiveh\u00EDculo",
+    "MarcaId": 1,
+    "CategoriaId": 7,
+    "Precio": 420.00,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      9,
+      8
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Transmisi\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 30,
+    "Codigo": "TRA-003",
+    "Nombre": "Flecha Homocin\u00E9tica Delantera",
+    "MarcaId": 2,
+    "CategoriaId": 7,
+    "Precio": 1500.00,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      5,
+      4
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Transmisi\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 31,
+    "Codigo": "ENF-001",
+    "Nombre": "Radiador de Aluminio",
+    "MarcaId": 8,
+    "CategoriaId": 9,
+    "Precio": 2780.00,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      7
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 32,
+    "Codigo": "ENF-002",
+    "Nombre": "Termostato con Empaque",
+    "MarcaId": 7,
+    "CategoriaId": 9,
+    "Precio": 210.00,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      5,
+      4
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 33,
+    "Codigo": "ENF-003",
+    "Nombre": "Bomba de Agua",
+    "MarcaId": 1,
+    "CategoriaId": 9,
+    "Precio": 980.00,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      9,
+      8
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 34,
+    "Codigo": "DIR-001",
+    "Nombre": "Terminal de Direcci\u00F3n Exterior",
+    "MarcaId": 9,
+    "CategoriaId": 5,
+    "Precio": 420.00,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Direcci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 35,
+    "Codigo": "DIR-002",
+    "Nombre": "Cremallera de Direcci\u00F3n Hidr\u00E1ulica",
+    "MarcaId": 1,
+    "CategoriaId": 5,
+    "Precio": 3000.00,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      2,
+      5,
+      6,
+      10
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Direcci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 36,
+    "Codigo": "DIR-003",
+    "Nombre": "Bomba de Direcci\u00F3n Hidr\u00E1ulica",
+    "MarcaId": 2,
+    "CategoriaId": 5,
+    "Precio": 4900.00,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3,
+      2,
+      1
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Direcci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 37,
+    "Codigo": "ENC-001",
+    "Nombre": "Bobina de Encendido",
+    "MarcaId": 1,
+    "CategoriaId": 10,
+    "Precio": 670.00,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3,
+      6,
+      9
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 38,
+    "Codigo": "ENC-002",
+    "Nombre": "Cables de Buj\u00EDa",
+    "MarcaId": 1,
+    "CategoriaId": 10,
+    "Precio": 560.00,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 39,
+    "Codigo": "ENC-003",
+    "Nombre": "M\u00F3dulo de Encendido",
+    "MarcaId": 10,
+    "CategoriaId": 10,
+    "Precio": 1499.00,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7,
+      6
+    ],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 40,
+    "Codigo": "ESC-001",
+    "Nombre": "Silenciador Trasero",
+    "MarcaId": 7,
+    "CategoriaId": 11,
+    "Precio": 2000.00,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 41,
+    "Codigo": "ESC-002",
+    "Nombre": "Catalizador de Reemplazo",
+    "MarcaId": 9,
+    "CategoriaId": 11,
+    "Precio": 3920.00,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      5,
+      4,
+      10
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 42,
+    "Codigo": "ESC-003",
+    "Nombre": "Sensor de Ox\u00EDgeno",
+    "MarcaId": 1,
+    "CategoriaId": 11,
+    "Precio": 590.00,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      9
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 43,
+    "Codigo": "ILU-001",
+    "Nombre": "Faro Delantero Derecho",
+    "MarcaId": 10,
+    "CategoriaId": 12,
+    "Precio": 2190.00,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      6,
+      9
+    ],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Iluminaci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 44,
+    "Codigo": "ILU-002",
+    "Nombre": "Focos LED",
+    "MarcaId": 1,
+    "CategoriaId": 12,
+    "Precio": 690.00,
+    "Stock": 21,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      9
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Iluminaci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 45,
+    "Codigo": "ILU-003",
+    "Nombre": "Calavera Trasera Izquierda",
+    "MarcaId": 5,
+    "CategoriaId": 12,
+    "Precio": 989.00,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      8
+    ],
+    "MarcaNombre": "Castrol",
+    "CategoriaNombre": "Iluminaci\u00F3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 46,
+    "Codigo": "CAR-001",
+    "Nombre": "Espejo Lateral El\u00E9ctrico Izquierdo",
+    "MarcaId": 9,
+    "CategoriaId": 13,
+    "Precio": 1450.00,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3,
+      4,
+      2
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Carrocer\u00EDa",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 47,
+    "Codigo": "CAR-002",
+    "Nombre": "Defensa Delantera",
+    "MarcaId": 7,
+    "CategoriaId": 13,
+    "Precio": 3100.00,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      3,
+      2,
+      8,
+      7,
+      6
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Carrocer\u00EDa",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 48,
+    "Codigo": "CAR-003",
+    "Nombre": "Parrilla Frontal",
+    "MarcaId": 2,
+    "CategoriaId": 13,
+    "Precio": 1590.00,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      3,
+      9
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Carrocer\u00EDa",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 49,
+    "Codigo": "ACC-001",
+    "Nombre": "Tapetes de Uso Rudo",
+    "MarcaId": 6,
+    "CategoriaId": 14,
+    "Precio": 490.00,
+    "Stock": 13,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      2,
+      3,
+      5,
+      4
+    ],
+    "MarcaNombre": "Fram",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 50,
+    "Codigo": "ACC-002",
+    "Nombre": "Cubreasientos de Piel Sint\u00E9tica",
+    "MarcaId": 9,
+    "CategoriaId": 14,
+    "Precio": 136.00,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      9
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 51,
+    "Codigo": "ACC-003",
+    "Nombre": "Barras de Techo",
+    "MarcaId": 1,
+    "CategoriaId": 14,
+    "Precio": 3200.00,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      3,
+      4,
+      5
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 52,
+    "Codigo": "LUB-001",
+    "Nombre": "Aceite de Transmisi\u00F3n Manual",
+    "MarcaId": 9,
+    "CategoriaId": 15,
+    "Precio": 490.00,
+    "Stock": 11,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7,
+      6,
+      5,
+      4
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 53,
+    "Codigo": "LUB-002",
+    "Nombre": "Grasa de Litio Multiusos",
+    "MarcaId": 1,
+    "CategoriaId": 15,
+    "Precio": 320.00,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 54,
+    "Codigo": "LUB-003",
+    "Nombre": "L\u00EDquido de Frenos DOT",
+    "MarcaId": 4,
+    "CategoriaId": 15,
+    "Precio": 280.00,
+    "Stock": 24,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      5
+    ],
+    "MarcaNombre": "Mobil",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 55,
+    "Codigo": "ACE-002",
+    "Nombre": "Aceite Semisint\u00E9tico",
+    "MarcaId": 7,
+    "CategoriaId": 1,
+    "Precio": 560.00,
+    "Stock": 22,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7,
+      6
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
   }
 ]
