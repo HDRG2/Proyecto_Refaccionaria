@@ -982,7 +982,7 @@
                             Style="{StaticResource Lista}"
                             Height="42"
                             Margin="10,0,0,0"
-                            SelectionChanged="Filtro_Changed"/>
+                            SelectionChanged="Modelo_Changed"/>
 
                         <!-- AÑO -->
                         <ComboBox
@@ -1843,6 +1843,10 @@
 
     </Grid>
 </Page>
+
+
+
+
 
 
 

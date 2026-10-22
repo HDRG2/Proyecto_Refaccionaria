@@ -1195,5 +1195,46 @@
         }
       }
     ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 24,
+    "Folio": "V-20261022-132945370",
+    "Fecha": "2026-10-22T13:29:45.370054-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Efectivo",
+    "Referencia": "",
+    "Recibido": 3000,
+    "Cambio": 506.00,
+    "Total": 2494.00,
+    "Lineas": [
+      {
+        "Subtotal": 2150.00,
+        "Id": 33,
+        "VentaId": 24,
+        "RefaccionId": 25,
+        "Cantidad": 1,
+        "PrecioUnitario": 2150.00,
+        "Refaccion": {
+          "Id": 25,
+          "Codigo": "ELE-001",
+          "Nombre": "Bater\u00EDa Placas",
+          "MarcaId": 10,
+          "CategoriaId": 8,
+          "Precio": 2150.00,
+          "Stock": 6,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            6,
+            11
+          ],
+          "MarcaNombre": "LTH",
+          "CategoriaNombre": "Sistema el\u00E9ctrico",
+          "AutosDescripciones": []
+        }
+      }
+    ]
   }
 ]
