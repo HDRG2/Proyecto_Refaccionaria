@@ -75,5 +75,12 @@
     "Modelo": "focus",
     "AnioInicio": 2015,
     "AnioFin": 2020
+  },
+  {
+    "Id": 12,
+    "Marca": "Mazda",
+    "Modelo": "Mazda 3",
+    "AnioInicio": 2008,
+    "AnioFin": 2027
   }
 ]
