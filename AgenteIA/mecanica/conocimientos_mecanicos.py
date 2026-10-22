@@ -209,6 +209,19 @@ CONOCIMIENTOS_MECANICOS = {
         "presión y puede causar quemaduras."
     ),
 
+    "falla_manguera": (
+        "Las mangueras más comunes son las del sistema de enfriamiento "
+        "(radiador y calefacción). Una manguera con falla suele mostrar "
+        "fugas o goteo de refrigerante, grietas, partes hinchadas o muy "
+        "blandas, abrazaderas flojas o vapor cerca del motor. Una fuga "
+        "puede bajar el nivel de refrigerante y provocar sobrecalentamiento. "
+        "Conviene revisarlas con el motor frío, apretando con la mano para "
+        "detectar zonas blandas o agrietadas, y reemplazar la manguera "
+        "dañada junto con su abrazadera si está en mal estado.\n\n"
+        "Por seguridad: no abrir la tapa del radiador ni tocar las "
+        "mangueras con el motor caliente, porque el sistema está a presión."
+    ),
+
     "que_hacer_testigo_aceite": (
         "Si se enciende el testigo de presión de aceite con el motor "
         "funcionando, detente en un lugar seguro y apaga el motor. Puede "
@@ -256,6 +269,13 @@ PREGUNTAS_FRECUENTES = [
        "se calienta", "se calento", "se esta calentando", "calentando",
        "sube la temperatura", "sube la aguja", "sale vapor", "echa vapor",
        "temperatura alta", "temperatura muy alta"]]),
+
+    # "falla mi manguera", "se rompió la manguera", "gotea la manguera".
+    ("falla_manguera",
+     [["manguera", "mangueras"],
+      ["falla", "fallas", "fallando", "rota", "roto", "rompio", "reventada",
+       "revento", "gotea", "fuga", "fugas", "tira", "pierde", "agrietada",
+       "grieta", "hinchada", "suelta", "zafo", "mal", "problema", "danada"]]),
 
     ("que_hacer_testigo_aceite",
      [["testigo de aceite", "testigo del aceite", "foco del aceite",
@@ -370,5 +390,146 @@ def buscar_respuesta_rapida(pregunta: str) -> str | None:
             return CONOCIMIENTOS_MECANICOS[clave]
 
     return None
+
+
+# ---------------------------------------------------------------------
+# "Falla mi volante", "no sirven mis luces": dice QUÉ pieza, pero no
+# QUÉ le pasa. En lugar de que el modelo invente un síntoma, se le
+# pregunta al vendedor y se le muestran los síntomas comunes de ese
+# sistema, tomados de la documentación revisada.
+# ---------------------------------------------------------------------
+
+_PALABRAS_FALLA = (
+    r"\b(?:falla|fallan|fallo|fallaron|fallando|no sirve|no sirven|"
+    r"no funciona|no funcionan|no jala|no jalan|tiene falla|tiene fallas|"
+    r"trae falla|anda mal|esta mal|estan mal|se descompuso|se descompusieron|"
+    r"descompuesto|descompuesta|descompuestos|descompuestas|tiene problemas?|"
+    r"problemas? con|problemas? en|algo raro)\b"
+)
+
+# Lo que puede acompañar al nombre de la pieza sin describir un síntoma.
+_RELLENO_FALLA = {
+    "falla", "fallan", "fallo", "fallaron", "fallando", "no", "sirve",
+    "sirven", "funciona", "funcionan", "jala", "jalan", "tiene", "trae",
+    "anda", "esta", "estan", "mal", "se", "descompuso", "descompusieron",
+    "descompuesto", "descompuesta", "descompuestos", "descompuestas",
+    "problema", "problemas", "con", "en", "algo", "raro", "mi", "mis", "su",
+    "sus", "tu", "tus", "el", "la", "los", "las", "lo", "del", "de", "al",
+    "un", "una", "carro", "auto", "coche", "camioneta", "vehiculo", "cliente",
+    "dice", "que", "me", "le", "ya", "y", "a", "senor", "senora", "oye",
+    "ayuda", "porfa", "favor", "por", "creo", "parece", "hay", "ahi", "algun",
+    "alguna", "tengo", "tenemos", "unos", "unas", "motor",
+}
+
+# Palabras que ya describen un síntoma: si aparecen, no se dice "no
+# reconozco la pieza" (la pregunta sigue a la documentación).
+_SINTOMA_EN_TEXTO = (
+    r"^(?:rechin|chill|chirri|vibr|tiembl|humo|vapor|golpe|truen|zumb|fuga|"
+    r"gote|calien|sobrec|patin|jalon|tiron|rebot|olor|huel|quem|cascab|ruid|"
+    r"suen|frena|arranc|prend|enciend|apag|jala|pierd|tira|gast)"
+)
+
+_NOMBRE_SISTEMA = {
+    "sistema_frenos": "los frenos",
+    "sistema_suspension": "la suspensión",
+    "sistema_direccion": "la dirección",
+    "llantas_y_alineacion": "las llantas y la alineación",
+    "sistema_electrico": "el sistema eléctrico",
+    "sistema_encendido": "el encendido",
+    "sistema_refrigeracion": "el sistema de enfriamiento",
+    "sistema_lubricacion": "la lubricación",
+    "sistema_combustible": "el sistema de combustible",
+    "sistema_transmision": "la transmisión",
+    "sistema_escape": "el escape",
+    "testigos_tablero": "los testigos del tablero",
+    "sistema_iluminacion": "las luces",
+    "aire_acondicionado": "el aire acondicionado",
+    "mantenimiento_preventivo": "esa pieza",
+}
+
+
+def respuesta_falla_sin_sintoma(pregunta: str) -> str | None:
+    texto = _normalizar(pregunta)
+    if not re.search(_PALABRAS_FALLA, texto):
+        return None
+
+    from AgenteIA.mecanica.documentacion_automotriz import DOCUMENTACION_AUTOMOTRIZ
+
+    resto = [p for p in re.findall(r"[a-z]+", texto) if p not in _RELLENO_FALLA]
+
+    # "falla mi carro", "mi camioneta anda mal": ni pieza ni síntoma.
+    if not resto:
+        return (
+            "¿Qué le pasa al vehículo exactamente? Por ejemplo: no arranca, "
+            "se calienta, hace ruido al frenar, vibra en carretera, sale humo, "
+            "se prende un testigo en el tablero o pierde fuerza. Con el "
+            "síntoma te digo las causas posibles y qué conviene revisar."
+        )
+    if len(resto) > 3:
+        return None
+
+    # Todas las palabras que quedan deben ser nombres de piezas de UN
+    # sistema ("volante", "luces", "mofle"); si hay algo más ("ruido",
+    # "vibra", "humo"), ya hay un síntoma y se contesta normal.
+    def formas(palabra: str) -> set[str]:
+        return {palabra, palabra.rstrip("s"), palabra + "s", palabra + "es",
+                palabra[:-2] if palabra.endswith("es") else palabra}
+
+    # Cada palabra vale 2 si es una pieza por sí sola en ese sistema
+    # ("luces" en iluminación) y 1 si solo aparece dentro de una frase
+    # ("luces tenues" en el sistema eléctrico).
+    mejor, mejor_puntos, mejor_cubiertas = None, 0, 0
+    for clave, datos in DOCUMENTACION_AUTOMOTRIZ.items():
+        sueltas, en_frase = set(), set()
+        for frase in datos.get("palabras_clave", []):
+            palabras_frase = re.findall(r"[a-z]+", _normalizar(frase))
+            (sueltas if len(palabras_frase) == 1 else en_frase).update(palabras_frase)
+        puntos = cubiertas = 0
+        for p in resto:
+            if formas(p) & sueltas:
+                puntos, cubiertas = puntos + 2, cubiertas + 1
+            elif formas(p) & en_frase:
+                puntos, cubiertas = puntos + 1, cubiertas + 1
+        if puntos > mejor_puntos:
+            mejor, mejor_puntos, mejor_cubiertas = clave, puntos, cubiertas
+
+    if mejor is None or mejor_cubiertas < len(resto):
+        # "falla mi rifle": una sola palabra que no es pieza de ningún
+        # sistema ni palabra de síntoma. Se dice claro, sin adivinar.
+        if mejor is None and len(resto) == 1 and len(resto[0]) >= 3 \
+                and not re.search(_SINTOMA_EN_TEXTO, resto[0]):
+            return (
+                f"No tengo información técnica sobre «{resto[0]}». Si es una "
+                "pieza del vehículo, dime qué síntoma tiene (por ejemplo: no "
+                "enciende, hace ruido, se calienta). También puedes preguntarme "
+                "por otra pieza: \"falla el alternador\", \"el carro no arranca\"."
+            )
+        return None
+
+    apartados = DOCUMENTACION_AUTOMOTRIZ[mejor]["apartados"]
+    sistema = _NOMBRE_SISTEMA.get(mejor, "esa parte del vehículo")
+    sintomas = next((v for k, v in apartados.items() if k.startswith("SÍNTOMAS")), None)
+
+    if sintomas:
+        return (
+            f"«Falla» puede ser varias cosas en {sistema}. Síntomas comunes: "
+            f"{sintomas[0].lower() + sintomas[1:]}\n\n"
+            "¿Cuál de estos tiene, o qué hace exactamente? Con el síntoma te "
+            "digo las causas posibles y qué conviene revisar."
+        )
+
+    # Sistemas sin lista de síntomas (luces): causas y revisión directas.
+    partes = [apartados[k] for k in ("CAUSAS POSIBLES", "DIAGNÓSTICO") if k in apartados]
+    if not partes:
+        return None
+    return (
+        f"Cuando {'fallan' if sistema.startswith(('los ', 'las ')) else 'falla'} "
+        f"{sistema}, lo más común es lo siguiente. "
+        + " ".join(partes)
+        + "\n\nSi me dices qué hace exactamente, te oriento mejor."
+    )
+
+
+
 
 

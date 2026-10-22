@@ -608,6 +608,114 @@ def test_vehiculo_solo_con_modelo_registrado():
     assert es_solo_vehiculo("amortiguador corolla", inventario) is False
 
 
+# ---------------------------------------------------------------------
+# Solo el nombre de una pieza
+# ---------------------------------------------------------------------
 
+from AgenteIA.asistente.productos import busqueda_solo_pieza
+
+
+@pytest.mark.parametrize("mensaje, esperado", [
+    ("balatas", ("encontrados", ["BAL-001"])),
+    ("filtro", ("encontrados", ["FIL-001"])),
+    ("balatas del inventario", ("encontrados", ["BAL-001"])),
+    ("brembo en productos", ("encontrados", ["BAL-001"])),
+    ("tienes aceite?", ("encontrados", ["ACE-001", "FIL-001"])),
+    ("llantas", ("sin_productos", "llantas")),
+    ("mofle inventario", ("sin_productos", "mofle")),
+    # No es solo una pieza: lo atienden otras etapas.
+    ("precio del filtro", None),
+    ("¿por qué rechinan las balatas?", None),
+    ("versa", None),
+    ("balatas 2015", None),
+    ("gracias", None),
+    ("hola", None),
+])
+def test_busqueda_solo_pieza(mensaje, esperado):
+    resultado = busqueda_solo_pieza(mensaje, INVENTARIO)
+    if esperado is None or esperado[0] == "sin_productos":
+        assert resultado == esperado
+    else:
+        assert resultado[0] == "encontrados"
+        assert [p["codigo"] for p in resultado[1]] == esperado[1]
+
+
+@pytest.mark.parametrize("mensaje", [
+    "categorias", "categorías disponibles", "ver categorías",
+    "¿qué categorías hay?", "marcas", "marcas que manejas",
+])
+def test_lista_de_categorias_o_marcas(mensaje):
+    from AgenteIA.inventario.consultas_inteligentes import consultar_inventario_inteligente
+    respuesta = consultar_inventario_inteligente(mensaje, INVENTARIO)
+    assert respuesta.startswith(("Categorías que se manejan", "Marcas que se manejan"))
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("Para diagnosticar, revisaré la presión.", "Para diagnosticar, conviene revisar la presión."),
+    ("No confirmaré una pieza sin revisar.", "No se debe confirmar una pieza sin revisar."),
+    ("Vendedor, actualmente no hay productos.", "Actualmente no hay productos."),
+])
+def test_respuesta_del_modelo_sin_primera_persona(texto, esperado):
+    from AgenteIA.asistente.filtros_respuesta import hablar_directo
+    assert hablar_directo(texto) == esperado
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("Para diagnosticarlo, necesitaría inspeccionar el mofle.",
+     "Para diagnosticarlo, conviene inspeccionar el mofle."),
+    ("Si detecto alguna falla, te recomendaría que revisaras el mofle y, si es necesario, lo reemplazaras.",
+     "Si se detecta alguna falla, conviene revisar el mofle y, si es necesario, reemplazarlo."),
+    ("Te sugiero que cambies el filtro.", "Te sugiero que cambies el filtro."),
+])
+def test_respuesta_del_modelo_sin_condicional(texto, esperado):
+    from AgenteIA.asistente.filtros_respuesta import hablar_directo
+    assert hablar_directo(texto) == esperado
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("Revisarás focos, fusibles y relevadores.", "Conviene revisar focos, fusibles y relevadores."),
+    ("Además, revisarás los conectores.", "Además, conviene revisar los conectores."),
+    ("Si no encuentras fallas, considera el cableado.", "Si no se encuentran fallas, considera el cableado."),
+    ("Antes eras mecánico.", "Antes eras mecánico."),
+])
+def test_respuesta_del_modelo_sin_segunda_persona(texto, esperado):
+    from AgenteIA.asistente.filtros_respuesta import hablar_directo
+    assert hablar_directo(texto) == esperado
+
+
+# ---------------------------------------------------------------------
+# Preguntas que no tienen nada que ver con la refaccionaria
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.social import respuesta_social
+
+
+@pytest.mark.parametrize("mensaje, empieza", [
+    ("¿quién ganó el mundial de 2022?", "Solo puedo ayudarte"),
+    ("¿cómo está el clima hoy?", "Solo puedo ayudarte"),
+    ("¿qué es la fotosíntesis?", "Solo puedo ayudarte"),
+    ("¿cuál es el mejor celular?", "Solo puedo ayudarte"),
+    ("hazme un resumen de la revolución mexicana", "Solo puedo ayudarte"),
+    ("¿cómo bajo de peso?", "Solo puedo ayudarte"),
+    ("¿cómo se programa en python?", "Solo puedo ayudarte"),
+    ("¿cómo arreglo mi computadora?", "Solo puedo ayudarte"),
+    ("dime los números de la lotería", "Solo puedo ayudarte"),
+    ("¿cuántos años tienes?", "Soy el asistente virtual"),
+    ("¿cuál es tu color favorito?", "Soy el asistente virtual"),
+    ("eres tonto", "Perdón si no te entendí"),
+])
+def test_fuera_de_tema(mensaje, empieza):
+    assert (respuesta_social(mensaje) or "").startswith(empieza)
+
+
+@pytest.mark.parametrize("mensaje", [
+    "el clima no enfria",
+    "falla la computadora del carro",
+    "¿cuánto es 25 por 4?",
+    "tiene juego el volante",
+    "el aire acondicionado no enfria hoy",
+])
+def test_temas_del_carro_no_se_rechazan(mensaje):
+    assert respuesta_social(mensaje) is None
 
 

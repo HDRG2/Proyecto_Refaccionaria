@@ -52,6 +52,16 @@ _PALABRAS_FILTRO_COMPLEJO = (
 )
 
 
+def _menciona_vehiculo(texto: str, productos: list[dict]) -> bool:
+    # Marca o modelo registrado en el texto ("corolla", "nissan").
+    from AgenteIA.asistente.productos import _prefijos_y_modelos
+    from AgenteIA.inventario.utilidades_inventario import MARCAS_CONOCIDAS
+
+    _, modelos = _prefijos_y_modelos(productos)
+    palabras = set(re.findall(r"[a-z]+", texto))
+    return bool(palabras & (modelos | set(MARCAS_CONOCIDAS)))
+
+
 def es_solicitud_listado(pregunta: str, productos: list[dict]) -> bool:
     texto = normalizar(pregunta).strip(" ¿?¡!.,")
 
@@ -64,6 +74,13 @@ def es_solicitud_listado(pregunta: str, productos: list[dict]) -> bool:
 
     # Si mencionan un producto concreto, no es un listado general.
     if productos_en_texto(texto, productos):
+        return False
+
+    # "¿qué tienes para un versa 2015?", "que tienes para corolla":
+    # es una búsqueda por vehículo.
+    if re.search(r"\b(?:para|a)\s+(?:un|una|el|la|mi|su)\s+[a-z]{3,}", texto) \
+            or re.search(r"\b(?:19|20)\d{2}\b", texto) \
+            or _menciona_vehiculo(texto, productos):
         return False
 
     # Cálculos sobre el inventario ("valor del inventario").
@@ -346,7 +363,9 @@ _RELLENO_CATEGORIA = {
     "el", "la", "lo", "de", "del", "en", "y", "a", "que", "hay", "tenemos",
     "tienes", "tienen", "productos", "producto", "refacciones", "refaccion",
     "piezas", "categoria", "porfa", "por", "favor", "ahora", "y", "unos",
-    "unas", "algo",
+    "unas", "algo", "cosas", "cosa", "articulos", "articulo", "todo",
+    "seccion", "area", "linea", "manejas", "manejan", "busco",
+    "tengas", "tengo", "manejes", "tengamos", "para",
 }
 
 
@@ -398,6 +417,7 @@ _PIDE_SOLO_NOMBRE = (
 
 def pide_solo_nombre(pregunta: str) -> bool:
     return re.search(_PIDE_SOLO_NOMBRE, normalizar(pregunta)) is not None
+
 
 
 

@@ -218,6 +218,7 @@ def es_busqueda_inventario_vehiculo(pregunta: str) -> bool:
         "que le sirve", "que le quedan", "que le sirven",
         "tienes refacciones", "tienes productos", "tienes piezas",
         "busco refacciones", "busco piezas", "busco algo para",
+        "algo para", "que tengas para", "lo que tengas para",
         "muestrame refacciones", "muestrame productos",
         "refacciones para", "productos para", "piezas para",
         "compatibles con", "compatible con", "le queda a",
@@ -233,6 +234,12 @@ def es_busqueda_inventario_vehiculo(pregunta: str) -> bool:
     )
 
     if any(expresion in texto for expresion in expresiones):
+        return True
+
+    # "hay algo para un corolla 2016", "pa un versa 2015 que tienes":
+    # un vehículo con año + una pregunta de qué hay.
+    if re.search(r"\b(?:para|pa|a)\s+(?:un|una|el|la|mi|su|ese|esa)?\s*[a-z][a-z0-9 ]*?(?:19|20)\d{2}\b", texto) \
+            and re.search(r"\b(?:tienes|tienen|hay|tengo|tenemos|manejas|manejan|algo|que|cuales)\b", texto):
         return True
 
     # "¿tienes balatas para un versa 2015?", "¿hay filtros para mi tsuru?"
@@ -1023,16 +1030,24 @@ def _stock_bajo(texto: str, productos: list[dict]) -> str | None:
 
 
 def _lista_categorias_o_marcas(texto: str, productos: list[dict]) -> str | None:
+    # "categorías", "categorías disponibles", "ver categorías",
+    # "¿qué categorías hay?", "marcas que manejas"...
+    solo = (
+        r"^\W*(?:(?:ver|ensename|muestrame|dame|dime|lista de|las|todas las)\s+)*"
+        r"{}(?:\s+(?:disponibles|que hay|que tienes|que tenemos|que manejas|"
+        r"que manejamos|registradas|registrados|del inventario|de productos|"
+        r"de refacciones))?\W*$"
+    )
     pide_categorias = re.search(
         r"\b(?:que|cuales)\s+(?:categorias|tipos de (?:productos|refacciones))\b|"
         r"\bcategorias\s+(?:hay|tienes|tienen|manejan|manejas)\b|\blista de categorias\b",
         texto,
-    )
+    ) or re.search(solo.format("categorias?"), texto)
     pide_marcas = re.search(
         r"\b(?:que|cuales)\s+marcas\b|\bmarcas\s+(?:hay|tienes|tienen|manejan|manejas)\b|"
         r"\blista de marcas\b",
         texto,
-    )
+    ) or re.search(solo.format("marcas"), texto)
 
     if not pide_categorias and not pide_marcas:
         return None
@@ -1153,6 +1168,8 @@ def consultar_inventario_inteligente(
 
     # No es una consulta reconocida por este módulo.
     return None
+
+
 
 
 

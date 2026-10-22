@@ -127,3 +127,113 @@ def test_hablar_directo(texto, esperado):
     assert hablar_directo(texto) == esperado
 
 
+# ---------------------------------------------------------------------
+# Mangueras y respuestas que niegan la falla reportada
+# ---------------------------------------------------------------------
+
+from AgenteIA.asistente.filtros_respuesta import quitar_diagnostico_negado
+
+
+@pytest.mark.parametrize("pregunta", [
+    "falla mi manguera", "mi manguera falla", "se rompió la manguera del radiador",
+    "gotea la manguera",
+])
+def test_falla_manguera_respuesta_fija(pregunta):
+    respuesta = buscar_respuesta_rapida(preparar_pregunta(pregunta))
+    assert respuesta == CONOCIMIENTOS_MECANICOS["falla_manguera"]
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("No tienes falla en tu manguera, revisa el nivel de refrigerante.",
+     "Revisa el nivel de refrigerante."),
+    ("Tu termostato está bien. Conviene revisar el ventilador.",
+     "Conviene revisar el ventilador."),
+    ("Revisa las balatas. No hay ningún problema con los discos.",
+     "Revisa las balatas."),
+    ("Conviene revisar el nivel.", "Conviene revisar el nivel."),
+])
+def test_quitar_diagnostico_negado(texto, esperado):
+    assert quitar_diagnostico_negado(texto) == esperado
+
+
+# ---------------------------------------------------------------------
+# "Falla mi X" sin síntoma: se pregunta el síntoma, no se inventa
+# ---------------------------------------------------------------------
+
+from AgenteIA.mecanica.conocimientos_mecanicos import respuesta_falla_sin_sintoma
+
+
+@pytest.mark.parametrize("pregunta, debe_contener", [
+    ("falla mi volante", "en la dirección"),
+    ("falla mi mofle", "en el escape"),
+    ("no sirven los frenos", "en los frenos"),
+    ("fallan mis luces", "fallan las luces"),
+    ("la transmision falla", "falla la transmisión"),
+    ("mi carro tiene falla en la suspension", "en la suspensión"),
+    ("falla el alternador", "en el sistema eléctrico"),
+])
+def test_falla_sin_sintoma_pide_el_sintoma(pregunta, debe_contener):
+    respuesta = respuesta_falla_sin_sintoma(preparar_pregunta(pregunta))
+    assert respuesta is not None and debe_contener in respuesta
+
+
+@pytest.mark.parametrize("pregunta", [
+    "el volante vibra",              # ya trae síntoma
+    "falla mi volante cuando giro y hace ruido",
+    "precio del volante",
+    "falla el sistema de la computadora del banco",
+])
+def test_falla_con_sintoma_o_sin_pieza_no_aplica(pregunta):
+    assert respuesta_falla_sin_sintoma(preparar_pregunta(pregunta)) is None
+
+
+# ---------------------------------------------------------------------
+# Validador de respuestas de mecánica: no aceptar síntomas inventados
+# ---------------------------------------------------------------------
+
+from AgenteIA.mecanica.validador_mecanica import (
+    respuesta_desde_documentacion,
+    terminos_inventados,
+)
+
+
+@pytest.mark.parametrize("pregunta, respuesta, inventado", [
+    ("falla mi volante",
+     "El ruido de rechinar al volante puede ser causado por la banda de dirección.", "rechinar"),
+    ("el carro vibra en carretera",
+     "La vibración puede deberse a balatas desgastadas.", "balatas"),
+])
+def test_detecta_terminos_inventados(pregunta, respuesta, inventado):
+    assert inventado in terminos_inventados(respuesta, pregunta, buscar_conocimiento(pregunta))
+
+
+@pytest.mark.parametrize("pregunta, respuesta", [
+    ("fallan mis luces", "Conviene revisar focos, fusibles, relevadores, conectores y cables."),
+    ("rechinan los frenos", "Puede deberse a pastillas desgastadas o discos rayados."),
+    ("el clutch patina", "El disco puede estar desgastado; las revoluciones suben sin avanzar."),
+    ("sale humo blanco", "El humo blanco con olor dulce puede ser refrigerante; revisa la junta de culata."),
+    ("no arranca el carro", "Puede ser la batería, las terminales o el motor de arranque."),
+])
+def test_acepta_respuestas_correctas(pregunta, respuesta):
+    assert terminos_inventados(respuesta, pregunta, buscar_conocimiento(pregunta)) == []
+
+
+def test_respuesta_desde_documentacion():
+    texto = respuesta_desde_documentacion(buscar_conocimiento("falla mi volante")) or ""
+    assert texto.startswith("Síntomas comunes:")
+    assert "Qué revisar:" in texto
+
+
+@pytest.mark.parametrize("pregunta, debe_contener", [
+    ("falla mi rifle", "No tengo información técnica sobre «rifle»"),
+    ("falla mi carro", "¿Qué le pasa al vehículo"),
+    ("falla", "¿Qué le pasa al vehículo"),
+    ("falla el motor", "¿Qué le pasa al vehículo"),
+    ("mi camioneta anda mal", "¿Qué le pasa al vehículo"),
+])
+def test_falla_sin_pieza_reconocible(pregunta, debe_contener):
+    respuesta = respuesta_falla_sin_sintoma(preparar_pregunta(pregunta))
+    assert respuesta is not None and debe_contener in respuesta
+
+
+
