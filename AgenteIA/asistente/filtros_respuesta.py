@@ -188,6 +188,28 @@ _SINTOMAS_SOBRECALENTAMIENTO = (
 )
 
 
+# Frases donde el modelo NIEGA la falla que reportó el vendedor sin poder
+# saberlo: "No tienes falla en tu manguera", "no hay ningún problema",
+# "tu termostato está bien". Se quita la oración completa.
+_NIEGA_FALLA = re.compile(
+    r"\b(?:no\s+(?:tienes|tiene|hay|existe|presenta)\s+(?:ningun\s+|ninguna\s+|una\s+)?"
+    r"(?:falla|problema|averia|dano)s?|"
+    r"no\s+es\s+(?:una\s+)?(?:falla|problema)|"
+    r"no\s+hay\s+(?:de\s+)?que\s+preocupar|"
+    r"(?:tu|su|el|la)\s+\w+(?:\s+\w+)?\s+(?:esta|estan)\s+(?:bien|en buen estado|funcionando bien))\b",
+    re.IGNORECASE,
+)
+
+
+def quitar_diagnostico_negado(respuesta: str) -> str:
+    oraciones = re.split(r"(?<=[.!?])\s+|,\s+(?=revisa|conviene|verifica)", respuesta)
+    limpias = [o for o in oraciones if not _NIEGA_FALLA.search(quitar_acentos(o))]
+    if not limpias or len(limpias) == len(oraciones):
+        return respuesta
+    texto = " ".join(limpias).strip()
+    return texto[0].upper() + texto[1:]
+
+
 def hablar_directo(respuesta: str) -> str:
     # El modelo a veces habla del vendedor en tercera persona porque así
     # viene en las instrucciones: "El vendedor debe revisar el nivel..."
@@ -200,6 +222,83 @@ def hablar_directo(respuesta: str) -> str:
         r"(?:debe|deber[ií]a|tiene que|puede|podr[ií]a|necesita)\s+",
         lambda m: cambiar(m) + " ",
         respuesta,
+    )
+    # "Vendedor, actualmente no hay..." -> "Actualmente no hay..."
+    respuesta = re.sub(
+        r"^\s*(?:Hola,?\s+)?(?:estimado\s+)?vendedor\s*[,:]\s*(\w)",
+        lambda m: m.group(1).upper(),
+        respuesta,
+        flags=re.IGNORECASE,
+    )
+
+    # Primera persona del modelo: "revisaré la presión" -> "conviene
+    # revisar la presión"; "no confirmaré" -> "no se debe confirmar".
+    verbos = {
+        "revisare": "revisar", "verificare": "verificar",
+        "comprobare": "comprobar", "inspeccionare": "inspeccionar",
+        "medire": "medir", "diagnosticare": "diagnosticar",
+        "recomendare": "recomendar", "sugerire": "sugerir",
+        "cambiare": "cambiar", "reemplazare": "reemplazar",
+        "confirmare": "confirmar", "descartare": "descartar",
+        "afirmare": "afirmar",
+    }
+
+    def primera_persona(m: re.Match) -> str:
+        negado, verbo = m.group(1), m.group(2)
+        base = verbos[quitar_acentos(verbo).casefold()]
+        texto = f"no se debe {base}" if negado else f"conviene {base}"
+        return texto[0].upper() + texto[1:] if (negado or verbo)[0].isupper() else texto
+
+    # Condicional: "necesitaría inspeccionar" -> "conviene inspeccionar";
+    # "si detecto" -> "si se detecta"; "te recomendaría que revisaras" ->
+    # "conviene revisar"; "lo reemplazaras" -> "reemplazarlo".
+    def infinitivo(raiz: str, terminacion: str) -> str:
+        return raiz + {"aras": "ar", "eras": "er", "iras": "ir",
+                       "ases": "ar", "eses": "er", "ieses": "ir"}[terminacion]
+
+    respuesta = re.sub(r"\b([Nn])ecesitar[ií]a\s+",
+                       lambda m: ("C" if m.group(1) == "N" else "c") + "onviene ", respuesta)
+    respuesta = re.sub(r"\b([Ss])i\s+(detecto|encuentro|veo|noto)\b",
+                       lambda m: m.group(1) + "i se " + {"detecto": "detecta", "encuentro": "encuentra",
+                                                         "veo": "ve", "noto": "nota"}[m.group(2)],
+                       respuesta)
+    respuesta = re.sub(
+        r"\b([Tt])e\s+(?:recomendar[ií]a|sugerir[ií]a|recomiendo|sugiero)\s+que\s+(\w+?)(aras|eras|iras|ases|eses|ieses)\b",
+        lambda m: ("C" if m.group(1) == "T" else "c") + "onviene " + infinitivo(m.group(2), m.group(3)),
+        respuesta,
+    )
+    # Segunda persona en futuro: "Revisarás los focos" -> "Conviene
+    # revisar los focos" (solo con acento: "eras" sin acento es otra cosa).
+    respuesta = re.sub(
+        r"\b(\w+?)(ar|er|ir)ás\b",
+        lambda m: ("Conviene " if m.group(1)[0].isupper() else "conviene ")
+        + m.group(1).lower() + m.group(2),
+        respuesta,
+    )
+    def impersonal(m: re.Match) -> str:
+        verbo = {"encuentras": "encuentra", "ves": "ve", "notas": "nota",
+                 "detectas": "detecta"}[m.group(3)]
+        # "si no encuentras fallas" -> "si no se encuentran fallas"
+        if m.group(4).endswith("s"):
+            verbo += "n"
+        return f"{m.group(1)}i {m.group(2) or ''}se {verbo} {m.group(4)}"
+
+    respuesta = re.sub(
+        r"\b([Ss])i\s+(no\s+)?(encuentras|ves|notas|detectas)\s+(\w+)",
+        impersonal,
+        respuesta,
+    )
+
+    respuesta = re.sub(r"\blo\s+(\w+?)(aras|eras|iras)\b",
+                       lambda m: infinitivo(m.group(1), m.group(2)) + "lo", respuesta)
+
+    respuesta = re.sub(
+        r"\b([Nn]o\s+)?(revisar[ée]|verificar[ée]|comprobar[ée]|inspeccionar[ée]|"
+        r"medir[ée]|diagnosticar[ée]|recomendar[ée]|sugerir[ée]|cambiar[ée]|"
+        r"reemplazar[ée]|confirmar[ée]|descartar[ée]|afirmar[ée])\b",
+        primera_persona,
+        respuesta,
+        flags=re.IGNORECASE,
     )
     return respuesta
 
@@ -220,6 +319,7 @@ def ajustar_respuesta_mecanica(respuesta: str, pregunta: str, tema: str, conocim
     # en consultas mecánicas sin riesgo de sobrecalentamiento.
     respuesta = quitar_reglas_repetidas(respuesta)
     respuesta = hablar_directo(respuesta)
+    respuesta = quitar_diagnostico_negado(respuesta)
     respuesta = corregir_minimizacion_de_riesgo(respuesta, tema)
     respuesta = aclarar_banda_o_cadena(respuesta)
     sobrecalentamiento = hay_sobrecalentamiento(pregunta)
@@ -380,6 +480,3 @@ def ajustar_respuesta_mecanica(respuesta: str, pregunta: str, tema: str, conocim
                 )
 
     return respuesta
-
-
-

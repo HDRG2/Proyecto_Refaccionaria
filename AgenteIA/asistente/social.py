@@ -58,6 +58,10 @@ _IDENTIDAD = (
 
 _AYUDA = (
     r"\b(?:ayuda|ayudame|que puedes hacer|que sabes hacer|"
+    # "háblame de autos", "qué sabes de mecánica": tema muy general.
+    r"(?:hablame|platicame|cuentame|explicame|dime algo|que sabes|que me dices)\s+"
+    r"(?:algo\s+)?(?:de|sobre|acerca de)\s+(?:los\s+|las\s+|la\s+)?"
+    r"(?:autos|carros|coches|vehiculos|mecanica|refacciones|motores)|"
     r"como funcionas|en que me ayudas|en que me puedes ayudar|"
     r"menu|opciones|instrucciones de uso|como te uso|"
     r"que haces|para que sirves)\b"
@@ -94,7 +98,35 @@ _TEMA_GENERAL = (
     r"elecciones|partido politico|gobierno|pelicula|peliculas|serie|"
     r"series|actor|actriz|cantante|musica|tarea|examen|escuela|novia|"
     r"novio|amor|dios|religion|como me veo|que hora es|que dia es|"
-    r"bitcoin|criptomoneda|historia de mexico)\b"
+    r"bitcoin|criptomoneda|historia de mexico|"
+    # Escuela y ciencia
+    r"fotosintesis|ciencia|biologia|quimica|fisica|matematicas|geografia|"
+    r"historia|revolucion|independencia|resumen de|tarea de|"
+    # Tecnología que no es del carro
+    r"celular|celulares|telefono|iphone|android|computadora|laptop|"
+    r"programar|programacion|python|javascript|internet|wifi|"
+    r"videojuego|videojuegos|netflix|youtube|tiktok|instagram|facebook|whatsapp|"
+    # Salud, dinero, suerte
+    r"bajar de peso|bajo de peso|subir de peso|adelgazar|dieta|ejercicio|gimnasio|gym|medicina|enfermedad|doctor|"
+    r"loteria|apuesta|apuestas|casino|invertir|inversion|acciones de|"
+    # Clima del día (no el aire acondicionado)
+    r"clima (?:de )?hoy|clima de manana|el tiempo hoy|va a llover|pronostico|"
+    r"temperatura afuera|noticias)\b"
+)
+
+# Preguntas personales al asistente: edad, gustos, si es humano.
+_PERSONAL = (
+    r"\b(?:cuantos anos tienes|que edad tienes|tu edad|tu color favorito|"
+    r"cual es tu color|tu comida favorita|que te gusta|tienes novi[ao]|"
+    r"donde vives|eres humano|eres una persona|eres real|tienes sentimientos|"
+    r"estas vivo|de donde eres)\b"
+)
+
+# Insultos o enojo: se contesta con calma y se ofrece ayuda.
+_INSULTO = (
+    r"\b(?:eres|estas|que) (?:muy |bien |bastante )?(?:tonto|tonta|inutil|idiota|"
+    r"estupido|estupida|pendejo|menso|mensa|burro|burra|lento|malo|mala)\b|"
+    r"\bno sirves\b|\bno sabes nada\b|\bque mal(?:o)? asistente\b"
 )
 
 _TEMA_AUTOMOTRIZ = (
@@ -116,9 +148,12 @@ def es_fuera_de_tema(texto_normalizado: str) -> bool:
     return bool(
         re.search(_TEMA_GENERAL, texto_normalizado)
         and not re.search(_TEMA_AUTOMOTRIZ, texto_normalizado)
-        # "tarea" con números ("¿cuánto es 5 por 3? es para mi tarea")
-        # se deja pasar a la calculadora.
-        and not re.search(r"\d", texto_normalizado)
+        # "tarea" con una operación ("¿cuánto es 5 por 3? es para mi
+        # tarea") se deja pasar a la calculadora; un año ("mundial de
+        # 2022") no es una operación.
+        and not re.search(
+            r"\d\s*(?:por|x|\*|\+|-|/|entre|mas|menos)\s*\d", texto_normalizado
+        )
     )
 
 
@@ -143,7 +178,12 @@ def respuesta_social(pregunta: str) -> str | None:
             "refacciones, inventario, precios o mecánica automotriz."
         )
 
-    if _esta_en(limpio, _SALUDOS):
+    if _esta_en(limpio, _SALUDOS) or re.fullmatch(
+        r"(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|oye)\s+)?"
+        r"(?:como estas|como esta|que tal|como te va|que onda|como andas)"
+        r"(?:\s+(?:amigo|joven|compa|carnal))?",
+        limpio,
+    ):
         return "¡Hola! Bienvenido a El Pistón. ¿En qué puedo ayudarte?"
 
     if _esta_en(limpio, _GRACIAS):
@@ -158,6 +198,20 @@ def respuesta_social(pregunta: str) -> str | None:
     # Risas: "jaja", "jejeje", "xd", "lol"
     if re.fullmatch(r"(?:(?:ja|je|ji|jo|ha|he|xd|lol|lmao)\s*)+", limpio):
         return "¿En qué puedo ayudarte con una consulta automotriz?"
+
+    if re.search(_INSULTO, limpio):
+        return (
+            "Perdón si no te entendí bien. Escríbeme tu consulta de otra "
+            "forma y lo reviso: por ejemplo, el nombre o código de la pieza, "
+            "o el síntoma del vehículo."
+        )
+
+    if re.search(_PERSONAL, limpio):
+        return (
+            "Soy el asistente virtual de El Pistón, así que no tengo edad ni "
+            "gustos personales. Te ayudo con refacciones, inventario, precios, "
+            "cálculos de ventas y mecánica automotriz. ¿Qué necesitas?"
+        )
 
     if re.search(_IDENTIDAD, limpio):
         return (
@@ -191,6 +245,9 @@ def respuesta_social(pregunta: str) -> str | None:
         if re.fullmatch(r"[a-z]{2,5}[_-]?\d{2,5}", p):
             return False
         vocales = len(re.findall(r"[aeiouy]", p))
+        # Siglas cortas como "NGK", "LTH", "BMW" son marcas, no teclazos.
+        if vocales == 0 and len(p) <= 4:
+            return False
         if vocales == 0:
             return True
         return len(p) >= 6 and vocales / len(p) < 0.2
@@ -202,4 +259,6 @@ def respuesta_social(pregunta: str) -> str | None:
         )
 
     return None
+
+
 

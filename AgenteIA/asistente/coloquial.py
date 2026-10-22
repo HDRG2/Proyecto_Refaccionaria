@@ -50,6 +50,11 @@ PRECIO = [
     ("que precio manejas", "cual es el precio de"),
     ("que precio manejan", "cual es el precio de"),
     ("a como me lo das", "cual es el precio de"),
+    ("a como me dejas", "cual es el precio de"),
+    ("a como dejas", "cual es el precio de"),
+    ("en cuanto me dejas", "cual es el precio de"),
+    ("en cuanto dejas", "cual es el precio de"),
+    ("a como das", "cual es el precio de"),
     ("a como me las das", "cual es el precio de"),
     ("a como me los das", "cual es el precio de"),
     ("a como me la das", "cual es el precio de"),
@@ -105,6 +110,9 @@ REFACCIONES = [
     ("acumuladores", "baterias"), ("acumulador", "bateria"),
     ("chicotes", "cables"), ("chicote", "cable"),
     ("sencores", "sensores"), ("sencor", "sensor"),
+    ("sonda de oxigeno", "sensor de oxigeno"), ("sonda lambda", "sensor de oxigeno"),
+    ("sensor lambda", "sensor de oxigeno"), ("sonda", "sensor"),
+    ("correas", "bandas"), ("correa", "banda"),
     ("cloche", "clutch"), ("cloch", "clutch"), ("cluch", "clutch"),
     ("kloch", "clutch"), ("clotch", "clutch"),
     ("filtro de la gasolina", "filtro de combustible"),
@@ -521,7 +529,7 @@ ARCHIVO_NO_ENTENDIDAS = CARPETA_REGISTRO / "preguntas_no_entendidas.txt"
 
 
 def registrar_no_entendida(pregunta: str, motivo: str, reescrita: str | None = None) -> None:
-    """Agrega una línea al registro. Nunca interrumpe la consulta."""
+    # Agrega una línea al registro. Nunca interrumpe la consulta."""
     # Las pruebas automáticas no escriben en el registro real.
     if os.environ.get("PISTON_SIN_REGISTRO"):
         return
@@ -537,3 +545,4 @@ def registrar_no_entendida(pregunta: str, motivo: str, reescrita: str | None = N
             archivo.write(linea)
     except OSError:
         pass
+

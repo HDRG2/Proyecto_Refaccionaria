@@ -290,6 +290,9 @@ def _cantidad_solicitada(texto: str, producto: dict, posicion: int | None) -> tu
         m = re.search(r"(?<![\w-])(\d+)\s*(?:piezas?|unidades?|cajas?)?\s*(?:de|del|el|la|los|las)?\s*$", antes)
         if m:
             return int(m.group(1)), ""
+        # "dos termostatos y UN radiador": el artículo justo antes es 1.
+        if re.search(r"\b(?:un|una|uno)\s*(?:pieza\s+(?:de|del)\s*)?$", antes):
+            return 1, ""
 
     if re.search(r"\b(?:todo|todos|todas|toda|completo|completa|"
                  r"todo el stock|toda la existencia|todas las piezas|"
@@ -305,7 +308,8 @@ def _cantidad_solicitada(texto: str, producto: dict, posicion: int | None) -> tu
 
     m = re.search(
         r"\b(?:vendo|vendiera|vendemos|vender|venda|son|serian|"
-        r"llevo|llevara|lleva|compran|compra|piden|pide|por|x|multiplica"
+        r"llevo|llevara|lleva|compran|compra|piden|pide|por|x|dame|ponme|"
+        r"apartame|pasame|vendeme|quiero|das|mandame|agregame|agrega|anota|anotame|multiplica"
         r"(?:lo|la)?(?:\s+por)?)\s*(\d+)\b", t
     )
     if m:
@@ -314,6 +318,16 @@ def _cantidad_solicitada(texto: str, producto: dict, posicion: int | None) -> tu
     m = re.search(r"\b(\d+)\s*(?:piezas?|unidades?|cajas?)\b", t)
     if m:
         return int(m.group(1)), ""
+
+    # Número justo antes del nombre de la pieza: "total de 5 bujias",
+    # "2 balatas con 10% de descuento", "6 filtros de aire".
+    raices_nombre = {
+        w[:5] for w in re.findall(r"[a-z]+", normalizar(str(producto.get("nombre", ""))))
+        if len(w) >= 4
+    }
+    for m in re.finditer(r"(?<![\w.,%-])(\d{1,4})\s+(?:piezas?\s+(?:de|del)\s+)?([a-z]{4,})", t):
+        if m.group(2)[:5] in raices_nombre:
+            return int(m.group(1)), ""
 
     if re.search(r"\bdoble\b", t):
         return 2, ""
@@ -432,6 +446,38 @@ def _armar_calculo(lineas_productos: list[tuple[dict, int]], texto: str, avisos:
     return "\n".join(lineas)
 
 
+_SEPARADOR_PIEZAS = (
+    r",|;|\s(?:y|e|mas|más|con|tambien)\s(?=\s*(?:\d+|un|una|uno|dos|tres|cuatro|"
+    r"cinco|seis|siete|ocho|nueve|diez|par|media docena|docena)\b)"
+)
+
+
+def _piezas_por_partes(texto: str, productos: list[dict]) -> list[tuple[int, dict]]:
+    # Parte el mensaje en "2 baterías" / "1 alternador" y busca una
+    # pieza en cada parte. Devuelve (posición del nombre, producto).
+    encontrados: list[tuple[int, dict]] = []
+    inicio = 0
+    cortes = [m.start() for m in re.finditer(_SEPARADOR_PIEZAS, texto)] + [len(texto)]
+    for fin in cortes:
+        parte = texto[inicio:fin]
+        candidatos = [p for _, p in productos_en_texto(parte, productos)] \
+            or buscar_por_palabra(parte, productos)
+        if len(candidatos) == 1:
+            producto = candidatos[0]
+            raices = {
+                w[:5] for w in re.findall(r"[a-z]+", normalizar(str(producto.get("nombre", ""))))
+                if len(w) >= 4
+            }
+            posicion = next(
+                (inicio + m.start() for m in re.finditer(r"[a-z]+", parte) if m.group()[:5] in raices),
+                inicio,
+            )
+            if all(p is not producto for _, p in encontrados):
+                encontrados.append((posicion, producto))
+        inicio = fin + 1
+    return encontrados
+
+
 def resolver_calculo(
     pregunta: str,
     productos: list[dict],
@@ -454,7 +500,25 @@ def resolver_calculo(
         )
     )
 
-    if not tiene_disparador and not tiene_operador and not pide_valor_inventario:
+    # "3 termostatos", "y 2 baterías": cantidad + UNA pieza, sin verbo.
+    cantidad_y_pieza = (
+        re.match(r"^\W*(?:y\s+)?(?:si\s+)?(?:son\s+)?\d{1,3}\s+[a-z]", _palabras_a_numeros(texto))
+        and len(texto.split()) <= 6
+        and len(buscar_por_palabra(pregunta, productos)) == 1
+    )
+    # "dame 3", "ponme 2", "apártame 5" con un producto ya seleccionado.
+    cantidad_sola = (
+        re.fullmatch(
+            r"\W*(?:y\s+)?(?:dame|ponme|apartame|pasame|vendeme|quiero|me das|"
+            r"mandame|agregame|agrega|anota|anotame)\s+(\d{1,3})"
+            r"(?:\s+(?:piezas?|unidades?|de esos?|de esas?|mas))?(?:\s+con iva)?\W*",
+            _palabras_a_numeros(texto),
+        )
+        and getattr(contexto, "codigo_seleccionado", None)
+    )
+
+    if not tiene_disparador and not tiene_operador and not pide_valor_inventario \
+            and not cantidad_y_pieza and not cantidad_sola:
         return None, None
 
     # "Total de piezas" es una consulta de existencias, no de dinero.
@@ -484,6 +548,13 @@ def resolver_calculo(
 
     # 2. Productos mencionados en la pregunta.
     mencionados = productos_en_texto(texto, productos)
+
+    # "me llevo 2 baterías y 1 alternador": varias piezas por su nombre
+    # corto, cada una con su cantidad.
+    if len(mencionados) < 2:
+        varios = _piezas_por_partes(texto, productos)
+        if len(varios) >= 2:
+            mencionados = varios
 
     if not mencionados:
         producto_parcial = identificar_producto(pregunta, productos)
@@ -664,3 +735,5 @@ def resolver_calculo(
     respuesta = _armar_calculo(lineas_productos, texto, avisos)
     producto_unico = lineas_productos[0][0] if len(lineas_productos) == 1 else None
     return respuesta, producto_unico
+
+

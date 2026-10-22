@@ -168,6 +168,18 @@ def detectar_intencion(pregunta: str):
     if re.search(palabras_precio, texto):
         return "precio"
 
+    # "¿cuánto el sensor?", "termostato cuánto", "en cuánto la bobina":
+    # "cuánto" sin "cuántos/cuántas" ni palabras de existencia es precio.
+    # "Cada cuánto", "cuánto dura", "cuánto tiempo" no preguntan precio.
+    if re.search(r"\bcuanto\b", texto) and not re.search(palabras_existencia, texto) \
+            and not re.search(r"\b(?:quedan|queda|hay|tengo|tenemos)\b", texto) \
+            and not re.search(
+                r"\bcada cuant[oa]s?\b|\bcuanto (?:dura|duran|tiempo|tarda|tardan|aguanta|"
+                r"aguantan|rinde|rinden|kilometraje|km|kilometros|mide|pesa|cabe|lleva de)\b",
+                texto,
+            ):
+        return "precio"
+
     if re.search(palabras_existencia, texto):
         return "existencia"
 
@@ -375,7 +387,143 @@ def buscar_por_palabra(pregunta: str, productos: list[dict]) -> list[dict]:
     # "aceite de motor" prefiere "Aceite de Motor 5W-30"
     # sobre "Filtro de Aceite".
     mejor = max(puntaje for puntaje, _ in puntajes)
-    return [producto for puntaje, producto in puntajes if puntaje == mejor]
+    mejores = [producto for puntaje, producto in puntajes if puntaje == mejor]
+
+    # En español la pieza es la primera palabra del nombre: "aceite"
+    # prefiere "Aceite de Motor" sobre "Filtro de Aceite".
+    if len(mejores) > 1:
+        def empieza_con_palabra(producto: dict) -> bool:
+            primera = re.findall(r"[a-z]+", normalizar(str(producto.get("nombre", ""))))[:1]
+            return bool(primera) and any(raiz(p) == raiz(primera[0]) for p in palabras)
+        al_inicio = [p for p in mejores if empieza_con_palabra(p)]
+        if len(al_inicio) == 1:
+            return al_inicio
+    return mejores
+
+
+# ---------------------------------------------------------------------
+# Solo el nombre de una pieza: "termostato", "sensor", "bujias del
+# inventario", "oxigeno productos", "llantas".
+# ---------------------------------------------------------------------
+
+# Palabras que acompañan al nombre sin cambiar lo que se pide.
+_RELLENO_PIEZA = {
+    "inventario", "productos", "producto", "refaccion", "refacciones",
+    "pieza", "piezas", "articulo", "articulos", "del", "de", "en", "el",
+    "la", "los", "las", "un", "una", "unos", "unas", "mi", "tu", "y", "o",
+    "tienes", "tienen", "tenemos", "tengo", "hay", "manejas", "manejan",
+    "manejamos", "busca", "buscame", "buscar", "dame", "dime", "muestrame",
+    "ensename", "mostrar", "ver", "quiero", "info", "informacion", "ficha",
+    "datos", "detalles", "sobre", "disponible", "disponibles", "existe",
+    "existen", "stock", "existencia", "lista", "registrado", "registrados",
+    "registrada", "registradas", "que", "si", "alguna", "algun", "alguno",
+    "favor", "porfa", "hola", "oye", "busco", "necesito", "ocupo",
+    "requiero", "quisiera", "me", "das", "da", "pasas", "pasame",
+    "consigues", "vendes", "venden", "vendemos", "tendras", "tienes",
+    "mas", "otra", "otro", "otros", "otras", "ese", "esa", "este", "esta",
+    "cosas", "cosa", "articulo",
+}
+
+# Palabras que describen la pieza ("discos DE FRENO", "balatas
+# TRASERAS"): si no hay producto, junto con un tipo conocido se contesta
+# "no hay" en lugar de adivinar.
+_DESCRIPTORES_PIEZA = {
+    "freno", "frenos", "motor", "aire", "aceite", "agua", "gasolina",
+    "combustible", "delantero", "delantera", "delanteros", "delanteras",
+    "trasero", "trasera", "traseros", "traseras", "izquierdo", "derecho",
+    "izquierda", "derecha", "electrico", "electrica", "nuevo", "nueva",
+    "original", "originales", "generico", "generica", "direccion",
+    "suspension", "transmision", "escape", "clutch", "encendido",
+    "distribucion", "tiempo", "accesorios", "oxigeno", "radiador",
+}
+
+# Tipos de refacción que se reconocen aunque no haya ninguno en el
+# inventario ("llantas" -> "No hay llantas registradas...").
+_TIPOS_CONOCIDOS = {
+    "llanta", "neumatico", "rin", "mofle", "silenciador", "catalizador",
+    "escape", "sensor", "bomba", "manguera", "radiador", "termostato",
+    "ventilador", "alternador", "marcha", "bateria", "bujia", "bobina",
+    "cable", "fusible", "relevador", "foco", "faro", "calavera", "balata",
+    "disco", "tambor", "zapata", "caliper", "amortiguador", "resorte",
+    "rotula", "terminal", "buje", "horquilla", "banda", "correa", "cadena",
+    "filtro", "aceite", "anticongelante", "refrigerante", "liquido",
+    "clutch", "embrague", "inyector", "empaque", "junta", "valvula",
+    "piston", "compresor", "condensador", "espejo", "limpiaparabrisas",
+    "pluma", "tapete", "polea", "tensor", "soporte", "flecha", "baleros",
+    "balero", "cremallera", "carburador", "turbo",
+}
+
+
+def _raiz_pieza(palabra: str) -> str:
+    return palabra[:5] if len(palabra) >= 5 else palabra
+
+
+def busqueda_solo_pieza(pregunta: str, productos: list[dict]):
+    # Si el mensaje es SOLO el nombre de una pieza (con palabras de
+    # relleno como "del inventario"), devuelve:
+    #   ("encontrados", [productos])  si hay productos con ese nombre,
+    #   ("sin_productos", "llantas")  si es un tipo de pieza que no hay,
+    #   None                          si el mensaje pide otra cosa.
+    # Así "termostato" muestra la ficha del inventario y no una
+    # explicación de mecánica (el vendedor busca la pieza).
+    texto = normalizar(pregunta).strip(" ¿?¡!.,")
+
+    # "busco ACE-001", "pru-009 en inventario": un código con relleno.
+    codigos = [
+        p for p in productos
+        if str(p.get("codigo", "")).strip()
+        and re.search(r"(?<![\w-])" + re.escape(normalizar(p["codigo"])) + r"(?![\w-])", texto)
+    ]
+    if len(codigos) == 1:
+        sin_codigo = texto.replace(normalizar(codigos[0]["codigo"]), " ")
+        if all(p in _RELLENO_PIEZA for p in re.findall(r"[a-z0-9]+", sin_codigo)):
+            return "encontrados", codigos
+
+    palabras = re.findall(r"[a-z0-9]+", texto)
+    resto = [p for p in palabras if p not in _RELLENO_PIEZA]
+
+    def palabras_de(producto: dict) -> list[str]:
+        return re.findall(r"[a-z0-9]+", normalizar(
+            f"{producto.get('nombre', '')} {producto.get('marca', '')}"
+        ))
+
+    # Los números solo valen si son parte de un nombre ("5w 30", "12v");
+    # un año o una cantidad ("balatas 2015", "3 filtros") es otra consulta.
+    numeros_en_nombres = {w for p in productos for w in palabras_de(p) if re.search(r"\d", w)}
+    if not resto or len(resto) > 5 or any(
+        re.search(r"\d", p) and p not in numeros_en_nombres for p in resto
+    ):
+        return None
+
+    raices = {_raiz_pieza(p) for p in resto}
+
+    def raices_de(producto: dict) -> set:
+        return {
+            _raiz_pieza(w) for w in palabras_de(producto)
+            if len(w) >= 3 or re.search(r"\d", w)
+        }
+
+    # Todas las palabras deben estar en el nombre o la marca del producto.
+    encontrados = [p for p in productos if raices <= raices_de(p)]
+    if encontrados:
+        return "encontrados", encontrados
+
+    # Ninguno: solo se contesta si TODO lo escrito es un tipo de pieza
+    # conocido ("llantas", "mofle"); si hay otras palabras, no se adivina.
+    tipos = {_raiz_pieza(t) for t in _TIPOS_CONOCIDOS}
+    descriptores = {_raiz_pieza(d) for d in _DESCRIPTORES_PIEZA}
+    if raices & tipos and raices <= tipos | descriptores:
+        return "sin_productos", " ".join(resto)
+    return None
+
+
+def mensaje_pieza_sin_productos(nombre: str) -> str:
+    return (
+        f"No hay productos de «{nombre}» en el inventario activo de El Pistón. "
+        "Si lo conoces con otro nombre o tienes el código, dímelo y lo "
+        "reviso. Si es una duda de mecánica, cuéntame el síntoma "
+        "(por ejemplo: \"la llanta vibra a alta velocidad\")."
+    )
 
 
 def lista_coincidencias(productos: list[dict]) -> str:
@@ -623,3 +771,6 @@ def es_solo_vehiculo(pregunta: str, productos: list[dict] | None = None) -> bool
              and not re.fullmatch(r"(?:19|20)\d{2}", p)]
     # Marca y/o año, y como mucho dos palabras más (el modelo).
     return (tiene_marca or (tiene_anio and otras)) and len(otras) <= 2
+
+
+

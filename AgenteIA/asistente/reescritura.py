@@ -288,9 +288,32 @@ def construir_frase(
         texto = str(clasificacion.get("texto") or "").strip()
         palabras = texto.split()
         # Una descripción corta del síntoma, sin números ni códigos.
-        if 2 <= len(palabras) <= 10 and not re.search(r"\d|[A-Z]{2,5}-\d", texto):
-            return texto
-        return None
+        if not (2 <= len(palabras) <= 10) or re.search(r"\d|[A-Z]{2,5}-\d", texto):
+            return None
+        # El modelo pequeño a veces copia el ejemplo ("falla mi mofle" ->
+        # "rechina al frenar"). Si el mensaje ya apuntaba a un sistema del
+        # vehículo (escape), la frase nueva no puede llevarlo a otro (frenos).
+        if not _mismo_sistema(pregunta, texto):
+            return None
+        return texto
+
+    return None
+
+
+def _sistemas(texto: str) -> set[str]:
+    from AgenteIA.mecanica.buscador_mecanico import buscar_conocimiento
+
+    documentacion = buscar_conocimiento(texto) or ""
+    return set(re.findall(r"SISTEMA: ([A-ZÁÉÍÓÚÑ ]+)", documentacion))
+
+
+def _mismo_sistema(original: str, reescrita: str) -> bool:
+    sistemas_original = _sistemas(original)
+    if not sistemas_original:
+        # El mensaje no se entendía ("no quiere jalar"): justo para eso
+        # sirve la reescritura.
+        return True
+    return bool(sistemas_original & _sistemas(reescrita))
 
     return None
 
@@ -363,6 +386,7 @@ async def reescribir_pregunta(pregunta: str, productos: list[dict], contexto, hi
     if frase and normalizar(frase) == normalizar(pregunta):
         return None
     return frase
+
 
 
 
