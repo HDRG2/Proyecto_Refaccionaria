@@ -419,6 +419,7 @@ namespace Refaccionaria.Frontend.Views
             CerrarTicket();
 
             // Cerrar ventana de cobro si estaba abierta
+            CancelarSimulacion();
             CapaCobro.Visibility = Visibility.Collapsed;
 
             // Regresar al login

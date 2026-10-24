@@ -39,7 +39,8 @@ public class VentaService
         Usuario usuario,
         IEnumerable<DetalleVenta> lineasTicket,
         string metodoPago,
-        decimal recibido)
+        decimal recibido,
+        string referencia = "")
     {
         // -----------------------------------------------------
         // 1. VALIDAR DATOS BÁSICOS
@@ -201,7 +202,7 @@ public class VentaService
             Fecha = DateTime.Now,
             UsuarioId = usuario.Id,
             MetodoPago = metodoPago,
-            Referencia = string.Empty,
+            Referencia = referencia,
             Recibido = recibido,
             Cambio = cambio,
             Total = total
