@@ -511,6 +511,99 @@ _NO_ES_GRUPO = {
 }
 
 
+# "cuánto cuesta todo", "si compro todos los productos de la lista",
+# "cuánto me sale todo": una pieza de cada producto (lo que pagaría un
+# cliente), no toda la existencia.
+_PIDE_COMPRA = (
+    r"\b(?:cuanto (?:me )?(?:cuesta|cuestan|sale|salen|costaria|costarian|"
+    r"saldria|saldrian)|compr\w*|me llevo|llevo|llevaria|precio de todo)\b"
+)
+_PIDE_UNA_DE_CADA = r"\b(?:un[oa]? de cada|1 de cada|una pieza de cada|cada uno|cada una)\b"
+_HABLA_DE_EXISTENCIA = (
+    r"\b(?:vend\w*|existencia|existencias|stock|inventario|gano|ganaria|"
+    r"ganancia|ganancias|utilidad|todas las piezas|todas sus piezas)\b"
+)
+_MENCIONA_LISTA = (
+    r"\b(?:(?:de|en) (?:la|esta|esa|tu|mi) lista|lo de (?:arriba|la lista)|"
+    r"(?:los|las) de (?:arriba|la lista)|de arriba|lista anterior|esos productos|"
+    r"esas piezas|esas refacciones|esos)\b"
+)
+
+
+def _categoria_pedida(texto: str, productos: list[dict]) -> str | None:
+    """Categoría pedida como grupo: "todo lo de motor", "los productos
+    del apartado de motor", "todos los de la categoría escape",
+    "todo de frenos". Aunque haya un producto que se llame igual
+    ("Motor de Arranque"), aquí se habla de la categoría."""
+    from AgenteIA.inventario.consultas_inteligentes import detectar_categoria
+
+    categoria = detectar_categoria(texto, productos)
+    if categoria is None:
+        return None
+    forma = re.escape(normalizar(categoria))
+    singular = forma[:-1] if forma.endswith("s") else forma
+    patron = (
+        r"\b(?:lo|los|las|productos|piezas|refacciones|articulos|todo|toda|todos|todas|"
+        r"apartado|categoria|seccion|area|departamento)\b"
+        # Entre medio solo relleno ("que están en el apartado"), nunca el
+        # nombre de una pieza ("todo el filtro de aceite").
+        r"(?:\s+(?:que|estan|esta|hay|tenemos|tienes|tengo|manejas|los|las|el|la|lo|"
+        r"productos|piezas|refacciones|articulos|apartado|categoria|seccion|area|"
+        r"departamento|todo|todos|toda|todas)){0,6}\s+"
+        r"(?:de|del|en)\s+(?:(?:la|el|los|las)\s+)?"
+        r"(?:(?:apartado|categoria|seccion|area|departamento)\s+(?:de\s+)?)?"
+        rf"(?:{forma}|{singular})(?:es|s)?\b"
+    )
+    m = re.search(patron, texto)
+    if not m:
+        return None
+    # Si el nombre completo de una pieza aparece ("filtro de aceite",
+    # "motor de arranque"), se habla de esa pieza.
+    if productos_en_texto(texto, productos):
+        return None
+    # "todo el motor de arranque": después de la categoría sigue el
+    # nombre de un producto, no es la categoría.
+    resto = texto[m.end():].strip()
+    if resto and any(
+        normalizar(str(p.get("nombre", ""))).startswith(
+            normalizar(categoria).rstrip("s") + " " + resto.split()[0]
+        ) or normalizar(str(p.get("nombre", ""))).startswith(
+            normalizar(categoria) + " " + resto.split()[0]
+        )
+        for p in productos
+    ):
+        return None
+    return categoria
+
+
+def _lista_reciente(historial, contexto, productos) -> list[dict]:
+    """Productos de la lista más reciente de la conversación, completa.
+    Primero el último mensaje; si no trae productos (por ejemplo fue
+    "No pude identificar..."), la lista que guarda el contexto; si no,
+    el mensaje anterior más reciente con dos o más productos."""
+    ultimo = ultimo_mensaje_asistente(historial)
+    en_ultimo = _codigos_en(ultimo, productos)
+    if len(en_ultimo) >= 2:
+        return en_ultimo
+    if len(en_ultimo) == 1:
+        return []
+
+    codigos = list(getattr(contexto, "codigos_lista", []) or [])
+    if len(codigos) >= 2:
+        por_codigo = {str(p.get("codigo", "")).casefold(): p for p in productos}
+        grupo = [por_codigo[c.casefold()] for c in codigos if c.casefold() in por_codigo]
+        if len(grupo) >= 2:
+            return grupo
+
+    for mensaje in reversed(list(historial or [])):
+        if getattr(mensaje, "rol", None) == "user":
+            continue
+        grupo = _codigos_en(getattr(mensaje, "texto", "") or "", productos)
+        if len(grupo) >= 2:
+            return grupo
+    return []
+
+
 def _codigos_en(texto: str, productos: list[dict]) -> list[dict]:
     return [p for _, p in productos_en_texto(texto, productos)]
 
@@ -519,8 +612,23 @@ def _grupo_a_vender(texto, pregunta, productos, contexto, historial):
     """Devuelve (descripción, productos) si se pide vender todo un grupo."""
     pide_todo = re.search(_PIDE_TODO, texto) is not None
     pide_total = re.search(_PIDE_TOTAL, texto) is not None
-    if not re.search(_PIDE_VENTA, texto) or not (pide_todo or pide_total):
+    pide_operacion = re.search(_PIDE_VENTA, texto) or re.search(_PIDE_COMPRA, texto)
+    if not pide_operacion or not (pide_todo or pide_total):
         return None
+
+    # "todos los productos de la lista": directo a la lista anterior.
+    if re.search(_MENCIONA_LISTA, texto) and not productos_en_texto(texto, productos):
+        grupo = _lista_reciente(historial, contexto, productos)
+        if len(grupo) >= 2:
+            return "los productos de la lista anterior", grupo
+
+    # "todo lo de motor", "los productos del apartado de motor": la
+    # categoría, aunque exista un producto llamado "Motor de Arranque".
+    pedida = _categoria_pedida(texto, productos)
+    if pedida is not None:
+        grupo = [p for p in productos
+                 if normalizar(str(p.get("categoria", ""))) == normalizar(pedida)]
+        return f"la categoría {pedida}", grupo
 
     # Un producto concreto ("vendo todo el filtro de aceite") no es grupo:
     # lo calcula el flujo normal con toda su existencia.
@@ -553,31 +661,66 @@ def _grupo_a_vender(texto, pregunta, productos, contexto, historial):
         return f"«{m.group(1)}»", []
 
     # 2. La lista que se acaba de mostrar ("vendo todo", "súmalos").
-    ultimo = ultimo_mensaje_asistente(historial)
-    en_ultimo = _codigos_en(ultimo, productos)
-
     # Lo anterior fue UN producto ("venderlo todo" tras su ficha):
     # lo calcula el flujo normal con ese producto.
-    if len(en_ultimo) == 1:
-        return None
-
-    if len(en_ultimo) >= 2:
-        return "los productos de la lista anterior", en_ultimo
-
-    codigos = list(getattr(contexto, "codigos_lista", []) or [])
-    if len(codigos) >= 2:
-        grupo = [p for c in codigos for p in productos
-                 if str(p.get("codigo", "")).casefold() == str(c).casefold()]
-        if len(grupo) >= 2:
-            return "los productos de la lista anterior", grupo
+    grupo = _lista_reciente(historial, contexto, productos)
+    if len(grupo) >= 2:
+        return "los productos de la lista anterior", grupo
 
     return None
+
+
+def _respuesta_una_de_cada(descripcion: str, grupo: list[dict], texto: str) -> str:
+    """"Cuánto cuesta todo": una pieza de cada producto."""
+    lineas = [f"Una pieza de cada uno de {descripcion}:"]
+    subtotal = 0.0
+    valor_existencia = 0.0
+    sin_existencia = []
+    contados = 0
+    for producto in grupo:
+        precio = obtener_precio(producto)
+        existencia = obtener_existencia(producto) or 0
+        if precio is None or existencia <= 0:
+            sin_existencia.append(etiqueta_producto(producto))
+            continue
+        subtotal += precio
+        valor_existencia += precio * existencia
+        contados += 1
+        lineas.append(f"• {etiqueta_producto(producto)}: {dinero(precio)}")
+
+    if contados == 0:
+        return f"Los productos de {descripcion} no tienen existencia disponible."
+
+    descuento = _descuento(texto)
+    lineas.append(f"• Productos: {contados}")
+    lineas.append(f"• Subtotal: {dinero(subtotal)}")
+    if descuento:
+        rebaja = subtotal * descuento / 100
+        subtotal -= rebaja
+        lineas.append(f"• Descuento ({descuento:g}%): -{dinero(rebaja)}")
+        lineas.append(f"• Subtotal con descuento: {dinero(subtotal)}")
+    lineas.append(f"• IVA (16%): {dinero(subtotal * IVA)}")
+    lineas.append(f"• Total con IVA: {dinero(subtotal * (1 + IVA))}")
+
+    if sin_existencia:
+        lineas.append("\nSin existencia (no se cuentan): " + ", ".join(sin_existencia))
+    lineas.append(
+        f"\nSi fuera toda la existencia de esos productos: {dinero(valor_existencia)} "
+        f"+ IVA = {dinero(valor_existencia * (1 + IVA))}."
+    )
+    return "\n".join(lineas)
 
 
 def _respuesta_grupo(descripcion: str, grupo: list[dict], texto: str) -> str:
     if not grupo:
         donde = f"de {descripcion}" if descripcion.startswith("«") else f"en {descripcion}"
         return f"No hay productos registrados {donde} en el inventario, así que no hay nada que calcular."
+
+    una_de_cada = re.search(_PIDE_UNA_DE_CADA, texto) or (
+        re.search(_PIDE_COMPRA, texto) and not re.search(_HABLA_DE_EXISTENCIA, texto)
+    )
+    if una_de_cada:
+        return _respuesta_una_de_cada(descripcion, grupo, texto)
 
     lineas = [f"Venta de toda la existencia de {descripcion}:"]
     subtotal = 0.0
@@ -640,6 +783,8 @@ def resolver_calculo(
             r"\b(?:valor|vale|valen|suma|sumale|total|vendo|vendiera|"
             r"vendemos|cuanto seria|cuanto dinero|lana|varo|feria)\b", texto
         )
+        # "todo lo que hay en llantas" es esa categoría, no el inventario.
+        and _categoria_pedida(texto, productos) is None
     )
 
     # "3 termostatos", "y 2 baterías": cantidad + UNA pieza, sin verbo.
@@ -663,8 +808,17 @@ def resolver_calculo(
         and getattr(contexto, "codigo_seleccionado", None)
     )
 
+    # "cuánto cuesta todo?", "si compro todos los de la lista".
+    compra_todo = (
+        re.search(_PIDE_COMPRA, texto) is not None
+        and re.search(_PIDE_TODO, texto) is not None
+    )
+    # "compro 2 balatas y 1 radiador": compra con cantidades.
+    if re.search(r"\bcompr\w*\b", texto) and re.search(r"\d", _palabras_a_numeros(texto)):
+        tiene_disparador = True
+
     if not tiene_disparador and not tiene_operador and not pide_valor_inventario \
-            and not cantidad_y_pieza and not cantidad_sola:
+            and not cantidad_y_pieza and not cantidad_sola and not compra_todo:
         return None, None
 
     # "Un cliente va a hacer afinación, ¿qué le vendo?" es una
@@ -680,6 +834,42 @@ def resolver_calculo(
         and not re.search(r"\b(?:precio|dinero|lana|vale|vendo|venta|iva|\$)\b", texto)
     ):
         return None, None
+
+    # 1a. "si vendo los 55 productos", "total si vendo las 488 piezas",
+    # "si vendo todos los productos": todo el inventario cuando el número
+    # coincide con los productos o con las piezas que hay.
+    habla_de_todo = re.search(
+        r"\b(?:productos|piezas|refacciones|articulos|unidades|mercancia)\b", texto
+    ) and re.search(_PIDE_VENTA, texto) or re.search(_PIDE_COMPRA, texto) and re.search(
+        r"\b(?:productos|piezas|refacciones|articulos|unidades|mercancia)\b", texto
+    )
+    if habla_de_todo and not productos_en_texto(texto, productos) \
+            and len(buscar_por_palabra(pregunta, productos)) != 1 \
+            and not re.search(_MENCIONA_LISTA, texto) \
+            and _categoria_pedida(texto, productos) is None:
+        total_productos = len(productos)
+        total_piezas = sum((obtener_existencia(p) or 0) for p in productos)
+        numeros_texto = [int(n) for n in re.findall(r"\b\d{1,6}\b", _palabras_a_numeros(texto))]
+        numero = numeros_texto[0] if len(numeros_texto) == 1 else None
+        todos = re.search(
+            r"\btod[oa]s? (?:l[oa]s )?(?:productos|piezas|refacciones|articulos|unidades|"
+            r"mercancia)\b(?! de (?:la|esta|esa) lista)", texto
+        )
+        ultimo_es_lista = len(_codigos_en(ultimo_mensaje_asistente(historial), productos)) >= 2
+        if numero is not None and numero in (total_productos, total_piezas):
+            pide_valor_inventario = True
+        elif numero is None and todos and not ultimo_es_lista:
+            pide_valor_inventario = True
+        elif numero is not None and numero > 0 and re.search(
+            r"\b(?:los|las)\s+" + str(numero) + r"\b", _palabras_a_numeros(texto)
+        ):
+            # "si vendo los 100 productos": no coincide con el inventario.
+            return (
+                f"En el inventario activo hay {total_productos} productos distintos y "
+                f"{total_piezas} piezas en total, así que no sé cuáles serían esos "
+                f"{numero}. Puedes preguntar «si vendo todo el inventario», "
+                "«si vendo todo de frenos» o «si vendo 3 del ACE-001»."
+            ), None
 
     # 1. Valor de todo el inventario.
     if pide_valor_inventario:
@@ -703,6 +893,19 @@ def resolver_calculo(
     if grupo is not None:
         descripcion, productos_grupo = grupo
         return _respuesta_grupo(descripcion, productos_grupo, texto), None
+
+    # "cuánto cuesta todo?" sin ninguna lista antes.
+    if compra_todo and not productos_en_texto(texto, productos) \
+            and not identificar_producto(pregunta, productos) \
+            and len(buscar_por_palabra(pregunta, productos)) != 1 \
+            and not getattr(contexto, "codigo_seleccionado", None) \
+            and len(_codigos_en(ultimo_mensaje_asistente(historial), productos)) != 1:
+        return (
+            "¿Todo de qué? Primero pídeme una lista (por ejemplo «frenos» o "
+            "«qué tienes para un versa 2015») y luego pregunta «cuánto cuesta "
+            "todo». Te doy el total de una pieza de cada producto y el de "
+            "toda su existencia."
+        ), None
 
     # 2. Productos mencionados en la pregunta.
     mencionados = productos_en_texto(texto, productos)
@@ -772,11 +975,11 @@ def resolver_calculo(
     if not mencionados and plural:
         en_ultimo = productos_en_texto(ultimo, productos)
         if len(en_ultimo) >= 2:
-            mencionados = [(None, p) for _, p in en_ultimo[:15]]
+            mencionados = [(None, p) for _, p in en_ultimo]
         else:
             recientes = productos_recientes(historial, productos)
             if len(recientes) >= 2:
-                mencionados = [(None, p) for p in recientes[:15]]
+                mencionados = [(None, p) for p in recientes]
 
     if not mencionados:
         seleccionado = obtener_producto_seleccionado(contexto, productos)
@@ -902,8 +1105,3 @@ def resolver_calculo(
     respuesta = _armar_calculo(lineas_productos, texto, avisos)
     producto_unico = lineas_productos[0][0] if len(lineas_productos) == 1 else None
     return respuesta, producto_unico
-
-
-
-
-

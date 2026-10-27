@@ -491,5 +491,166 @@ def test_sintomas_nuevos_tienen_documentacion(pregunta):
     assert _cumple("MEC", texto, pregunta), texto
 
 
+# ---------------------------------------------------------------
+# "Cuánto cuesta todo" después de una lista
+# ---------------------------------------------------------------
+
+def test_cuanto_cuesta_todo_de_la_lista_es_una_de_cada():
+    texto = _conversar(["enfriamiento", "cuanto cuesta todo?"])[1]
+    assert texto.startswith("Una pieza de cada uno de los productos de la lista anterior")
+    assert "PRU-010" in texto and "PRU-011" in texto and "PRU-014" in texto
+    assert "Si fuera toda la existencia" in texto
 
 
+def test_compro_todos_los_de_la_lista_tras_no_entendi():
+    # Aunque el último mensaje fue "No pude identificar...", se usa la
+    # lista completa más reciente de la conversación.
+    historial = []
+    lista, _ = _turno("enfriamiento")
+    historial += [{"rol": "user", "texto": "enfriamiento"}, {"rol": "assistant", "texto": lista}]
+    historial += [{"rol": "user", "texto": "cuanto cuesta eso"},
+                  {"rol": "assistant", "texto": "No pude identificar con seguridad la refacción."}]
+    texto, _ = _turno("cuanto seria si compro todos los productos de la lista", historial, {})
+    assert texto.startswith("Una pieza de cada uno"), texto
+    assert "PRU-010" in texto and "PRU-011" in texto and "PRU-014" in texto
+
+
+def test_lista_larga_no_se_corta_en_quince():
+    # Inventario de 42 piezas solo para esta prueba; al final se
+    # regresa el original.
+    global INVENTARIO  # pylint: disable=global-statement
+    original = INVENTARIO
+    INVENTARIO = [
+        {"codigo": f"PRO-{i:03d}", "nombre": f"Pieza prueba {i}", "marca": "Bosch",
+         "categoria": "Motor", "precio": 100 + i, "existencia": 2, "universal": False,
+         "vehiculosCompatibles": ["Chevrolet Aveo 2018-2024"]}
+        for i in range(1, 43)
+    ]
+    try:
+        respuestas = _conversar([
+            "que productos tienen autos compatibles",
+            "me refiero a cuanto seria si compro todos los productos de la lista",
+        ])
+    finally:
+        INVENTARIO = original
+    assert "• Productos: 42" in respuestas[1], respuestas[1][-300:]
+
+
+def test_vender_todo_sigue_siendo_toda_la_existencia():
+    texto = _conversar(["encendido", "vendo todo"])[1]
+    assert texto.startswith("Venta de toda la existencia")
+
+
+def test_cuanto_cuesta_todo_sin_lista_pregunta_de_que():
+    assert _conversar(["cuanto cuesta todo?"])[0].startswith("¿Todo de qué?")
+
+
+def test_cuanto_cuesta_todo_tras_un_producto_usa_ese_producto():
+    texto = _conversar(["termostato", "cuanto cuesta todo"])[1]
+    assert texto.startswith("Cálculo para Termostato de Motor")
+
+
+def test_compro_con_cantidades():
+    texto = _conversar(["compro 2 balatas y 1 radiador"])[0]
+    assert texto.startswith("Suma de productos") and "BAL-002" in texto and "PRU-010" in texto
+
+
+def test_precio_normal_no_cambia():
+    assert _conversar(["cuanto cuesta el termostato"])[0].startswith("El precio de Termostato")
+
+
+@pytest.mark.parametrize("pregunta, inicio", [
+    ("fr3nos", "Productos de la categoría Frenos"),
+    ("3nfri4miento", "Productos de la categoría Enfriamiento"),
+    ("b4l4t4s", "Balatas delanteras Ceramitas"),
+])
+def test_numeros_en_lugar_de_letras_en_conversacion(pregunta, inicio):
+    assert _conversar([pregunta])[0].startswith(inicio)
+
+
+# ---------------------------------------------------------------
+# "Si vendo los 55 productos" / "las 488 piezas" = todo el inventario
+# ---------------------------------------------------------------
+
+def _totales():
+    return len(INVENTARIO), sum(p["existencia"] for p in INVENTARIO)
+
+
+@pytest.mark.parametrize("plantilla", [
+    "cuanto es el total si vendo los {productos} productos",
+    "cuanto es el total si vendo los {piezas} productos",
+    "total si vendo las {piezas} piezas",
+    "si vendo todos los productos",
+])
+def test_vender_todo_el_inventario_por_numero(plantilla):
+    productos, piezas = _totales()
+    texto = _conversar([plantilla.format(productos=productos, piezas=piezas)])[0]
+    assert texto.startswith("Valor de todo el inventario activo"), texto
+    assert f"• Piezas: {piezas}" in texto
+
+
+def test_numero_que_no_coincide_con_el_inventario():
+    texto = _conversar(["si vendo los 100 productos"])[0]
+    assert "no sé cuáles serían esos 100" in texto
+
+
+def test_vender_todos_los_productos_tras_lista_usa_la_lista():
+    texto = _conversar(["enfriamiento", "si vendo todos los productos"])[1]
+    assert texto.startswith("Venta de toda la existencia de los productos de la lista anterior")
+
+
+# ---------------------------------------------------------------
+# Vender toda una categoría aunque un producto se llame parecido
+# ---------------------------------------------------------------
+
+_INVENTARIO_MOTOR = [
+    {"codigo": "ELE-003", "nombre": "Motor de Arranque", "marca": "Bosch",
+     "categoria": "Sistema eléctrico", "precio": 2890, "existencia": 2},
+    {"codigo": "MOT-101", "nombre": "Junta de cabeza 1.6L", "marca": "Victor Reinz",
+     "categoria": "Motor", "precio": 780, "existencia": 6},
+    {"codigo": "MOT-102", "nombre": "Bomba de aceite", "marca": "Melling",
+     "categoria": "Motor", "precio": 1450, "existencia": 3},
+    {"codigo": "ENC-101", "nombre": "Bujía de iridio", "marca": "NGK",
+     "categoria": "Encendido", "precio": 210, "existencia": 40},
+    {"codigo": "FIL-101", "nombre": "Filtro de aceite", "marca": "Mann",
+     "categoria": "Filtros", "precio": 140, "existencia": 25},
+    {"codigo": "ACE-101", "nombre": "Aceite sintético 5W-30 (4 L)", "marca": "Castrol",
+     "categoria": "Aceites", "precio": 890, "existencia": 18},
+]
+
+
+def _con_inventario_motor(preguntas):
+    global INVENTARIO  # pylint: disable=global-statement
+    original = INVENTARIO
+    INVENTARIO = _INVENTARIO_MOTOR
+    try:
+        return _conversar(preguntas)
+    finally:
+        INVENTARIO = original
+
+
+@pytest.mark.parametrize("pregunta", [
+    "no no, yo hablo de vender todos los productos que están en el apartado de motor",
+    "si vendo todo lo de motor",
+    "vender todos los productos de la categoria motor",
+    "cuanto gano si vendo todo lo que hay en motor",
+])
+def test_vender_categoria_motor_no_es_motor_de_arranque(pregunta):
+    texto = _con_inventario_motor([pregunta])[0]
+    assert texto.startswith("Venta de toda la existencia de la categoría Motor"), texto
+    assert "ELE-003" not in texto
+
+
+def test_vender_todo_el_motor_de_arranque_es_el_producto():
+    texto = _con_inventario_motor(["vendo todo el motor de arranque"])[0]
+    assert texto.startswith("Cálculo para Motor de Arranque"), texto
+
+
+def test_vender_todos_los_productos_de_una_categoria():
+    texto = _con_inventario_motor(["vendo todos los productos de encendido"])[0]
+    assert texto.startswith("Venta de toda la existencia de la categoría Encendido"), texto
+
+
+def test_vender_todo_el_filtro_de_aceite_no_es_categoria_aceites():
+    texto = _con_inventario_motor(["vendo todo el filtro de aceite"])[0]
+    assert "FIL-101" in texto and "categoría Aceites" not in texto, texto

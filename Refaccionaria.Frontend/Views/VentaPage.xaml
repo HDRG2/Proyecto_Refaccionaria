@@ -993,43 +993,60 @@
                             Margin="10,0,0,0"
                             SelectionChanged="Filtro_Changed"/>
 
-                        <!-- QUITAR FILTROS -->
-                        <Button
+                        <!-- QUITAR FILTROS Y FLECHA PARA ESCONDER CATEGORÍAS -->
+                        <StackPanel
                             Grid.Column="4"
-                            Content="Quitar filtros"
-                            Style="{StaticResource BotonPrimario}"
-                            Padding="18,10"
-                            Click="QuitarFiltros_Click"/>
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+
+                            <Button
+                                Content="Quitar filtros"
+                                Style="{StaticResource BotonPrimario}"
+                                Padding="18,10"
+                                Click="QuitarFiltros_Click"/>
+
+                            <Button
+                                x:Name="BtnMostrarCategorias"
+                                Style="{StaticResource BotonContorno}"
+                                Width="42"
+                                Height="42"
+                                Padding="0"
+                                VerticalAlignment="Stretch"
+                                ToolTipService.ToolTip="Ocultar categorías"
+                                Click="MostrarCategorias_Click">
+
+                                <FontIcon
+                                    x:Name="IconoCategorias"
+                                    Glyph="&#xE70E;"
+                                    FontFamily="Segoe MDL2 Assets"
+                                    FontSize="14"
+                                    RenderTransformOrigin="0.5,0.5">
+
+                                    <FontIcon.RenderTransform>
+                                        <RotateTransform x:Name="GiroFlecha" Angle="0"/>
+                                    </FontIcon.RenderTransform>
+
+                                </FontIcon>
+
+                            </Button>
+
+                        </StackPanel>
 
                     </Grid>
 
 
-                    <!-- CATEGORÍAS -->
-                    <Grid Margin="0,16,0,-6"
-                          ColumnSpacing="8"
-                          RowSpacing="6">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- PRIMERA FILA -->
+                    <!-- CATEGORÍAS
+                         Los botones se crean en VentaPage.Categorias.cs con
+                         las categorías registradas en la base de datos y se
+                         reparten en filas parejas según el ancho disponible.
+                         Aquí solo queda "Todos". -->
+                    <StackPanel x:Name="PanelCategorias"
+                                Margin="0,16,0,-6"
+                                Spacing="6"
+                                SizeChanged="PanelCategorias_SizeChanged">
 
                         <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="0"
                             x:Name="RbTodos"
                             Content="Todos"
                             Tag="Todos"
@@ -1039,159 +1056,7 @@
                             IsChecked="True"
                             Checked="Tipo_Checked"/>
 
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Content="Aceites"
-                            Tag="Aceites"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="2"
-                            Content="Filtros"
-                            Tag="Filtros"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="3"
-                            Content="Frenos"
-                            Tag="Frenos"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="4"
-                            Content="Suspensión"
-                            Tag="Suspensión"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="5"
-                            Content="Dirección"
-                            Tag="Dirección"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="6"
-                            Content="Motor"
-                            Tag="Motor"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="7"
-                            Content="Transmisión"
-                            Tag="Transmisión"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <!-- SEGUNDA FILA -->
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Content="Sistema eléctrico"
-                            Tag="Sistema eléctrico"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Content="Enfriamiento"
-                            Tag="Enfriamiento"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Content="Encendido"
-                            Tag="Encendido"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="3"
-                            Content="Escape"
-                            Tag="Escape"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="4"
-                            Content="Iluminación"
-                            Tag="Iluminación"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="5"
-                            Content="Carrocería"
-                            Tag="Carrocería"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="6"
-                            Content="Accesorios"
-                            Tag="Accesorios"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="7"
-                            Content="Lubricantes"
-                            Tag="Lubricantes"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                    </Grid>
+                    </StackPanel>
 
                 </StackPanel>
 
@@ -1937,10 +1802,3 @@
 
     </Grid>
 </Page>
-
-
-
-
-
-
-
