@@ -98,8 +98,20 @@ namespace Refaccionaria.Frontend.Views
 
             IEnumerable<string> modelos;
 
+            // Castrol, Bosch... no son marcas de auto: se muestran
+            // todos los modelos para poder combinar marca de pieza
+            // con el auto.
+            bool esMarcaDeAuto =
+                _autos.Any(a =>
+                    string.Equals(
+                        a.Marca,
+                        marcaSeleccionada,
+                        StringComparison.OrdinalIgnoreCase
+                    ));
+
             if (marcaSeleccionada ==
-                TODAS_MARCAS)
+                TODAS_MARCAS ||
+                !esMarcaDeAuto)
             {
                 modelos =
                     _autos
@@ -139,6 +151,16 @@ namespace Refaccionaria.Frontend.Views
         // LLENAR AÑOS
         // =========================================================
 
+        // Año final 0 (o menor al inicial) = el modelo se sigue
+        // fabricando: cuenta hasta el año que viene.
+        private static int AnioFinReal(ModeloAuto auto)
+        {
+            return auto.AnioFin <= 0 || auto.AnioFin < auto.AnioInicio
+                ? DateTime.Now.Year + 1
+                : auto.AnioFin;
+        }
+
+
         private void LlenarAnios()
         {
             if (CmbMarca == null ||
@@ -161,8 +183,14 @@ namespace Refaccionaria.Frontend.Views
 
             IEnumerable<ModeloAuto> vehiculos = _autos;
 
-            // Filtrar por marca
-            if (marcaSeleccionada != TODAS_MARCAS)
+            // Filtrar por marca (solo si es marca de auto)
+            if (marcaSeleccionada != TODAS_MARCAS &&
+                _autos.Any(a =>
+                    string.Equals(
+                        a.Marca,
+                        marcaSeleccionada,
+                        StringComparison.OrdinalIgnoreCase
+                    )))
             {
                 vehiculos = vehiculos.Where(a =>
                     string.Equals(
@@ -185,15 +213,33 @@ namespace Refaccionaria.Frontend.Views
                 );
             }
 
-            IEnumerable<int> anios =
+            int anioMaximo =
+                Math.Max(
+                    DateTime.Now.Year + 1,
+                    _autos.Count > 0
+                        ? _autos.Max(a => AnioFinReal(a))
+                        : 0
+                );
+
+            List<ModeloAuto> conAnio =
                 vehiculos
-                .SelectMany(a =>
-                    Enumerable.Range(
-                        a.AnioInicio,
-                        a.AnioFin - a.AnioInicio + 1
-                    )
+                .Where(a => a.AnioInicio > 0)
+                .ToList();
+
+            int anioMinimo =
+                conAnio.Count > 0
+                    ? Math.Min(conAnio.Min(a => a.AnioInicio), anioMaximo)
+                    : anioMaximo - 30;
+
+            // Nunca menos de 30 años hacia atrás.
+            anioMinimo =
+                Math.Min(anioMinimo, anioMaximo - 30);
+
+            IEnumerable<int> anios =
+                Enumerable.Range(
+                    anioMinimo,
+                    anioMaximo - anioMinimo + 1
                 )
-                .Distinct()
                 .OrderByDescending(a => a);
 
             foreach (int anio in anios)
@@ -309,6 +355,15 @@ namespace Refaccionaria.Frontend.Views
                     .ToHashSet();
 
 
+                /*
+                 * Si es solo marca de refacciones (Castrol, Bosch),
+                 * no hay autos de esa marca y únicamente quedan sus
+                 * productos. Las universales y las compatibles solo
+                 * entran cuando es marca de auto (Toyota, Nissan).
+                 */
+                bool esMarcaDeAuto =
+                    autosMarca.Count > 0;
+
                 lista =
                     lista.Where(
                         r =>
@@ -318,13 +373,18 @@ namespace Refaccionaria.Frontend.Views
                                 StringComparison.OrdinalIgnoreCase
                             ) ||
 
-                            r.EsUniversal ||
-
                             (
-                                r.AutosCompatibles != null &&
-                                r.AutosCompatibles.Any(
-                                    id =>
-                                        autosMarca.Contains(id)
+                                esMarcaDeAuto &&
+                                (
+                                    r.EsUniversal ||
+
+                                    (
+                                        r.AutosCompatibles != null &&
+                                        r.AutosCompatibles.Any(
+                                            id =>
+                                                autosMarca.Contains(id)
+                                        )
+                                    )
                                 )
                             )
                     );
@@ -374,22 +434,12 @@ namespace Refaccionaria.Frontend.Views
             // AÑO
             // -----------------------------------------------------
 
-            /*
-             * Solo quedan las refacciones registradas para un vehículo
-             * de ese año. Si también se eligió un modelo, el MISMO
-             * vehículo debe cumplir ambos: "Corolla" + 2016 no muestra
-             * una pieza que solo es del Corolla 2010 y del Versa 2016.
-             *
-             * Las universales no se muestran aquí porque no tienen un
-             * año registrado; aparecen con "Cualquier año".
-             */
-
             if (CmbAnio.SelectedItem is int anio)
             {
                 IEnumerable<ModeloAuto> vehiculosAnio =
                     _autos.Where(
                         a => a.AnioInicio <= anio &&
-                             anio <= a.AnioFin
+                             anio <= AnioFinReal(a)
                     );
 
                 if (modelo != TODOS_MODELOS)
@@ -506,7 +556,7 @@ namespace Refaccionaria.Frontend.Views
                     id => _autos.Any(
                         a => a.Id == id &&
                              a.AnioInicio <= anio &&
-                             anio <= a.AnioFin
+                             anio <= AnioFinReal(a)
                     )
                 );
             }

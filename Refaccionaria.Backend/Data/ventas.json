@@ -1236,5 +1236,633 @@
         }
       }
     ]
+  },
+  {
+    "EmpleadoNombre": "Jos\u00E9 Remirez",
+    "Id": 25,
+    "Folio": "V-20261023-154834402",
+    "Fecha": "2026-10-23T15:48:34.4050994-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "Tarjeta ****4242 \u00B7 Aut. 779172",
+    "Recibido": 1461.60,
+    "Cambio": 0,
+    "Total": 1461.60,
+    "Lineas": [
+      {
+        "Subtotal": 1260.00,
+        "Id": 34,
+        "VentaId": 25,
+        "RefaccionId": 29,
+        "Cantidad": 3,
+        "PrecioUnitario": 420.00,
+        "Refaccion": {
+          "Id": 29,
+          "Codigo": "TRA-002",
+          "Nombre": "Aceite ATF Multiveh\u00EDculo",
+          "MarcaId": 1,
+          "CategoriaId": 7,
+          "Precio": 420.00,
+          "Stock": 7,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            10,
+            9,
+            8
+          ],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Transmisi\u00F3n",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 26,
+    "Folio": "V-20261023-160804054",
+    "Fecha": "2026-10-23T16:08:04.0540476-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "Tarjeta ****4242 \u00B7 Aut. 315461",
+    "Recibido": 1461.60,
+    "Cambio": 0,
+    "Total": 1461.60,
+    "Lineas": [
+      {
+        "Subtotal": 1260.00,
+        "Id": 35,
+        "VentaId": 26,
+        "RefaccionId": 29,
+        "Cantidad": 3,
+        "PrecioUnitario": 420.00,
+        "Refaccion": {
+          "Id": 29,
+          "Codigo": "TRA-002",
+          "Nombre": "Aceite ATF Multiveh\u00EDculo",
+          "MarcaId": 1,
+          "CategoriaId": 7,
+          "Precio": 420.00,
+          "Stock": 4,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            10,
+            9,
+            8
+          ],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Transmisi\u00F3n",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 27,
+    "Folio": "V-20261023-164004659",
+    "Fecha": "2026-10-23T16:40:04.6619582-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 1705.20,
+    "Cambio": 0,
+    "Total": 1705.20,
+    "Lineas": [
+      {
+        "Subtotal": 1470.00,
+        "Id": 36,
+        "VentaId": 27,
+        "RefaccionId": 52,
+        "Cantidad": 3,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 8,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 28,
+    "Folio": "V-20261023-164047897",
+    "Fecha": "2026-10-23T16:40:47.8973936-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 1948.80,
+    "Cambio": 0,
+    "Total": 1948.80,
+    "Lineas": [
+      {
+        "Subtotal": 1680.00,
+        "Id": 37,
+        "VentaId": 28,
+        "RefaccionId": 55,
+        "Cantidad": 3,
+        "PrecioUnitario": 560.00,
+        "Refaccion": {
+          "Id": 55,
+          "Codigo": "ACE-002",
+          "Nombre": "Aceite Semisint\u00E9tico",
+          "MarcaId": 7,
+          "CategoriaId": 1,
+          "Precio": 560.00,
+          "Stock": 19,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6
+          ],
+          "MarcaNombre": "Gonher",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 29,
+    "Folio": "V-20261023-164122903",
+    "Fecha": "2026-10-23T16:41:22.9040016-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 7540.00,
+    "Cambio": 0,
+    "Total": 7540.00,
+    "Lineas": [
+      {
+        "Subtotal": 6500,
+        "Id": 38,
+        "VentaId": 29,
+        "RefaccionId": 9,
+        "Cantidad": 2,
+        "PrecioUnitario": 3250,
+        "Refaccion": {
+          "Id": 9,
+          "Codigo": "PRU-009",
+          "Nombre": "Alternador",
+          "MarcaId": 1,
+          "CategoriaId": 8,
+          "Precio": 3250,
+          "Stock": 6,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Sistema el\u00E9ctrico",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 30,
+    "Folio": "V-20261023-165037894",
+    "Fecha": "2026-10-23T16:50:37.8972766-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 3004.40,
+    "Cambio": 0,
+    "Total": 3004.40,
+    "Lineas": [
+      {
+        "Subtotal": 1470.00,
+        "Id": 39,
+        "VentaId": 30,
+        "RefaccionId": 52,
+        "Cantidad": 3,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 8,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 1120.00,
+        "Id": 40,
+        "VentaId": 30,
+        "RefaccionId": 55,
+        "Cantidad": 2,
+        "PrecioUnitario": 560.00,
+        "Refaccion": {
+          "Id": 55,
+          "Codigo": "ACE-002",
+          "Nombre": "Aceite Semisint\u00E9tico",
+          "MarcaId": 7,
+          "CategoriaId": 1,
+          "Precio": 560.00,
+          "Stock": 19,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6
+          ],
+          "MarcaNombre": "Gonher",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 31,
+    "Folio": "V-20261023-230844242",
+    "Fecha": "2026-10-23T23:08:44.2454948-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 3093.72,
+    "Cambio": 0,
+    "Total": 3093.72,
+    "Lineas": [
+      {
+        "Subtotal": 420.00,
+        "Id": 41,
+        "VentaId": 31,
+        "RefaccionId": 29,
+        "Cantidad": 1,
+        "PrecioUnitario": 420.00,
+        "Refaccion": {
+          "Id": 29,
+          "Codigo": "TRA-002",
+          "Nombre": "Aceite ATF Multiveh\u00EDculo",
+          "MarcaId": 1,
+          "CategoriaId": 7,
+          "Precio": 420.00,
+          "Stock": 1,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            10,
+            9,
+            8
+          ],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Transmisi\u00F3n",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 2247.00,
+        "Id": 42,
+        "VentaId": 31,
+        "RefaccionId": 2,
+        "Cantidad": 3,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 32,
+    "Folio": "V-20261023-232237435",
+    "Fecha": "2026-10-23T23:22:37.4387131-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 1624.00,
+    "Cambio": 0,
+    "Total": 1624.00,
+    "Lineas": [
+      {
+        "Subtotal": 420.00,
+        "Id": 43,
+        "VentaId": 32,
+        "RefaccionId": 29,
+        "Cantidad": 1,
+        "PrecioUnitario": 420.00,
+        "Refaccion": {
+          "Id": 29,
+          "Codigo": "TRA-002",
+          "Nombre": "Aceite ATF Multiveh\u00EDculo",
+          "MarcaId": 1,
+          "CategoriaId": 7,
+          "Precio": 420.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            10,
+            9,
+            8
+          ],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Transmisi\u00F3n",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 980.00,
+        "Id": 44,
+        "VentaId": 32,
+        "RefaccionId": 52,
+        "Cantidad": 2,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 5,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 33,
+    "Folio": "V-20261023-233556011",
+    "Fecha": "2026-10-23T23:35:56.0139791-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 2606.52,
+    "Cambio": 0,
+    "Total": 2606.52,
+    "Lineas": [
+      {
+        "Subtotal": 2247.00,
+        "Id": 45,
+        "VentaId": 33,
+        "RefaccionId": 2,
+        "Cantidad": 3,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 7,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 34,
+    "Folio": "V-20261023-233622580",
+    "Fecha": "2026-10-23T23:36:22.5800626-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 1437.24,
+    "Cambio": 0,
+    "Total": 1437.24,
+    "Lineas": [
+      {
+        "Subtotal": 749.00,
+        "Id": 46,
+        "VentaId": 34,
+        "RefaccionId": 2,
+        "Cantidad": 1,
+        "PrecioUnitario": 749.00,
+        "Refaccion": {
+          "Id": 2,
+          "Codigo": "ACE-001",
+          "Nombre": "Aceite de Motor 5W-30",
+          "MarcaId": 1,
+          "CategoriaId": 1,
+          "Precio": 749.00,
+          "Stock": 7,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": true,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Aceites",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 490.00,
+        "Id": 47,
+        "VentaId": 34,
+        "RefaccionId": 52,
+        "Cantidad": 1,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 3,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 35,
+    "Folio": "V-20261023-234442244",
+    "Fecha": "2026-10-23T23:44:42.2469163-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 16216.80,
+    "Cambio": 0,
+    "Total": 16216.80,
+    "Lineas": [
+      {
+        "Subtotal": 980.00,
+        "Id": 48,
+        "VentaId": 35,
+        "RefaccionId": 52,
+        "Cantidad": 2,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 2,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      },
+      {
+        "Subtotal": 13000,
+        "Id": 49,
+        "VentaId": 35,
+        "RefaccionId": 9,
+        "Cantidad": 4,
+        "PrecioUnitario": 3250,
+        "Refaccion": {
+          "Id": 9,
+          "Codigo": "PRU-009",
+          "Nombre": "Alternador",
+          "MarcaId": 1,
+          "CategoriaId": 8,
+          "Precio": 3250,
+          "Stock": 4,
+          "StockBajo": true,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [],
+          "MarcaNombre": "Bosch",
+          "CategoriaNombre": "Sistema el\u00E9ctrico",
+          "AutosDescripciones": []
+        }
+      }
+    ]
+  },
+  {
+    "EmpleadoNombre": "",
+    "Id": 36,
+    "Folio": "V-20261023-235523883",
+    "Fecha": "2026-10-23T23:55:23.8869057-06:00",
+    "UsuarioId": 2,
+    "MetodoPago": "Tarjeta",
+    "Referencia": "",
+    "Recibido": 1705.20,
+    "Cambio": 0,
+    "Total": 1705.20,
+    "Lineas": [
+      {
+        "Subtotal": 1470.00,
+        "Id": 50,
+        "VentaId": 36,
+        "RefaccionId": 52,
+        "Cantidad": 3,
+        "PrecioUnitario": 490.00,
+        "Refaccion": {
+          "Id": 52,
+          "Codigo": "LUB-001",
+          "Nombre": "Aceite de Transmisi\u00F3n Manual",
+          "MarcaId": 9,
+          "CategoriaId": 15,
+          "Precio": 490.00,
+          "Stock": 10,
+          "StockBajo": false,
+          "Activo": true,
+          "EsUniversal": false,
+          "AutosCompatibles": [
+            7,
+            6,
+            5,
+            4
+          ],
+          "MarcaNombre": "Denso",
+          "CategoriaNombre": "Lubricantes",
+          "AutosDescripciones": []
+        }
+      }
+    ]
   }
 ]

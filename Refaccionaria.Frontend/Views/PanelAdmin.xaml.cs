@@ -98,7 +98,7 @@ public sealed partial class PanelAdmin : Page
         Validaciones.LetrasYNumeros(TxtFormEmpUsuario);
 
         // Formulario de producto
-        Validaciones.SoloLetras(TxtFormNombre);
+        Validaciones.NombrePieza(TxtFormNombre);
         Validaciones.Codigo(TxtFormCodigo);
         Validaciones.Precio(TxtFormPrecio);
         Validaciones.SoloNumeros(TxtFormStock);
@@ -109,7 +109,7 @@ public sealed partial class PanelAdmin : Page
         
         // Agregar elementos
         Validaciones.SoloLetras(TxtElemAutoMarca);
-        Validaciones.Busqueda(TxtElemAutoModelo);
+        Validaciones.ModeloAuto(TxtElemAutoModelo);
         Validaciones.SoloNumeros(TxtElemAutoAnioInicio);
         Validaciones.SoloNumeros(TxtElemAutoAnioFin);
         Validaciones.SoloLetras(TxtElemMarca);
@@ -1044,5 +1044,3 @@ public sealed partial class PanelAdmin : Page
     }
 
 }
-
-

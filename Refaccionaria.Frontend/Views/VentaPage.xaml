@@ -993,43 +993,60 @@
                             Margin="10,0,0,0"
                             SelectionChanged="Filtro_Changed"/>
 
-                        <!-- QUITAR FILTROS -->
-                        <Button
+                        <!-- QUITAR FILTROS Y FLECHA PARA ESCONDER CATEGORÍAS -->
+                        <StackPanel
                             Grid.Column="4"
-                            Content="Quitar filtros"
-                            Style="{StaticResource BotonPrimario}"
-                            Padding="18,10"
-                            Click="QuitarFiltros_Click"/>
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Spacing="8">
+
+                            <Button
+                                Content="Quitar filtros"
+                                Style="{StaticResource BotonPrimario}"
+                                Padding="18,10"
+                                Click="QuitarFiltros_Click"/>
+
+                            <Button
+                                x:Name="BtnMostrarCategorias"
+                                Style="{StaticResource BotonContorno}"
+                                Width="42"
+                                Height="42"
+                                Padding="0"
+                                VerticalAlignment="Stretch"
+                                ToolTipService.ToolTip="Ocultar categorías"
+                                Click="MostrarCategorias_Click">
+
+                                <FontIcon
+                                    x:Name="IconoCategorias"
+                                    Glyph="&#xE70E;"
+                                    FontFamily="Segoe MDL2 Assets"
+                                    FontSize="14"
+                                    RenderTransformOrigin="0.5,0.5">
+
+                                    <FontIcon.RenderTransform>
+                                        <RotateTransform x:Name="GiroFlecha" Angle="0"/>
+                                    </FontIcon.RenderTransform>
+
+                                </FontIcon>
+
+                            </Button>
+
+                        </StackPanel>
 
                     </Grid>
 
 
-                    <!-- CATEGORÍAS -->
-                    <Grid Margin="0,16,0,-6"
-                          ColumnSpacing="8"
-                          RowSpacing="6">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- PRIMERA FILA -->
+                    <!-- CATEGORÍAS
+                         Los botones se crean en VentaPage.Categorias.cs con
+                         las categorías registradas en la base de datos y se
+                         reparten en filas parejas según el ancho disponible.
+                         Aquí solo queda "Todos". -->
+                    <StackPanel x:Name="PanelCategorias"
+                                Margin="0,16,0,-6"
+                                Spacing="6"
+                                SizeChanged="PanelCategorias_SizeChanged">
 
                         <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="0"
                             x:Name="RbTodos"
                             Content="Todos"
                             Tag="Todos"
@@ -1039,159 +1056,7 @@
                             IsChecked="True"
                             Checked="Tipo_Checked"/>
 
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Content="Aceites"
-                            Tag="Aceites"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="2"
-                            Content="Filtros"
-                            Tag="Filtros"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="3"
-                            Content="Frenos"
-                            Tag="Frenos"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="4"
-                            Content="Suspensión"
-                            Tag="Suspensión"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="5"
-                            Content="Dirección"
-                            Tag="Dirección"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="6"
-                            Content="Motor"
-                            Tag="Motor"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="0"
-                            Grid.Column="7"
-                            Content="Transmisión"
-                            Tag="Transmisión"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <!-- SEGUNDA FILA -->
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Content="Sistema eléctrico"
-                            Tag="Sistema eléctrico"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Content="Enfriamiento"
-                            Tag="Enfriamiento"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Content="Encendido"
-                            Tag="Encendido"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="3"
-                            Content="Escape"
-                            Tag="Escape"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="4"
-                            Content="Iluminación"
-                            Tag="Iluminación"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="5"
-                            Content="Carrocería"
-                            Tag="Carrocería"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="6"
-                            Content="Accesorios"
-                            Tag="Accesorios"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                        <RadioButton
-                            Grid.Row="1"
-                            Grid.Column="7"
-                            Content="Lubricantes"
-                            Tag="Lubricantes"
-                            GroupName="Tipo"
-                            Style="{StaticResource Pildora}"
-                            HorizontalAlignment="Stretch"
-                            Checked="Tipo_Checked"/>
-
-                    </Grid>
+                    </StackPanel>
 
                 </StackPanel>
 
@@ -1404,6 +1269,43 @@
                             Margin="0,18,0,0"
                             Visibility="Collapsed">
 
+                            <StackPanel.Resources>
+
+                                <!-- Animación del pistón: aparece, rebota y se balancea -->
+                                <Storyboard x:Key="AnimPistonAprobado">
+
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PistonAprobado"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0" To="1" Duration="0:0:0.3"/>
+
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="TransPiston"
+                                        Storyboard.TargetProperty="TranslateY"
+                                        From="0" To="-8"
+                                        Duration="0:0:0.4"
+                                        AutoReverse="True" RepeatBehavior="Forever">
+                                        <DoubleAnimation.EasingFunction>
+                                            <SineEase EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="TransPiston"
+                                        Storyboard.TargetProperty="Rotation"
+                                        From="-5" To="5"
+                                        Duration="0:0:0.8"
+                                        AutoReverse="True" RepeatBehavior="Forever">
+                                        <DoubleAnimation.EasingFunction>
+                                            <SineEase EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                </Storyboard>
+
+                            </StackPanel.Resources>
+
+
                             <Border
                                 Background="{StaticResource Campo}"
                                 BorderBrush="{StaticResource BordeSuave}"
@@ -1411,11 +1313,68 @@
                                 CornerRadius="5"
                                 Padding="14">
 
-                                <TextBlock
-                                    Text="Pasa la tarjeta en la terminal por el total indicado y confirma la venta cuando el pago sea aprobado."
-                                    FontSize="13"
-                                    Foreground="#CCCCCC"
-                                    TextWrapping="Wrap"/>
+                                <StackPanel Spacing="10">
+
+                                    <TextBlock
+                                        Text="Escanea el código con tu teléfono para pagar con tarjeta."
+                                        FontSize="13"
+                                        Foreground="#CCCCCC"
+                                        TextWrapping="Wrap"/>
+
+                                    <Grid
+                                        Width="190"
+                                        Height="190"
+                                        HorizontalAlignment="Center">
+
+                                        <!-- 1. QR -->
+                                        <Border
+                                            x:Name="CajaQr"
+                                            Background="White"
+                                            CornerRadius="6"
+                                            Padding="8">
+
+                                            <Image
+                                                x:Name="ImgQr"
+                                                Stretch="Uniform"/>
+
+                                        </Border>
+
+                                        <!-- 2. PROCESANDO -->
+                                        <ProgressRing
+                                            x:Name="AnilloPago"
+                                            Width="80"
+                                            Height="80"
+                                            IsActive="False"
+                                            Visibility="Collapsed"
+                                            Foreground="{StaticResource Rojo}"/>
+
+                                        <!-- 3. APROBADO: pistón con pulgar arriba -->
+                                        <Image
+                                            x:Name="PistonAprobado"
+                                            Source="ms-appx:///Assets/PistonAprobado.png"
+                                            Height="140"
+                                            Stretch="Uniform"
+                                            RenderTransformOrigin="0.5,1"
+                                            Visibility="Collapsed">
+
+                                            <Image.RenderTransform>
+                                                <CompositeTransform x:Name="TransPiston"/>
+                                            </Image.RenderTransform>
+
+                                        </Image>
+
+                                    </Grid>
+
+                                    <TextBlock
+                                        x:Name="TxtEstadoPago"
+                                        FontSize="13"
+                                        FontWeight="SemiBold"
+                                        Foreground="White"
+                                        TextWrapping="Wrap"
+                                        TextAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                </StackPanel>
 
                             </Border>
 
@@ -1843,10 +1802,3 @@
 
     </Grid>
 </Page>
-
-
-
-
-
-
-

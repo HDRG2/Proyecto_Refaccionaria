@@ -16,12 +16,7 @@ namespace Refaccionaria.Frontend.Views;
 //
 // Registra o corrige autos (autos.json), marcas de piezas
 // (marcas.json) y categorías (categorias.json).
-//
-// Se trabaja sobre las MISMAS colecciones (autos, marcas,
-// categorias) que usa el formulario de producto, así que los
-// cambios aparecen de inmediato en "Agregar producto" y
-// "Editar producto".
-//
+
 // Al EDITAR solo cambia el nombre: el Id se conserva, por eso
 // los productos y las ventas que ya usan ese auto, marca o
 // categoría siguen ligados y muestran el nombre corregido.
@@ -235,16 +230,23 @@ public sealed partial class PanelAdmin : Page
             return fallo;
         }
 
-        // Modelo: letras, números y espacios. Sin caracteres especiales.
-        if (!Regex.IsMatch(modelo, @"^[\p{L}0-9 ]+$"))
+        // Modelo: la MISMA regla que la caja de texto
+        // (Validaciones.ModeloAuto): letras, números, espacios,
+        // guion y punto ("X-Trail", "CR-V", "CX-5", "Serie 3").
+        // Debe llevar al menos una letra o número ("-" solo no vale).
+        if (!Validaciones.EsModeloAuto(modelo) ||
+            !modelo.Any(char.IsLetterOrDigit))
         {
             await MostrarMensaje(
                 "Modelo no válido",
-                "El modelo solo puede tener letras, números y espacios. " +
-                "No se aceptan caracteres especiales (- . / # etc.)."
+                "El modelo solo puede tener letras, números, espacios, " +
+                "guion (-) y punto (.). Por ejemplo: X-Trail, CR-V o Serie 3."
             );
             return fallo;
         }
+
+        // "focus" -> "Focus" (solo la primera letra; "CX-5" no cambia).
+        modelo = Capitalizar(modelo, soloPrimera: true);
 
         int anioMaximo = DateTime.Now.Year + 1;
 

@@ -13,11 +13,11 @@
   },
   {
     "Id": 4,
-    "Nombre": "Suspensión"
+    "Nombre": "Suspensi\u00F3n"
   },
   {
     "Id": 5,
-    "Nombre": "Dirección"
+    "Nombre": "Direcci\u00F3n"
   },
   {
     "Id": 6,
@@ -25,11 +25,11 @@
   },
   {
     "Id": 7,
-    "Nombre": "Transmisión"
+    "Nombre": "Transmisi\u00F3n"
   },
   {
     "Id": 8,
-    "Nombre": "Sistema eléctrico"
+    "Nombre": "Sistema el\u00E9ctrico"
   },
   {
     "Id": 9,
@@ -45,18 +45,22 @@
   },
   {
     "Id": 12,
-    "Nombre": "Iluminación"
+    "Nombre": "Iluminaci\u00F3n"
   },
   {
     "Id": 13,
-    "Nombre": "Carrocería"
+    "Nombre": "Carrocer\u00EDa"
   },
   {
     "Id": 14,
     "Nombre": "Accesorios"
   },
   {
-    "Id":15,
-    "Nombre": "Lubricantes"  
+    "Id": 15,
+    "Nombre": "Lubricantes"
+  },
+  {
+    "Id": 16,
+    "Nombre": "Llantas"
   }
 ]

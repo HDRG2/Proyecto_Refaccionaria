@@ -237,6 +237,8 @@ namespace Refaccionaria.Frontend.Views
 
                 LlenarAnios();
 
+                LlenarCategorias();
+
                 return true;
             }
             catch (Exception ex)
@@ -362,7 +364,12 @@ namespace Refaccionaria.Frontend.Views
 
             if (refaccion.EsUniversal)
             {
+                
+                refaccion.AutosDescripciones.Add(
+                    "Universal: sirve para cualquier vehiculo"
+                );
                 return;
+
             }
 
 
@@ -419,6 +426,7 @@ namespace Refaccionaria.Frontend.Views
             CerrarTicket();
 
             // Cerrar ventana de cobro si estaba abierta
+            CancelarSimulacion();
             CapaCobro.Visibility = Visibility.Collapsed;
 
             // Regresar al login

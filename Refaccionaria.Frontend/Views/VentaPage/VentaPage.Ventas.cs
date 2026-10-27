@@ -23,6 +23,14 @@ namespace Refaccionaria.Frontend.Views
             object sender,
             RoutedEventArgs e)
         {
+            
+            await FinalizarVentaAsync(string.Empty);
+        }
+
+
+        private async Task FinalizarVentaAsync(
+            string referencia)
+        {
             // =====================================================
             // 1. VALIDAR QUE HAYA PRODUCTOS
             // =====================================================
@@ -73,9 +81,9 @@ namespace Refaccionaria.Frontend.Views
                         _usuarioActual,
                         _ticket,
                         _metodoPago,
-                        recibido
+                        recibido,
+                        referencia
                     );
-
 
                 // =================================================
                 // 4. ACTUALIZAR INVENTARIO LOCAL
@@ -108,6 +116,12 @@ namespace Refaccionaria.Frontend.Views
 
                 TxtDetalleExito.Text =
                     $"Venta por {venta.Total:C} registrada correctamente.";
+
+                if (!string.IsNullOrEmpty(venta.Referencia))
+                {
+                    TxtDetalleExito.Text +=
+                        $"\nPago aprobado: {venta.Referencia}";
+                }
 
                 PanelCobro.Visibility =
                     Visibility.Collapsed;
@@ -182,6 +196,9 @@ namespace Refaccionaria.Frontend.Views
             object sender,
             RoutedEventArgs e)
         {
+            CancelarSimulacion();
+
+
             CapaCobro.Visibility =
                 Visibility.Collapsed;
 
