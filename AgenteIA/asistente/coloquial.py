@@ -495,12 +495,41 @@ def _distancia(a: str, b: str) -> int:
     return filas[-1][-1]
 
 
+# "tr4nsmision", "b4l4t4s", "fr3nos": números escritos en lugar de letras.
+_NUMERO_A_LETRA = str.maketrans({"4": "a", "3": "e", "1": "i", "0": "o", "5": "s", "7": "t"})
+
+
+def _corregir_numeros_por_letras(texto: str, vocabulario) -> str:
+    """Cambia los números por letras solo si así sale una palabra conocida.
+    Los códigos ("ace001", "BAL-002"), medidas ("5w30", "205/55") y
+    cantidades no se tocan porque no forman ninguna palabra."""
+
+    def reemplazar(m: re.Match) -> str:
+        original = m.group(0)
+        if len(re.findall(r"[^\W\d_]", original)) < 2:
+            return original
+        traducida = _sin_acentos(original).casefold().translate(_NUMERO_A_LETRA)
+        if re.search(r"\d", traducida):
+            return original
+        if traducida in _conocidas():
+            return traducida
+        correccion = _mejor_correccion(traducida, vocabulario)
+        return correccion or original
+
+    return re.sub(
+        r"(?<![\w-])(?=[^\W_]*\d)(?=[^\W_]*[^\W\d_])[^\W_]{4,}(?![\w-])",
+        reemplazar,
+        texto,
+    )
+
+
 def corregir_ortografia(texto: str, productos: list[dict]) -> str:
     """Corrige errores de dedo en palabras de refacciones y mecánica."""
     if not texto:
         return texto
 
     vocabulario = _vocabulario_objetivo(productos)
+    texto = _corregir_numeros_por_letras(texto, vocabulario)
     cambios = {}
 
     for palabra in set(_palabras(texto)):
@@ -546,5 +575,7 @@ def registrar_no_entendida(pregunta: str, motivo: str, reescrita: str | None = N
             archivo.write(linea)
     except OSError:
         pass
+
+
 
 

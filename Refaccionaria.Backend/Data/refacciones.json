@@ -5,7 +5,7 @@
     "Nombre": "Filtro de Aceite",
     "MarcaId": 4,
     "CategoriaId": 2,
-    "Precio": 159.00,
+    "Precio": 159.0,
     "Stock": 20,
     "StockBajo": false,
     "Activo": true,
@@ -27,7 +27,7 @@
     "Nombre": "Aceite de Motor 5W-30",
     "MarcaId": 1,
     "CategoriaId": 1,
-    "Precio": 749.00,
+    "Precio": 749.0,
     "Stock": 6,
     "StockBajo": false,
     "Activo": true,
@@ -43,7 +43,7 @@
     "Nombre": "Balatas delanteras Ceramitas",
     "MarcaId": 2,
     "CategoriaId": 3,
-    "Precio": 1249.00,
+    "Precio": 1249.0,
     "Stock": 15,
     "StockBajo": false,
     "Activo": true,
@@ -66,7 +66,7 @@
     "Nombre": "Bujia de encendido",
     "MarcaId": 3,
     "CategoriaId": 10,
-    "Precio": 149.00,
+    "Precio": 149.0,
     "Stock": 14,
     "StockBajo": false,
     "Activo": true,
@@ -88,7 +88,7 @@
     "Nombre": "Amortiguador Delantero",
     "MarcaId": 8,
     "CategoriaId": 4,
-    "Precio": 1450.00,
+    "Precio": 1450.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -98,7 +98,7 @@
       9
     ],
     "MarcaNombre": "Monroe",
-    "CategoriaNombre": "Suspensi\u00F3n",
+    "CategoriaNombre": "Suspensi\u00f3n",
     "AutosDescripciones": [
       "Toyota Corolla (2014-2019)",
       "Toyota Yaris (2016-2020)"
@@ -110,7 +110,7 @@
     "Nombre": "Filtro de aire",
     "MarcaId": 6,
     "CategoriaId": 2,
-    "Precio": 280.00,
+    "Precio": 280.0,
     "Stock": 20,
     "StockBajo": false,
     "Activo": true,
@@ -126,7 +126,7 @@
     "Nombre": "Filtro de Combustible",
     "MarcaId": 7,
     "CategoriaId": 2,
-    "Precio": 350.00,
+    "Precio": 350.0,
     "Stock": 12,
     "StockBajo": false,
     "Activo": true,
@@ -139,7 +139,7 @@
   {
     "Id": 8,
     "Codigo": "PRU-008",
-    "Nombre": "Bater\u00EDa de 12V",
+    "Nombre": "Bater\u00eda de 12V",
     "MarcaId": 10,
     "CategoriaId": 8,
     "Precio": 2100,
@@ -149,7 +149,7 @@
     "EsUniversal": false,
     "AutosCompatibles": [],
     "MarcaNombre": "LTH",
-    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
     "AutosDescripciones": []
   },
   {
@@ -165,7 +165,7 @@
     "EsUniversal": false,
     "AutosCompatibles": [],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
     "AutosDescripciones": []
   },
   {
@@ -267,10 +267,10 @@
   {
     "Id": 16,
     "Codigo": "MOT-001",
-    "Nombre": "Buj\u00EDas de Iridio",
+    "Nombre": "Buj\u00edas de Iridio",
     "MarcaId": 3,
     "CategoriaId": 6,
-    "Precio": 680.00,
+    "Precio": 680.0,
     "Stock": 14,
     "StockBajo": false,
     "Activo": true,
@@ -286,10 +286,10 @@
   {
     "Id": 17,
     "Codigo": "MOT-002",
-    "Nombre": "Banda de Distribuci\u00F3n",
+    "Nombre": "Banda de Distribuci\u00f3n",
     "MarcaId": 7,
     "CategoriaId": 6,
-    "Precio": 890.00,
+    "Precio": 890.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
@@ -308,7 +308,7 @@
     "Nombre": "Bomba de Aceite",
     "MarcaId": 6,
     "CategoriaId": 6,
-    "Precio": 1225.00,
+    "Precio": 1225.0,
     "Stock": 6,
     "StockBajo": false,
     "Activo": true,
@@ -324,10 +324,10 @@
   {
     "Id": 19,
     "Codigo": "FRE-001",
-    "Nombre": "Balatas Delanteras Cer\u00E1micas",
+    "Nombre": "Balatas Delanteras Cer\u00e1micas",
     "MarcaId": 2,
     "CategoriaId": 3,
-    "Precio": 1000.00,
+    "Precio": 1000.0,
     "Stock": 5,
     "StockBajo": true,
     "Activo": true,
@@ -345,7 +345,7 @@
     "Nombre": "Disco de Freno Ventilado",
     "MarcaId": 9,
     "CategoriaId": 3,
-    "Precio": 659.00,
+    "Precio": 659.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -364,7 +364,7 @@
     "Nombre": "Bomba de Freno",
     "MarcaId": 10,
     "CategoriaId": 3,
-    "Precio": 980.00,
+    "Precio": 980.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -384,7 +384,7 @@
     "Nombre": "Amortiguador Trasero",
     "MarcaId": 8,
     "CategoriaId": 4,
-    "Precio": 1380.00,
+    "Precio": 1380.0,
     "Stock": 3,
     "StockBajo": true,
     "Activo": true,
@@ -395,16 +395,16 @@
       8
     ],
     "MarcaNombre": "Monroe",
-    "CategoriaNombre": "Suspensi\u00F3n",
+    "CategoriaNombre": "Suspensi\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 23,
     "Codigo": "SUS-002",
-    "Nombre": "R\u00F3tula Inferior",
+    "Nombre": "R\u00f3tula Inferior",
     "MarcaId": 7,
     "CategoriaId": 4,
-    "Precio": 680.00,
+    "Precio": 680.0,
     "Stock": 4,
     "StockBajo": true,
     "Activo": true,
@@ -414,7 +414,7 @@
       7
     ],
     "MarcaNombre": "Gonher",
-    "CategoriaNombre": "Suspensi\u00F3n",
+    "CategoriaNombre": "Suspensi\u00f3n",
     "AutosDescripciones": []
   },
   {
@@ -423,7 +423,7 @@
     "Nombre": "Resorte Delantero",
     "MarcaId": 6,
     "CategoriaId": 4,
-    "Precio": 1190.00,
+    "Precio": 1190.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
@@ -434,16 +434,16 @@
       10
     ],
     "MarcaNombre": "Fram",
-    "CategoriaNombre": "Suspensi\u00F3n",
+    "CategoriaNombre": "Suspensi\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 25,
     "Codigo": "ELE-001",
-    "Nombre": "Bater\u00EDa Placas",
+    "Nombre": "Bater\u00eda Placas",
     "MarcaId": 10,
     "CategoriaId": 8,
-    "Precio": 2150.00,
+    "Precio": 2150.0,
     "Stock": 5,
     "StockBajo": true,
     "Activo": true,
@@ -453,7 +453,7 @@
       11
     ],
     "MarcaNombre": "LTH",
-    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
     "AutosDescripciones": []
   },
   {
@@ -462,7 +462,7 @@
     "Nombre": "Alternador A",
     "MarcaId": 5,
     "CategoriaId": 8,
-    "Precio": 3450.00,
+    "Precio": 3450.0,
     "Stock": 2,
     "StockBajo": true,
     "Activo": true,
@@ -472,7 +472,7 @@
       7
     ],
     "MarcaNombre": "Castrol",
-    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
     "AutosDescripciones": []
   },
   {
@@ -493,7 +493,7 @@
       8
     ],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Sistema el\u00E9ctrico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
     "AutosDescripciones": []
   },
   {
@@ -502,7 +502,7 @@
     "Nombre": "Kit de Clutch",
     "MarcaId": 4,
     "CategoriaId": 7,
-    "Precio": 3200.00,
+    "Precio": 3200.0,
     "Stock": 3,
     "StockBajo": true,
     "Activo": true,
@@ -512,16 +512,16 @@
       6
     ],
     "MarcaNombre": "Mobil",
-    "CategoriaNombre": "Transmisi\u00F3n",
+    "CategoriaNombre": "Transmisi\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 29,
     "Codigo": "TRA-002",
-    "Nombre": "Aceite ATF Multiveh\u00EDculo",
+    "Nombre": "Aceite ATF Multiveh\u00edculo",
     "MarcaId": 1,
     "CategoriaId": 7,
-    "Precio": 420.00,
+    "Precio": 420.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
@@ -532,16 +532,16 @@
       8
     ],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Transmisi\u00F3n",
+    "CategoriaNombre": "Transmisi\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 30,
     "Codigo": "TRA-003",
-    "Nombre": "Flecha Homocin\u00E9tica Delantera",
+    "Nombre": "Flecha Homocin\u00e9tica Delantera",
     "MarcaId": 2,
     "CategoriaId": 7,
-    "Precio": 1500.00,
+    "Precio": 1500.0,
     "Stock": 3,
     "StockBajo": true,
     "Activo": true,
@@ -551,7 +551,7 @@
       4
     ],
     "MarcaNombre": "Brembo",
-    "CategoriaNombre": "Transmisi\u00F3n",
+    "CategoriaNombre": "Transmisi\u00f3n",
     "AutosDescripciones": []
   },
   {
@@ -560,7 +560,7 @@
     "Nombre": "Radiador de Aluminio",
     "MarcaId": 8,
     "CategoriaId": 9,
-    "Precio": 2780.00,
+    "Precio": 2780.0,
     "Stock": 2,
     "StockBajo": true,
     "Activo": true,
@@ -579,7 +579,7 @@
     "Nombre": "Termostato con Empaque",
     "MarcaId": 7,
     "CategoriaId": 9,
-    "Precio": 210.00,
+    "Precio": 210.0,
     "Stock": 10,
     "StockBajo": false,
     "Activo": true,
@@ -598,7 +598,7 @@
     "Nombre": "Bomba de Agua",
     "MarcaId": 1,
     "CategoriaId": 9,
-    "Precio": 980.00,
+    "Precio": 980.0,
     "Stock": 5,
     "StockBajo": true,
     "Activo": true,
@@ -614,26 +614,26 @@
   {
     "Id": 34,
     "Codigo": "DIR-001",
-    "Nombre": "Terminal de Direcci\u00F3n Exterior",
+    "Nombre": "Terminal de Direcci\u00f3n Exterior",
     "MarcaId": 9,
     "CategoriaId": 5,
-    "Precio": 420.00,
+    "Precio": 420.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
     "EsUniversal": true,
     "AutosCompatibles": [],
     "MarcaNombre": "Denso",
-    "CategoriaNombre": "Direcci\u00F3n",
+    "CategoriaNombre": "Direcci\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 35,
     "Codigo": "DIR-002",
-    "Nombre": "Cremallera de Direcci\u00F3n Hidr\u00E1ulica",
+    "Nombre": "Cremallera de Direcci\u00f3n Hidr\u00e1ulica",
     "MarcaId": 1,
     "CategoriaId": 5,
-    "Precio": 3000.00,
+    "Precio": 3000.0,
     "Stock": 6,
     "StockBajo": false,
     "Activo": true,
@@ -646,16 +646,16 @@
       10
     ],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Direcci\u00F3n",
+    "CategoriaNombre": "Direcci\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 36,
     "Codigo": "DIR-003",
-    "Nombre": "Bomba de Direcci\u00F3n Hidr\u00E1ulica",
+    "Nombre": "Bomba de Direcci\u00f3n Hidr\u00e1ulica",
     "MarcaId": 2,
     "CategoriaId": 5,
-    "Precio": 4900.00,
+    "Precio": 4900.0,
     "Stock": 2,
     "StockBajo": true,
     "Activo": true,
@@ -666,7 +666,7 @@
       1
     ],
     "MarcaNombre": "Brembo",
-    "CategoriaNombre": "Direcci\u00F3n",
+    "CategoriaNombre": "Direcci\u00f3n",
     "AutosDescripciones": []
   },
   {
@@ -675,7 +675,7 @@
     "Nombre": "Bobina de Encendido",
     "MarcaId": 1,
     "CategoriaId": 10,
-    "Precio": 670.00,
+    "Precio": 670.0,
     "Stock": 10,
     "StockBajo": false,
     "Activo": true,
@@ -692,10 +692,10 @@
   {
     "Id": 38,
     "Codigo": "ENC-002",
-    "Nombre": "Cables de Buj\u00EDa",
+    "Nombre": "Cables de Buj\u00eda",
     "MarcaId": 1,
     "CategoriaId": 10,
-    "Precio": 560.00,
+    "Precio": 560.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -710,10 +710,10 @@
   {
     "Id": 39,
     "Codigo": "ENC-003",
-    "Nombre": "M\u00F3dulo de Encendido",
+    "Nombre": "M\u00f3dulo de Encendido",
     "MarcaId": 10,
     "CategoriaId": 10,
-    "Precio": 1499.00,
+    "Precio": 1499.0,
     "Stock": 3,
     "StockBajo": true,
     "Activo": true,
@@ -732,7 +732,7 @@
     "Nombre": "Silenciador Trasero",
     "MarcaId": 7,
     "CategoriaId": 11,
-    "Precio": 2000.00,
+    "Precio": 2000.0,
     "Stock": 4,
     "StockBajo": true,
     "Activo": true,
@@ -750,7 +750,7 @@
     "Nombre": "Catalizador de Reemplazo",
     "MarcaId": 9,
     "CategoriaId": 11,
-    "Precio": 3920.00,
+    "Precio": 3920.0,
     "Stock": 2,
     "StockBajo": true,
     "Activo": true,
@@ -767,10 +767,10 @@
   {
     "Id": 42,
     "Codigo": "ESC-003",
-    "Nombre": "Sensor de Ox\u00EDgeno",
+    "Nombre": "Sensor de Ox\u00edgeno",
     "MarcaId": 1,
     "CategoriaId": 11,
-    "Precio": 590.00,
+    "Precio": 590.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
@@ -789,7 +789,7 @@
     "Nombre": "Faro Delantero Derecho",
     "MarcaId": 10,
     "CategoriaId": 12,
-    "Precio": 2190.00,
+    "Precio": 2190.0,
     "Stock": 6,
     "StockBajo": false,
     "Activo": true,
@@ -800,7 +800,7 @@
       9
     ],
     "MarcaNombre": "LTH",
-    "CategoriaNombre": "Iluminaci\u00F3n",
+    "CategoriaNombre": "Iluminaci\u00f3n",
     "AutosDescripciones": []
   },
   {
@@ -809,7 +809,7 @@
     "Nombre": "Focos LED",
     "MarcaId": 1,
     "CategoriaId": 12,
-    "Precio": 690.00,
+    "Precio": 690.0,
     "Stock": 21,
     "StockBajo": false,
     "Activo": true,
@@ -819,7 +819,7 @@
       9
     ],
     "MarcaNombre": "Bosch",
-    "CategoriaNombre": "Iluminaci\u00F3n",
+    "CategoriaNombre": "Iluminaci\u00f3n",
     "AutosDescripciones": []
   },
   {
@@ -828,7 +828,7 @@
     "Nombre": "Calavera Trasera Izquierda",
     "MarcaId": 5,
     "CategoriaId": 12,
-    "Precio": 989.00,
+    "Precio": 989.0,
     "Stock": 9,
     "StockBajo": false,
     "Activo": true,
@@ -838,16 +838,16 @@
       8
     ],
     "MarcaNombre": "Castrol",
-    "CategoriaNombre": "Iluminaci\u00F3n",
+    "CategoriaNombre": "Iluminaci\u00f3n",
     "AutosDescripciones": []
   },
   {
     "Id": 46,
     "Codigo": "CAR-001",
-    "Nombre": "Espejo Lateral El\u00E9ctrico Izquierdo",
+    "Nombre": "Espejo Lateral El\u00e9ctrico Izquierdo",
     "MarcaId": 9,
     "CategoriaId": 13,
-    "Precio": 1450.00,
+    "Precio": 1450.0,
     "Stock": 10,
     "StockBajo": false,
     "Activo": true,
@@ -858,7 +858,7 @@
       2
     ],
     "MarcaNombre": "Denso",
-    "CategoriaNombre": "Carrocer\u00EDa",
+    "CategoriaNombre": "Carrocer\u00eda",
     "AutosDescripciones": []
   },
   {
@@ -867,7 +867,7 @@
     "Nombre": "Defensa Delantera",
     "MarcaId": 7,
     "CategoriaId": 13,
-    "Precio": 3100.00,
+    "Precio": 3100.0,
     "Stock": 8,
     "StockBajo": false,
     "Activo": true,
@@ -881,7 +881,7 @@
       6
     ],
     "MarcaNombre": "Gonher",
-    "CategoriaNombre": "Carrocer\u00EDa",
+    "CategoriaNombre": "Carrocer\u00eda",
     "AutosDescripciones": []
   },
   {
@@ -890,7 +890,7 @@
     "Nombre": "Parrilla Frontal",
     "MarcaId": 2,
     "CategoriaId": 13,
-    "Precio": 1590.00,
+    "Precio": 1590.0,
     "Stock": 4,
     "StockBajo": true,
     "Activo": true,
@@ -901,7 +901,7 @@
       9
     ],
     "MarcaNombre": "Brembo",
-    "CategoriaNombre": "Carrocer\u00EDa",
+    "CategoriaNombre": "Carrocer\u00eda",
     "AutosDescripciones": []
   },
   {
@@ -910,7 +910,7 @@
     "Nombre": "Tapetes de Uso Rudo",
     "MarcaId": 6,
     "CategoriaId": 14,
-    "Precio": 490.00,
+    "Precio": 490.0,
     "Stock": 13,
     "StockBajo": false,
     "Activo": true,
@@ -929,10 +929,10 @@
   {
     "Id": 50,
     "Codigo": "ACC-002",
-    "Nombre": "Cubreasientos de Piel Sint\u00E9tica",
+    "Nombre": "Cubreasientos de Piel Sint\u00e9tica",
     "MarcaId": 9,
     "CategoriaId": 14,
-    "Precio": 136.00,
+    "Precio": 136.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -951,7 +951,7 @@
     "Nombre": "Barras de Techo",
     "MarcaId": 1,
     "CategoriaId": 14,
-    "Precio": 3200.00,
+    "Precio": 3200.0,
     "Stock": 1,
     "StockBajo": true,
     "Activo": true,
@@ -969,10 +969,10 @@
   {
     "Id": 52,
     "Codigo": "LUB-001",
-    "Nombre": "Aceite de Transmisi\u00F3n Manual",
+    "Nombre": "Aceite de Transmisi\u00f3n Manual",
     "MarcaId": 9,
     "CategoriaId": 15,
-    "Precio": 490.00,
+    "Precio": 490.0,
     "Stock": 7,
     "StockBajo": false,
     "Activo": true,
@@ -993,7 +993,7 @@
     "Nombre": "Grasa de Litio Multiusos",
     "MarcaId": 1,
     "CategoriaId": 15,
-    "Precio": 320.00,
+    "Precio": 320.0,
     "Stock": 14,
     "StockBajo": false,
     "Activo": true,
@@ -1006,10 +1006,10 @@
   {
     "Id": 54,
     "Codigo": "LUB-003",
-    "Nombre": "L\u00EDquido de Frenos DOT",
+    "Nombre": "L\u00edquido de Frenos DOT",
     "MarcaId": 4,
     "CategoriaId": 15,
-    "Precio": 280.00,
+    "Precio": 280.0,
     "Stock": 24,
     "StockBajo": false,
     "Activo": true,
@@ -1024,10 +1024,10 @@
   {
     "Id": 55,
     "Codigo": "ACE-002",
-    "Nombre": "Aceite Semisint\u00E9tico",
+    "Nombre": "Aceite Semisint\u00e9tico",
     "MarcaId": 7,
     "CategoriaId": 1,
-    "Precio": 560.00,
+    "Precio": 560.0,
     "Stock": 17,
     "StockBajo": false,
     "Activo": true,
@@ -1039,5 +1039,4165 @@
     "MarcaNombre": "Gonher",
     "CategoriaNombre": "Aceites",
     "AutosDescripciones": []
+  },
+  {
+    "Id": 56,
+    "Codigo": "LLA-001",
+    "Nombre": "Llanta 185/65 R15 (uso urbano)",
+    "MarcaId": 12,
+    "CategoriaId": 16,
+    "Precio": 2150,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Michelin",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 57,
+    "Codigo": "LLA-002",
+    "Nombre": "Llanta 175/70 R13 econ\u00f3mica",
+    "MarcaId": 22,
+    "CategoriaId": 16,
+    "Precio": 980,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Tornel",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 58,
+    "Codigo": "LLA-003",
+    "Nombre": "Llanta 205/55 R16 (todo clima)",
+    "MarcaId": 14,
+    "CategoriaId": 16,
+    "Precio": 2450,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Bridgestone",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 59,
+    "Codigo": "LLA-004",
+    "Nombre": "Llanta 195/65 R15 (baja resistencia)",
+    "MarcaId": 15,
+    "CategoriaId": 16,
+    "Precio": 1890,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Goodyear",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 60,
+    "Codigo": "LLA-005",
+    "Nombre": "Llanta 185/60 R14",
+    "MarcaId": 16,
+    "CategoriaId": 16,
+    "Precio": 1280,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4
+    ],
+    "MarcaNombre": "Hankook",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 61,
+    "Codigo": "LLA-006",
+    "Nombre": "Llanta 225/45 R17 alto rendimiento",
+    "MarcaId": 19,
+    "CategoriaId": 16,
+    "Precio": 3650,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      16
+    ],
+    "MarcaNombre": "Pirelli",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 62,
+    "Codigo": "LLA-007",
+    "Nombre": "Llanta 215/60 R17 para SUV",
+    "MarcaId": 17,
+    "CategoriaId": 16,
+    "Precio": 2980,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      17
+    ],
+    "MarcaNombre": "Continental",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 63,
+    "Codigo": "LLA-008",
+    "Nombre": "Llanta 265/70 R17 todo terreno (A/T)",
+    "MarcaId": 18,
+    "CategoriaId": 16,
+    "Precio": 4350,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "BFGoodrich",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 64,
+    "Codigo": "LLA-009",
+    "Nombre": "Llanta 31x10.50 R15 para lodo (M/T)",
+    "MarcaId": 23,
+    "CategoriaId": 16,
+    "Precio": 4780,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [],
+    "MarcaNombre": "GeneralTire",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 65,
+    "Codigo": "LLA-010",
+    "Nombre": "Llanta 195/70 R15C de carga",
+    "MarcaId": 13,
+    "CategoriaId": 16,
+    "Precio": 2290,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Firestone",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 66,
+    "Codigo": "LLA-011",
+    "Nombre": "Llanta 225/50 R17 run-flat",
+    "MarcaId": 14,
+    "CategoriaId": 16,
+    "Precio": 4150,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      20
+    ],
+    "MarcaNombre": "Bridgestone",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 67,
+    "Codigo": "LLA-012",
+    "Nombre": "Llanta 185/55 R15 (silenciosa)",
+    "MarcaId": 24,
+    "CategoriaId": 16,
+    "Precio": 2050,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      21
+    ],
+    "MarcaNombre": "Yokohama",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 68,
+    "Codigo": "LLA-013",
+    "Nombre": "Llanta 195/60 R15 nacional",
+    "MarcaId": 20,
+    "CategoriaId": 16,
+    "Precio": 1450,
+    "Stock": 11,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      22
+    ],
+    "MarcaNombre": "Euzkadi",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 69,
+    "Codigo": "LLA-014",
+    "Nombre": "Llanta de refacci\u00f3n T125/70 R16",
+    "MarcaId": 21,
+    "CategoriaId": 16,
+    "Precio": 1150,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      16
+    ],
+    "MarcaNombre": "Kumho",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 70,
+    "Codigo": "LLA-015",
+    "Nombre": "Rin de acero 15 pulgadas (4x100)",
+    "MarcaId": 29,
+    "CategoriaId": 16,
+    "Precio": 1350,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Hayes",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 71,
+    "Codigo": "LLA-016",
+    "Nombre": "V\u00e1lvulas de hule TR413 (juego de 4)",
+    "MarcaId": 1,
+    "CategoriaId": 16,
+    "Precio": 95,
+    "Stock": 40,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 72,
+    "Codigo": "LLA-017",
+    "Nombre": "Birlos de seguridad M12x1.5 (juego de 4)",
+    "MarcaId": 25,
+    "CategoriaId": 16,
+    "Precio": 680,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "McGard",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 73,
+    "Codigo": "LLA-018",
+    "Nombre": "Kit para reparar ponchaduras (tapones y lija)",
+    "MarcaId": 26,
+    "CategoriaId": 16,
+    "Precio": 320,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Slime",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 74,
+    "Codigo": "LLA-019",
+    "Nombre": "Sensor de presi\u00f3n de llanta (TPMS) 315 MHz",
+    "MarcaId": 27,
+    "CategoriaId": 16,
+    "Precio": 890,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Schrader",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 75,
+    "Codigo": "LLA-020",
+    "Nombre": "Plomos de balanceo adhesivos (caja de 60)",
+    "MarcaId": 28,
+    "CategoriaId": 16,
+    "Precio": 450,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Perfect Equipment",
+    "CategoriaNombre": "Llantas",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 76,
+    "Codigo": "ACC-101",
+    "Nombre": "Tapetes de hule (juego de 4)",
+    "MarcaId": 30,
+    "CategoriaId": 14,
+    "Precio": 520,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "WeatherTech",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 77,
+    "Codigo": "ACC-102",
+    "Nombre": "Funda para volante 38 cm",
+    "MarcaId": 31,
+    "CategoriaId": 14,
+    "Precio": 260,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Covercraft",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 78,
+    "Codigo": "ACC-103",
+    "Nombre": "Cargador USB doble 12V",
+    "MarcaId": 32,
+    "CategoriaId": 14,
+    "Precio": 210,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Philips",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 79,
+    "Codigo": "ACC-104",
+    "Nombre": "Soporte de celular para rejilla",
+    "MarcaId": 33,
+    "CategoriaId": 14,
+    "Precio": 230,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Belkin",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 80,
+    "Codigo": "ACC-105",
+    "Nombre": "C\u00e1mara de reversa con pantalla 4.3 pulgadas",
+    "MarcaId": 34,
+    "CategoriaId": 14,
+    "Precio": 1450,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Steelmate",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 81,
+    "Codigo": "ACC-106",
+    "Nombre": "Alarma con 2 controles",
+    "MarcaId": 35,
+    "CategoriaId": 14,
+    "Precio": 1690,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Viper",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 82,
+    "Codigo": "ACC-107",
+    "Nombre": "Portaplacas cromado",
+    "MarcaId": 36,
+    "CategoriaId": 14,
+    "Precio": 180,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Rugged",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 83,
+    "Codigo": "ACC-108",
+    "Nombre": "Gato hidr\u00e1ulico de botella 2 toneladas",
+    "MarcaId": 37,
+    "CategoriaId": 14,
+    "Precio": 650,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 84,
+    "Codigo": "ACC-109",
+    "Nombre": "Llave de cruz para birlos",
+    "MarcaId": 37,
+    "CategoriaId": 14,
+    "Precio": 240,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 85,
+    "Codigo": "ACC-110",
+    "Nombre": "Extintor 1 kg para auto",
+    "MarcaId": 38,
+    "CategoriaId": 14,
+    "Precio": 420,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Kidde",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 86,
+    "Codigo": "ACC-111",
+    "Nombre": "Lodera trasera (par)",
+    "MarcaId": 36,
+    "CategoriaId": 14,
+    "Precio": 360,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "Rugged",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 87,
+    "Codigo": "ACC-112",
+    "Nombre": "Aromatizante para rejilla (paquete de 3)",
+    "MarcaId": 39,
+    "CategoriaId": 14,
+    "Precio": 120,
+    "Stock": 40,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Glade",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 88,
+    "Codigo": "ACC-113",
+    "Nombre": "Cubierta para auto talla M",
+    "MarcaId": 31,
+    "CategoriaId": 14,
+    "Precio": 980,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      16
+    ],
+    "MarcaNombre": "Covercraft",
+    "CategoriaNombre": "Accesorios",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)",
+      "Mazda 3 (2014-2018)"
+    ]
+  },
+  {
+    "Id": 89,
+    "Codigo": "ACE-101",
+    "Nombre": "Aceite sint\u00e9tico 5W-30 (4 L)",
+    "MarcaId": 5,
+    "CategoriaId": 1,
+    "Precio": 890,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Castrol",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 90,
+    "Codigo": "ACE-102",
+    "Nombre": "Aceite sint\u00e9tico 0W-20 (4 L)",
+    "MarcaId": 4,
+    "CategoriaId": 1,
+    "Precio": 960,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Mobil",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 91,
+    "Codigo": "ACE-103",
+    "Nombre": "Aceite mineral 20W-50 (4 L)",
+    "MarcaId": 40,
+    "CategoriaId": 1,
+    "Precio": 480,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Quaker State",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 92,
+    "Codigo": "ACE-104",
+    "Nombre": "Aceite 15W-40 para di\u00e9sel (4 L)",
+    "MarcaId": 41,
+    "CategoriaId": 1,
+    "Precio": 720,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Shell",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": [
+      "Nissan NP300 (2015-2022)"
+    ]
+  },
+  {
+    "Id": 93,
+    "Codigo": "ACE-105",
+    "Nombre": "Aceite sint\u00e9tico 5W-40 (5 L)",
+    "MarcaId": 42,
+    "CategoriaId": 1,
+    "Precio": 1080,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      20
+    ],
+    "MarcaNombre": "Pennzoil",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)",
+      "Bmw Serie 3 (2012-2018)"
+    ]
+  },
+  {
+    "Id": 94,
+    "Codigo": "ACE-106",
+    "Nombre": "Aceite 5W-30 alto kilometraje (4 L)",
+    "MarcaId": 43,
+    "CategoriaId": 1,
+    "Precio": 780,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Valvoline",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 95,
+    "Codigo": "ACE-107",
+    "Nombre": "Aceite 10W-40 para motocicleta (1 L)",
+    "MarcaId": 44,
+    "CategoriaId": 1,
+    "Precio": 220,
+    "Stock": 16,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Motul",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 96,
+    "Codigo": "ACE-108",
+    "Nombre": "Aceite sint\u00e9tico 5W-30 (1 L)",
+    "MarcaId": 5,
+    "CategoriaId": 1,
+    "Precio": 235,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Castrol",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 97,
+    "Codigo": "ACE-109",
+    "Nombre": "Aceite mineral 25W-50 (1 L)",
+    "MarcaId": 45,
+    "CategoriaId": 1,
+    "Precio": 120,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Roshfrans",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 98,
+    "Codigo": "ACE-110",
+    "Nombre": "Aceite 0W-20 Dexos (4 L)",
+    "MarcaId": 46,
+    "CategoriaId": 1,
+    "Precio": 890,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      5
+    ],
+    "MarcaNombre": "ACDelco",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)",
+      "Chevrolet Spark (2016-2021)"
+    ]
+  },
+  {
+    "Id": 99,
+    "Codigo": "ACE-111",
+    "Nombre": "Aceite sint\u00e9tico 0W-20 (5 L)",
+    "MarcaId": 42,
+    "CategoriaId": 1,
+    "Precio": 1050,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      21
+    ],
+    "MarcaNombre": "Pennzoil",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)",
+      "Honda Fit (2015-2020)"
+    ]
+  },
+  {
+    "Id": 100,
+    "Codigo": "ACE-112",
+    "Nombre": "Aceite sint\u00e9tico 0W-20 (1 L)",
+    "MarcaId": 4,
+    "CategoriaId": 1,
+    "Precio": 250,
+    "Stock": 24,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Mobil",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 101,
+    "Codigo": "ACE-113",
+    "Nombre": "Aditivo para aceite de motor (300 ml)",
+    "MarcaId": 47,
+    "CategoriaId": 1,
+    "Precio": 310,
+    "Stock": 11,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Liqui Moly",
+    "CategoriaNombre": "Aceites",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 102,
+    "Codigo": "CAR-101",
+    "Nombre": "Espejo lateral derecho el\u00e9ctrico",
+    "MarcaId": 48,
+    "CategoriaId": 13,
+    "Precio": 1320,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      17
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan X-Trail (2014-2020)"
+    ]
+  },
+  {
+    "Id": 103,
+    "Codigo": "CAR-102",
+    "Nombre": "Espejo lateral izquierdo manual",
+    "MarcaId": 48,
+    "CategoriaId": 13,
+    "Precio": 690,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 104,
+    "Codigo": "CAR-103",
+    "Nombre": "Defensa trasera (sin pintar)",
+    "MarcaId": 49,
+    "CategoriaId": 13,
+    "Precio": 2380,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4
+    ],
+    "MarcaNombre": "Depo",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)"
+    ]
+  },
+  {
+    "Id": 105,
+    "Codigo": "CAR-104",
+    "Nombre": "Parrilla frontal",
+    "MarcaId": 49,
+    "CategoriaId": 13,
+    "Precio": 1150,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Depo",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 106,
+    "Codigo": "CAR-105",
+    "Nombre": "Cofre (sin pintar)",
+    "MarcaId": 50,
+    "CategoriaId": 13,
+    "Precio": 4900,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Sherman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 107,
+    "Codigo": "CAR-106",
+    "Nombre": "Manija exterior de puerta delantera",
+    "MarcaId": 51,
+    "CategoriaId": 13,
+    "Precio": 260,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 108,
+    "Codigo": "CAR-107",
+    "Nombre": "Manija interior de puerta",
+    "MarcaId": 51,
+    "CategoriaId": 13,
+    "Precio": 190,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 109,
+    "Codigo": "CAR-108",
+    "Nombre": "Tolva de motor inferior",
+    "MarcaId": 50,
+    "CategoriaId": 13,
+    "Precio": 640,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Sherman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 110,
+    "Codigo": "CAR-109",
+    "Nombre": "Loderas delanteras (par)",
+    "MarcaId": 36,
+    "CategoriaId": 13,
+    "Precio": 330,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      16
+    ],
+    "MarcaNombre": "Rugged",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Mazda 3 (2014-2018)"
+    ]
+  },
+  {
+    "Id": 111,
+    "Codigo": "CAR-110",
+    "Nombre": "Amortiguador de cofre (par)",
+    "MarcaId": 52,
+    "CategoriaId": 13,
+    "Precio": 560,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      20
+    ],
+    "MarcaNombre": "Stabilus",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Bmw Serie 3 (2012-2018)"
+    ]
+  },
+  {
+    "Id": 112,
+    "Codigo": "CAR-111",
+    "Nombre": "Elevador de cristal el\u00e9ctrico delantero izquierdo",
+    "MarcaId": 51,
+    "CategoriaId": 13,
+    "Precio": 1180,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 113,
+    "Codigo": "CAR-112",
+    "Nombre": "Cristal de espejo con base",
+    "MarcaId": 48,
+    "CategoriaId": 13,
+    "Precio": 280,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": [
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 114,
+    "Codigo": "CAR-113",
+    "Nombre": "Clips de tapicer\u00eda (bolsa de 50)",
+    "MarcaId": 51,
+    "CategoriaId": 13,
+    "Precio": 180,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Carrocer\u00eda",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 115,
+    "Codigo": "DIR-101",
+    "Nombre": "Terminal de direcci\u00f3n interior",
+    "MarcaId": 53,
+    "CategoriaId": 5,
+    "Precio": 420,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 116,
+    "Codigo": "DIR-102",
+    "Nombre": "Terminal de direcci\u00f3n exterior",
+    "MarcaId": 53,
+    "CategoriaId": 5,
+    "Precio": 390,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 117,
+    "Codigo": "DIR-103",
+    "Nombre": "Cremallera de direcci\u00f3n hidr\u00e1ulica",
+    "MarcaId": 54,
+    "CategoriaId": 5,
+    "Precio": 6900,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Cardone",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 118,
+    "Codigo": "DIR-104",
+    "Nombre": "Cremallera de direcci\u00f3n el\u00e9ctrica",
+    "MarcaId": 55,
+    "CategoriaId": 5,
+    "Precio": 9800,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "TRW",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 119,
+    "Codigo": "DIR-105",
+    "Nombre": "Barra de direcci\u00f3n (par)",
+    "MarcaId": 56,
+    "CategoriaId": 5,
+    "Precio": 560,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      15
+    ],
+    "MarcaNombre": "Syd",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2012-2017)"
+    ]
+  },
+  {
+    "Id": 120,
+    "Codigo": "DIR-106",
+    "Nombre": "Fuelle de cremallera (par)",
+    "MarcaId": 53,
+    "CategoriaId": 5,
+    "Precio": 240,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 121,
+    "Codigo": "DIR-107",
+    "Nombre": "L\u00edquido de direcci\u00f3n hidr\u00e1ulica (1 L)",
+    "MarcaId": 57,
+    "CategoriaId": 5,
+    "Precio": 160,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Prestone",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 122,
+    "Codigo": "DIR-108",
+    "Nombre": "Dep\u00f3sito de l\u00edquido de direcci\u00f3n",
+    "MarcaId": 51,
+    "CategoriaId": 5,
+    "Precio": 350,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 123,
+    "Codigo": "DIR-109",
+    "Nombre": "Polea de bomba de direcci\u00f3n",
+    "MarcaId": 51,
+    "CategoriaId": 5,
+    "Precio": 420,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 124,
+    "Codigo": "DIR-110",
+    "Nombre": "Volante deportivo 35 cm",
+    "MarcaId": 58,
+    "CategoriaId": 5,
+    "Precio": 1890,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Sparco",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 125,
+    "Codigo": "DIR-111",
+    "Nombre": "Terminal de direcci\u00f3n interior",
+    "MarcaId": 55,
+    "CategoriaId": 5,
+    "Precio": 480,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "TRW",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 126,
+    "Codigo": "DIR-112",
+    "Nombre": "Brazo loco (auxiliar)",
+    "MarcaId": 53,
+    "CategoriaId": 5,
+    "Precio": 940,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan NP300 (2015-2022)"
+    ]
+  },
+  {
+    "Id": 127,
+    "Codigo": "DIR-113",
+    "Nombre": "Amortiguador de direcci\u00f3n",
+    "MarcaId": 8,
+    "CategoriaId": 5,
+    "Precio": 1350,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Direcci\u00f3n",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 128,
+    "Codigo": "ENC-101",
+    "Nombre": "Buj\u00eda de iridio",
+    "MarcaId": 3,
+    "CategoriaId": 10,
+    "Precio": 210,
+    "Stock": 40,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2,
+      1,
+      3
+    ],
+    "MarcaNombre": "NGK",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)",
+      "Nissan Sentra (2013-2019)",
+      "Nissan March (2011-2020)"
+    ]
+  },
+  {
+    "Id": 129,
+    "Codigo": "ENC-102",
+    "Nombre": "Buj\u00eda de platino",
+    "MarcaId": 1,
+    "CategoriaId": 10,
+    "Precio": 160,
+    "Stock": 36,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      7
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)",
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 130,
+    "Codigo": "ENC-103",
+    "Nombre": "Buj\u00eda de iridio",
+    "MarcaId": 9,
+    "CategoriaId": 10,
+    "Precio": 230,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      9
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)",
+      "Toyota Yaris (2016-2020)"
+    ]
+  },
+  {
+    "Id": 131,
+    "Codigo": "ENC-104",
+    "Nombre": "Buj\u00eda para motocicleta",
+    "MarcaId": 3,
+    "CategoriaId": 10,
+    "Precio": 95,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      13
+    ],
+    "MarcaNombre": "NGK",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Yamaha Banshee (1987-2006)"
+    ]
+  },
+  {
+    "Id": 132,
+    "Codigo": "ENC-105",
+    "Nombre": "Cables de buj\u00edas (juego de 4)",
+    "MarcaId": 3,
+    "CategoriaId": 10,
+    "Precio": 690,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      21
+    ],
+    "MarcaNombre": "NGK",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Honda Fit (2015-2020)"
+    ]
+  },
+  {
+    "Id": 133,
+    "Codigo": "ENC-106",
+    "Nombre": "Bobina de encendido",
+    "MarcaId": 9,
+    "CategoriaId": 10,
+    "Precio": 1150,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)"
+    ]
+  },
+  {
+    "Id": 134,
+    "Codigo": "ENC-107",
+    "Nombre": "Bobina de encendido",
+    "MarcaId": 59,
+    "CategoriaId": 10,
+    "Precio": 980,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4
+    ],
+    "MarcaNombre": "Delphi",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)"
+    ]
+  },
+  {
+    "Id": 135,
+    "Codigo": "ENC-108",
+    "Nombre": "M\u00f3dulo de encendido",
+    "MarcaId": 1,
+    "CategoriaId": 10,
+    "Precio": 1450,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 136,
+    "Codigo": "ENC-109",
+    "Nombre": "Distribuidor completo",
+    "MarcaId": 60,
+    "CategoriaId": 10,
+    "Precio": 2890,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Hitachi",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 137,
+    "Codigo": "ENC-110",
+    "Nombre": "Sensor de posici\u00f3n del cig\u00fce\u00f1al (CKP)",
+    "MarcaId": 9,
+    "CategoriaId": 10,
+    "Precio": 790,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 138,
+    "Codigo": "ENC-111",
+    "Nombre": "Switch de encendido (contacto)",
+    "MarcaId": 51,
+    "CategoriaId": 10,
+    "Precio": 520,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 139,
+    "Codigo": "ENC-112",
+    "Nombre": "Bobina de encendido",
+    "MarcaId": 60,
+    "CategoriaId": 10,
+    "Precio": 1190,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      12
+    ],
+    "MarcaNombre": "Hitachi",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Mazda 3 (2019-2025)"
+    ]
+  },
+  {
+    "Id": 140,
+    "Codigo": "ENC-113",
+    "Nombre": "Bobina de encendido",
+    "MarcaId": 61,
+    "CategoriaId": 10,
+    "Precio": 1280,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "Motorcraft",
+    "CategoriaNombre": "Encendido",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 141,
+    "Codigo": "ENF-101",
+    "Nombre": "Anticongelante 50/50 (3.78 L)",
+    "MarcaId": 57,
+    "CategoriaId": 9,
+    "Precio": 285,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Prestone",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 142,
+    "Codigo": "ENF-102",
+    "Nombre": "Anticongelante concentrado (3.78 L)",
+    "MarcaId": 57,
+    "CategoriaId": 9,
+    "Precio": 420,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Prestone",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 143,
+    "Codigo": "ENF-103",
+    "Nombre": "Radiador",
+    "MarcaId": 62,
+    "CategoriaId": 9,
+    "Precio": 3200,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Nissens",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 144,
+    "Codigo": "ENF-104",
+    "Nombre": "Bomba de agua",
+    "MarcaId": 63,
+    "CategoriaId": 9,
+    "Precio": 1180,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "GMB",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 145,
+    "Codigo": "ENF-105",
+    "Nombre": "Bomba de agua",
+    "MarcaId": 64,
+    "CategoriaId": 9,
+    "Precio": 1450,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Aisin",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 146,
+    "Codigo": "ENF-106",
+    "Nombre": "Termostato",
+    "MarcaId": 65,
+    "CategoriaId": 9,
+    "Precio": 320,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Motorad",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 147,
+    "Codigo": "ENF-107",
+    "Nombre": "Tap\u00f3n de radiador 16 lb",
+    "MarcaId": 66,
+    "CategoriaId": 9,
+    "Precio": 140,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Stant",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 148,
+    "Codigo": "ENF-108",
+    "Nombre": "Manguera inferior de radiador",
+    "MarcaId": 67,
+    "CategoriaId": 9,
+    "Precio": 380,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Gates",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 149,
+    "Codigo": "ENF-109",
+    "Nombre": "Motoventilador el\u00e9ctrico",
+    "MarcaId": 68,
+    "CategoriaId": 9,
+    "Precio": 2350,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      3
+    ],
+    "MarcaNombre": "Valeo",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan March (2011-2020)"
+    ]
+  },
+  {
+    "Id": 150,
+    "Codigo": "ENF-110",
+    "Nombre": "Sensor de temperatura del motor",
+    "MarcaId": 59,
+    "CategoriaId": 9,
+    "Precio": 290,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14,
+      2
+    ],
+    "MarcaNombre": "Delphi",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)",
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 151,
+    "Codigo": "ENF-111",
+    "Nombre": "Radiador de calefacci\u00f3n",
+    "MarcaId": 9,
+    "CategoriaId": 9,
+    "Precio": 1650,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 152,
+    "Codigo": "ENF-112",
+    "Nombre": "Banda de bomba de agua",
+    "MarcaId": 67,
+    "CategoriaId": 9,
+    "Precio": 290,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Gates",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 153,
+    "Codigo": "ENF-113",
+    "Nombre": "Abrazaderas para manguera (juego de 10)",
+    "MarcaId": 37,
+    "CategoriaId": 9,
+    "Precio": 150,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Enfriamiento",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 154,
+    "Codigo": "ESC-101",
+    "Nombre": "Silenciador (mofle) 2.25 pulgadas",
+    "MarcaId": 69,
+    "CategoriaId": 11,
+    "Precio": 1250,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Walker",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 155,
+    "Codigo": "ESC-102",
+    "Nombre": "Silenciador deportivo 2.5 pulgadas",
+    "MarcaId": 70,
+    "CategoriaId": 11,
+    "Precio": 2890,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Flowmaster",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 156,
+    "Codigo": "ESC-103",
+    "Nombre": "Convertidor catal\u00edtico",
+    "MarcaId": 69,
+    "CategoriaId": 11,
+    "Precio": 4950,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Walker",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 157,
+    "Codigo": "ESC-104",
+    "Nombre": "Convertidor catal\u00edtico",
+    "MarcaId": 71,
+    "CategoriaId": 11,
+    "Precio": 5200,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bosal",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 158,
+    "Codigo": "ESC-105",
+    "Nombre": "Tubo de escape intermedio",
+    "MarcaId": 69,
+    "CategoriaId": 11,
+    "Precio": 890,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Walker",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 159,
+    "Codigo": "ESC-106",
+    "Nombre": "Empaque de m\u00faltiple de escape",
+    "MarcaId": 72,
+    "CategoriaId": 11,
+    "Precio": 180,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Victor Reinz",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 160,
+    "Codigo": "ESC-107",
+    "Nombre": "Empaque de tubo de escape (dona)",
+    "MarcaId": 72,
+    "CategoriaId": 11,
+    "Precio": 85,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Victor Reinz",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 161,
+    "Codigo": "ESC-108",
+    "Nombre": "Soporte de hule para escape (paquete de 2)",
+    "MarcaId": 69,
+    "CategoriaId": 11,
+    "Precio": 120,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Walker",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 162,
+    "Codigo": "ESC-109",
+    "Nombre": "Sensor de ox\u00edgeno antes del catalizador",
+    "MarcaId": 1,
+    "CategoriaId": 11,
+    "Precio": 1150,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 163,
+    "Codigo": "ESC-110",
+    "Nombre": "M\u00faltiple de escape",
+    "MarcaId": 51,
+    "CategoriaId": 11,
+    "Precio": 2450,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 164,
+    "Codigo": "ESC-111",
+    "Nombre": "Silenciador trasero original",
+    "MarcaId": 71,
+    "CategoriaId": 11,
+    "Precio": 1650,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4
+    ],
+    "MarcaNombre": "Bosal",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)"
+    ]
+  },
+  {
+    "Id": 165,
+    "Codigo": "ESC-112",
+    "Nombre": "Silenciador para cuatrimoto",
+    "MarcaId": 73,
+    "CategoriaId": 11,
+    "Precio": 3900,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      13
+    ],
+    "MarcaNombre": "FMF",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Yamaha Banshee (1987-2006)"
+    ]
+  },
+  {
+    "Id": 166,
+    "Codigo": "ESC-113",
+    "Nombre": "Escudo t\u00e9rmico de escape",
+    "MarcaId": 51,
+    "CategoriaId": 11,
+    "Precio": 390,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Escape",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 167,
+    "Codigo": "FIL-101",
+    "Nombre": "Filtro de aceite",
+    "MarcaId": 74,
+    "CategoriaId": 2,
+    "Precio": 140,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6,
+      7
+    ],
+    "MarcaNombre": "Mann",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)",
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 168,
+    "Codigo": "FIL-102",
+    "Nombre": "Filtro de aceite",
+    "MarcaId": 75,
+    "CategoriaId": 2,
+    "Precio": 120,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2,
+      1,
+      3
+    ],
+    "MarcaNombre": "Wix",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)",
+      "Nissan Sentra (2013-2019)",
+      "Nissan March (2011-2020)"
+    ]
+  },
+  {
+    "Id": 169,
+    "Codigo": "FIL-103",
+    "Nombre": "Filtro de aceite",
+    "MarcaId": 61,
+    "CategoriaId": 2,
+    "Precio": 150,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      11,
+      18
+    ],
+    "MarcaNombre": "Motorcraft",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Ford focus (2015-2020)",
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 170,
+    "Codigo": "FIL-104",
+    "Nombre": "Filtro de aceite",
+    "MarcaId": 46,
+    "CategoriaId": 2,
+    "Precio": 135,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      15,
+      5
+    ],
+    "MarcaNombre": "ACDelco",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)",
+      "Chevrolet Aveo (2012-2017)",
+      "Chevrolet Spark (2016-2021)"
+    ]
+  },
+  {
+    "Id": 171,
+    "Codigo": "FIL-105",
+    "Nombre": "Filtro de aire de motor",
+    "MarcaId": 74,
+    "CategoriaId": 2,
+    "Precio": 290,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Mann",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 172,
+    "Codigo": "FIL-106",
+    "Nombre": "Filtro de aire de motor",
+    "MarcaId": 7,
+    "CategoriaId": 2,
+    "Precio": 210,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Gonher",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 173,
+    "Codigo": "FIL-107",
+    "Nombre": "Filtro de aire deportivo lavable",
+    "MarcaId": 76,
+    "CategoriaId": 2,
+    "Precio": 890,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Spectre",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 174,
+    "Codigo": "FIL-108",
+    "Nombre": "Filtro de cabina (polen)",
+    "MarcaId": 74,
+    "CategoriaId": 2,
+    "Precio": 260,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      21
+    ],
+    "MarcaNombre": "Mann",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Honda Fit (2015-2020)"
+    ]
+  },
+  {
+    "Id": 175,
+    "Codigo": "FIL-109",
+    "Nombre": "Filtro de cabina",
+    "MarcaId": 75,
+    "CategoriaId": 2,
+    "Precio": 240,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Wix",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 176,
+    "Codigo": "FIL-110",
+    "Nombre": "Filtro de gasolina",
+    "MarcaId": 1,
+    "CategoriaId": 2,
+    "Precio": 280,
+    "Stock": 16,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 177,
+    "Codigo": "FIL-111",
+    "Nombre": "Filtro de di\u00e9sel",
+    "MarcaId": 77,
+    "CategoriaId": 2,
+    "Precio": 420,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Fleetguard",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Nissan NP300 (2015-2022)"
+    ]
+  },
+  {
+    "Id": 178,
+    "Codigo": "FIL-112",
+    "Nombre": "Filtro de transmisi\u00f3n autom\u00e1tica con empaque",
+    "MarcaId": 75,
+    "CategoriaId": 2,
+    "Precio": 380,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Wix",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 179,
+    "Codigo": "FIL-113",
+    "Nombre": "Filtro de aceite",
+    "MarcaId": 78,
+    "CategoriaId": 2,
+    "Precio": 95,
+    "Stock": 28,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10,
+      21
+    ],
+    "MarcaNombre": "Interfil",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)",
+      "Honda Fit (2015-2020)"
+    ]
+  },
+  {
+    "Id": 180,
+    "Codigo": "FIL-114",
+    "Nombre": "Filtro de aire de motor",
+    "MarcaId": 79,
+    "CategoriaId": 2,
+    "Precio": 410,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      20
+    ],
+    "MarcaNombre": "Mahle",
+    "CategoriaNombre": "Filtros",
+    "AutosDescripciones": [
+      "Bmw Serie 3 (2012-2018)"
+    ]
+  },
+  {
+    "Id": 181,
+    "Codigo": "FRE-101",
+    "Nombre": "Balatas delanteras cer\u00e1micas (juego)",
+    "MarcaId": 2,
+    "CategoriaId": 3,
+    "Precio": 1180,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 182,
+    "Codigo": "FRE-102",
+    "Nombre": "Balatas delanteras semimet\u00e1licas",
+    "MarcaId": 80,
+    "CategoriaId": 3,
+    "Precio": 690,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Wagner",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 183,
+    "Codigo": "FRE-103",
+    "Nombre": "Balatas delanteras cer\u00e1micas (juego)",
+    "MarcaId": 1,
+    "CategoriaId": 3,
+    "Precio": 980,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      2
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)",
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 184,
+    "Codigo": "FRE-104",
+    "Nombre": "Disco de freno delantero 280 mm",
+    "MarcaId": 2,
+    "CategoriaId": 3,
+    "Precio": 1180,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 185,
+    "Codigo": "FRE-105",
+    "Nombre": "Disco de freno delantero ventilado",
+    "MarcaId": 80,
+    "CategoriaId": 3,
+    "Precio": 890,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Wagner",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 186,
+    "Codigo": "FRE-106",
+    "Nombre": "L\u00edquido de frenos DOT 4 (500 ml)",
+    "MarcaId": 1,
+    "CategoriaId": 3,
+    "Precio": 165,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 187,
+    "Codigo": "FRE-107",
+    "Nombre": "L\u00edquido de frenos DOT 3 (350 ml)",
+    "MarcaId": 80,
+    "CategoriaId": 3,
+    "Precio": 110,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Wagner",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 188,
+    "Codigo": "FRE-108",
+    "Nombre": "Cilindro maestro de frenos",
+    "MarcaId": 81,
+    "CategoriaId": 3,
+    "Precio": 1650,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bendix",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 189,
+    "Codigo": "FRE-109",
+    "Nombre": "Manguera de freno delantera",
+    "MarcaId": 80,
+    "CategoriaId": 3,
+    "Precio": 280,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Wagner",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 190,
+    "Codigo": "FRE-110",
+    "Nombre": "Cilindro de rueda trasero",
+    "MarcaId": 81,
+    "CategoriaId": 3,
+    "Precio": 360,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bendix",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 191,
+    "Codigo": "FRE-111",
+    "Nombre": "Cable de freno de mano",
+    "MarcaId": 51,
+    "CategoriaId": 3,
+    "Precio": 390,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)"
+    ]
+  },
+  {
+    "Id": 192,
+    "Codigo": "FRE-112",
+    "Nombre": "Kit de resortes para zapatas",
+    "MarcaId": 82,
+    "CategoriaId": 3,
+    "Precio": 220,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Raybestos",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 193,
+    "Codigo": "FRE-113",
+    "Nombre": "Disco de freno trasero",
+    "MarcaId": 2,
+    "CategoriaId": 3,
+    "Precio": 1050,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      20
+    ],
+    "MarcaNombre": "Brembo",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": [
+      "Bmw Serie 3 (2012-2018)"
+    ]
+  },
+  {
+    "Id": 194,
+    "Codigo": "FRE-114",
+    "Nombre": "Limpiador de frenos en aerosol (400 ml)",
+    "MarcaId": 83,
+    "CategoriaId": 3,
+    "Precio": 130,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bardahl",
+    "CategoriaNombre": "Frenos",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 195,
+    "Codigo": "ILU-101",
+    "Nombre": "Foco H4 12V, 60/55W",
+    "MarcaId": 32,
+    "CategoriaId": 12,
+    "Precio": 145,
+    "Stock": 40,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Philips",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 196,
+    "Codigo": "ILU-102",
+    "Nombre": "Foco H7 12V, 55W",
+    "MarcaId": 84,
+    "CategoriaId": 12,
+    "Precio": 160,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Osram",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 197,
+    "Codigo": "ILU-103",
+    "Nombre": "Foco 9006 (HB4) 12V",
+    "MarcaId": 32,
+    "CategoriaId": 12,
+    "Precio": 165,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Philips",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 198,
+    "Codigo": "ILU-104",
+    "Nombre": "Kit de luces LED H4 (par)",
+    "MarcaId": 32,
+    "CategoriaId": 12,
+    "Precio": 1250,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Philips",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 199,
+    "Codigo": "ILU-105",
+    "Nombre": "Kit de luces LED H11 (par)",
+    "MarcaId": 84,
+    "CategoriaId": 12,
+    "Precio": 1190,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Osram",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 200,
+    "Codigo": "ILU-106",
+    "Nombre": "Foco de freno 1157 (par)",
+    "MarcaId": 85,
+    "CategoriaId": 12,
+    "Precio": 90,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Sylvania",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 201,
+    "Codigo": "ILU-107",
+    "Nombre": "Faro delantero izquierdo",
+    "MarcaId": 49,
+    "CategoriaId": 12,
+    "Precio": 1890,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Depo",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 202,
+    "Codigo": "ILU-108",
+    "Nombre": "Calavera trasera izquierda",
+    "MarcaId": 48,
+    "CategoriaId": 12,
+    "Precio": 1150,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 203,
+    "Codigo": "ILU-109",
+    "Nombre": "Calavera trasera derecha",
+    "MarcaId": 48,
+    "CategoriaId": 12,
+    "Precio": 1150,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 204,
+    "Codigo": "ILU-110",
+    "Nombre": "Faros delanteros (par)",
+    "MarcaId": 49,
+    "CategoriaId": 12,
+    "Precio": 2650,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Depo",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 205,
+    "Codigo": "ILU-111",
+    "Nombre": "Foco de reversa 921 LED",
+    "MarcaId": 85,
+    "CategoriaId": 12,
+    "Precio": 85,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Sylvania",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 206,
+    "Codigo": "ILU-112",
+    "Nombre": "Interruptor de luces (palanca)",
+    "MarcaId": 51,
+    "CategoriaId": 12,
+    "Precio": 690,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 207,
+    "Codigo": "ILU-113",
+    "Nombre": "Faro delantero izquierdo",
+    "MarcaId": 48,
+    "CategoriaId": 12,
+    "Precio": 1750,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      16
+    ],
+    "MarcaNombre": "TYC",
+    "CategoriaNombre": "Iluminaci\u00f3n",
+    "AutosDescripciones": [
+      "Mazda 3 (2014-2018)"
+    ]
+  },
+  {
+    "Id": 208,
+    "Codigo": "LUB-101",
+    "Nombre": "Grasa multiusos para chasis (450 g)",
+    "MarcaId": 45,
+    "CategoriaId": 15,
+    "Precio": 120,
+    "Stock": 25,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Roshfrans",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 209,
+    "Codigo": "LUB-102",
+    "Nombre": "Grasa para baleros (450 g)",
+    "MarcaId": 4,
+    "CategoriaId": 15,
+    "Precio": 160,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Mobil",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 210,
+    "Codigo": "LUB-103",
+    "Nombre": "Aceite ATF Dexron VI (1 L)",
+    "MarcaId": 46,
+    "CategoriaId": 15,
+    "Precio": 230,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      4,
+      15
+    ],
+    "MarcaNombre": "ACDelco",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2018-2024)",
+      "Chevrolet Aveo (2012-2017)"
+    ]
+  },
+  {
+    "Id": 211,
+    "Codigo": "LUB-104",
+    "Nombre": "Aceite ATF multiveh\u00edculo (946 ml)",
+    "MarcaId": 43,
+    "CategoriaId": 15,
+    "Precio": 210,
+    "Stock": 22,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Valvoline",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 212,
+    "Codigo": "LUB-105",
+    "Nombre": "L\u00edquido para transmisi\u00f3n CVT (4 L)",
+    "MarcaId": 43,
+    "CategoriaId": 15,
+    "Precio": 1250,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2,
+      1,
+      17
+    ],
+    "MarcaNombre": "Valvoline",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)",
+      "Nissan Sentra (2013-2019)",
+      "Nissan X-Trail (2014-2020)"
+    ]
+  },
+  {
+    "Id": 213,
+    "Codigo": "LUB-106",
+    "Nombre": "Lubricante penetrante en aerosol (400 ml)",
+    "MarcaId": 83,
+    "CategoriaId": 15,
+    "Precio": 140,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bardahl",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 214,
+    "Codigo": "LUB-107",
+    "Nombre": "Grasa de litio en aerosol (300 ml)",
+    "MarcaId": 83,
+    "CategoriaId": 15,
+    "Precio": 160,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bardahl",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 215,
+    "Codigo": "LUB-108",
+    "Nombre": "Limpiador de inyectores para gasolina (354 ml)",
+    "MarcaId": 83,
+    "CategoriaId": 15,
+    "Precio": 170,
+    "Stock": 24,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bardahl",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 216,
+    "Codigo": "LUB-109",
+    "Nombre": "Aceite hidr\u00e1ulico para gato (1 L)",
+    "MarcaId": 37,
+    "CategoriaId": 15,
+    "Precio": 150,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 217,
+    "Codigo": "LUB-110",
+    "Nombre": "Lubricante para cadenas (400 ml)",
+    "MarcaId": 44,
+    "CategoriaId": 15,
+    "Precio": 210,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      13
+    ],
+    "MarcaNombre": "Motul",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": [
+      "Yamaha Banshee (1987-2006)"
+    ]
+  },
+  {
+    "Id": 218,
+    "Codigo": "LUB-111",
+    "Nombre": "Grasa para homocin\u00e9tica (sobre de 90 g)",
+    "MarcaId": 86,
+    "CategoriaId": 15,
+    "Precio": 95,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Spidan",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 219,
+    "Codigo": "LUB-112",
+    "Nombre": "Aceite ATF tipo F (946 ml)",
+    "MarcaId": 61,
+    "CategoriaId": 15,
+    "Precio": 190,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Motorcraft",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 220,
+    "Codigo": "LUB-113",
+    "Nombre": "Aceite para direcci\u00f3n hidr\u00e1ulica (946 ml)",
+    "MarcaId": 43,
+    "CategoriaId": 15,
+    "Precio": 170,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Valvoline",
+    "CategoriaNombre": "Lubricantes",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 221,
+    "Codigo": "MOT-101",
+    "Nombre": "Junta de cabeza 1.6L",
+    "MarcaId": 72,
+    "CategoriaId": 6,
+    "Precio": 780,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Victor Reinz",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 222,
+    "Codigo": "MOT-102",
+    "Nombre": "Kit de distribuci\u00f3n (banda, tensor y polea)",
+    "MarcaId": 67,
+    "CategoriaId": 6,
+    "Precio": 1950,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Gates",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 223,
+    "Codigo": "MOT-103",
+    "Nombre": "Banda de accesorios 6PK1200",
+    "MarcaId": 67,
+    "CategoriaId": 6,
+    "Precio": 380,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2,
+      3
+    ],
+    "MarcaNombre": "Gates",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)",
+      "Nissan March (2011-2020)"
+    ]
+  },
+  {
+    "Id": 224,
+    "Codigo": "MOT-104",
+    "Nombre": "Banda de accesorios 5PK875",
+    "MarcaId": 87,
+    "CategoriaId": 6,
+    "Precio": 290,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dayco",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 225,
+    "Codigo": "MOT-105",
+    "Nombre": "Tensor de banda de accesorios",
+    "MarcaId": 87,
+    "CategoriaId": 6,
+    "Precio": 890,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Dayco",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 226,
+    "Codigo": "MOT-106",
+    "Nombre": "Soporte de motor trasero",
+    "MarcaId": 56,
+    "CategoriaId": 6,
+    "Precio": 720,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Syd",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 227,
+    "Codigo": "MOT-107",
+    "Nombre": "Empaque de tapa de punter\u00edas",
+    "MarcaId": 72,
+    "CategoriaId": 6,
+    "Precio": 260,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Victor Reinz",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 228,
+    "Codigo": "MOT-108",
+    "Nombre": "Juego de empaques completo",
+    "MarcaId": 72,
+    "CategoriaId": 6,
+    "Precio": 1650,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      15
+    ],
+    "MarcaNombre": "Victor Reinz",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2012-2017)"
+    ]
+  },
+  {
+    "Id": 229,
+    "Codigo": "MOT-109",
+    "Nombre": "Ret\u00e9n de cig\u00fce\u00f1al delantero",
+    "MarcaId": 88,
+    "CategoriaId": 6,
+    "Precio": 140,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1,
+      2
+    ],
+    "MarcaNombre": "National",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)",
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 230,
+    "Codigo": "MOT-110",
+    "Nombre": "Pistones con anillos 0.50 (juego de 4)",
+    "MarcaId": 79,
+    "CategoriaId": 6,
+    "Precio": 3850,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Mahle",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 231,
+    "Codigo": "MOT-111",
+    "Nombre": "V\u00e1lvula PCV",
+    "MarcaId": 51,
+    "CategoriaId": 6,
+    "Precio": 160,
+    "Stock": 18,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8,
+      9
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)",
+      "Toyota Yaris (2016-2020)"
+    ]
+  },
+  {
+    "Id": 232,
+    "Codigo": "MOT-112",
+    "Nombre": "Cuerpo de aceleraci\u00f3n",
+    "MarcaId": 1,
+    "CategoriaId": 6,
+    "Precio": 3200,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 233,
+    "Codigo": "MOT-113",
+    "Nombre": "Inyector de gasolina",
+    "MarcaId": 1,
+    "CategoriaId": 6,
+    "Precio": 980,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 234,
+    "Codigo": "MOT-114",
+    "Nombre": "Polea de cig\u00fce\u00f1al (damper)",
+    "MarcaId": 87,
+    "CategoriaId": 6,
+    "Precio": 1290,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Dayco",
+    "CategoriaNombre": "Motor",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)"
+    ]
+  },
+  {
+    "Id": 235,
+    "Codigo": "ELE-101",
+    "Nombre": "Bater\u00eda 12V 600 CCA (grupo 35)",
+    "MarcaId": 10,
+    "CategoriaId": 8,
+    "Precio": 2390,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 236,
+    "Codigo": "ELE-102",
+    "Nombre": "Bater\u00eda 12V 450 CCA (grupo 51R)",
+    "MarcaId": 10,
+    "CategoriaId": 8,
+    "Precio": 1890,
+    "Stock": 9,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "LTH",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 237,
+    "Codigo": "ELE-103",
+    "Nombre": "Bater\u00eda 12V 800 CCA (grupo 65)",
+    "MarcaId": 46,
+    "CategoriaId": 8,
+    "Precio": 3650,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "ACDelco",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 238,
+    "Codigo": "ELE-104",
+    "Nombre": "Alternador 90A",
+    "MarcaId": 1,
+    "CategoriaId": 8,
+    "Precio": 3450,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 239,
+    "Codigo": "ELE-105",
+    "Nombre": "Alternador 110A",
+    "MarcaId": 9,
+    "CategoriaId": 8,
+    "Precio": 4250,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 240,
+    "Codigo": "ELE-106",
+    "Nombre": "Marcha (motor de arranque)",
+    "MarcaId": 9,
+    "CategoriaId": 8,
+    "Precio": 3350,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Denso",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)"
+    ]
+  },
+  {
+    "Id": 241,
+    "Codigo": "ELE-107",
+    "Nombre": "Terminales de bater\u00eda (par)",
+    "MarcaId": 37,
+    "CategoriaId": 8,
+    "Precio": 90,
+    "Stock": 30,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 242,
+    "Codigo": "ELE-108",
+    "Nombre": "Fusibles tipo navaja surtidos (caja de 50)",
+    "MarcaId": 89,
+    "CategoriaId": 8,
+    "Precio": 180,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bussmann",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 243,
+    "Codigo": "ELE-109",
+    "Nombre": "Sensor de velocidad (VSS)",
+    "MarcaId": 59,
+    "CategoriaId": 8,
+    "Precio": 560,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Delphi",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 244,
+    "Codigo": "ELE-110",
+    "Nombre": "Switch de luces de freno",
+    "MarcaId": 51,
+    "CategoriaId": 8,
+    "Precio": 230,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 245,
+    "Codigo": "ELE-111",
+    "Nombre": "Plumas limpiaparabrisas 22 pulgadas (par)",
+    "MarcaId": 1,
+    "CategoriaId": 8,
+    "Precio": 320,
+    "Stock": 20,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 246,
+    "Codigo": "ELE-112",
+    "Nombre": "Plumas limpiaparabrisas 18 pulgadas (par)",
+    "MarcaId": 90,
+    "CategoriaId": 8,
+    "Precio": 260,
+    "Stock": 16,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Trico",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 247,
+    "Codigo": "ELE-113",
+    "Nombre": "Regulador de voltaje del alternador",
+    "MarcaId": 1,
+    "CategoriaId": 8,
+    "Precio": 420,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Bosch",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 248,
+    "Codigo": "ELE-114",
+    "Nombre": "Cargador de bater\u00eda 6 A",
+    "MarcaId": 37,
+    "CategoriaId": 8,
+    "Precio": 790,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "Truper",
+    "CategoriaNombre": "Sistema el\u00e9ctrico",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 249,
+    "Codigo": "SUS-101",
+    "Nombre": "Amortiguador delantero de gas",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 1450,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 250,
+    "Codigo": "SUS-102",
+    "Nombre": "Amortiguador trasero de gas",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 1180,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 251,
+    "Codigo": "SUS-103",
+    "Nombre": "Amortiguador trasero",
+    "MarcaId": 91,
+    "CategoriaId": 4,
+    "Precio": 1290,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      8
+    ],
+    "MarcaNombre": "KYB",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Toyota Corolla (2014-2019)"
+    ]
+  },
+  {
+    "Id": 252,
+    "Codigo": "SUS-104",
+    "Nombre": "Amortiguador delantero",
+    "MarcaId": 92,
+    "CategoriaId": 4,
+    "Precio": 990,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Gabriel",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 253,
+    "Codigo": "SUS-105",
+    "Nombre": "R\u00f3tula inferior",
+    "MarcaId": 53,
+    "CategoriaId": 4,
+    "Precio": 640,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      15
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2012-2017)"
+    ]
+  },
+  {
+    "Id": 254,
+    "Codigo": "SUS-106",
+    "Nombre": "Horquilla inferior con r\u00f3tula",
+    "MarcaId": 56,
+    "CategoriaId": 4,
+    "Precio": 1350,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      1
+    ],
+    "MarcaNombre": "Syd",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Sentra (2013-2019)"
+    ]
+  },
+  {
+    "Id": 255,
+    "Codigo": "SUS-107",
+    "Nombre": "Bujes de horquilla (juego)",
+    "MarcaId": 56,
+    "CategoriaId": 4,
+    "Precio": 380,
+    "Stock": 12,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Syd",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 256,
+    "Codigo": "SUS-108",
+    "Nombre": "Tornillo estabilizador (par)",
+    "MarcaId": 53,
+    "CategoriaId": 4,
+    "Precio": 360,
+    "Stock": 14,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Moog",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 257,
+    "Codigo": "SUS-109",
+    "Nombre": "Resortes helicoidales delanteros (par)",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 1690,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 258,
+    "Codigo": "SUS-110",
+    "Nombre": "Base de amortiguador con balero",
+    "MarcaId": 8,
+    "CategoriaId": 4,
+    "Precio": 690,
+    "Stock": 7,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Monroe",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)"
+    ]
+  },
+  {
+    "Id": 259,
+    "Codigo": "SUS-111",
+    "Nombre": "Muelle trasera",
+    "MarcaId": 93,
+    "CategoriaId": 4,
+    "Precio": 2450,
+    "Stock": 2,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Rassini",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan NP300 (2015-2022)"
+    ]
+  },
+  {
+    "Id": 260,
+    "Codigo": "SUS-112",
+    "Nombre": "Balero de rueda delantero",
+    "MarcaId": 94,
+    "CategoriaId": 4,
+    "Precio": 690,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "SKF",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 261,
+    "Codigo": "SUS-113",
+    "Nombre": "Amortiguador trasero",
+    "MarcaId": 92,
+    "CategoriaId": 4,
+    "Precio": 1050,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      18
+    ],
+    "MarcaNombre": "Gabriel",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Ford Lobo (2015-2020)"
+    ]
+  },
+  {
+    "Id": 262,
+    "Codigo": "SUS-114",
+    "Nombre": "Amortiguador trasero para cuatrimoto",
+    "MarcaId": 95,
+    "CategoriaId": 4,
+    "Precio": 6800,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      13
+    ],
+    "MarcaNombre": "Fox",
+    "CategoriaNombre": "Suspensi\u00f3n",
+    "AutosDescripciones": [
+      "Yamaha Banshee (1987-2006)"
+    ]
+  },
+  {
+    "Id": 263,
+    "Codigo": "TRA-101",
+    "Nombre": "Kit de clutch 200 mm",
+    "MarcaId": 96,
+    "CategoriaId": 7,
+    "Precio": 3890,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      7
+    ],
+    "MarcaNombre": "Sachs",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Vento (2014-2022)"
+    ]
+  },
+  {
+    "Id": 264,
+    "Codigo": "TRA-102",
+    "Nombre": "Kit de clutch 190 mm",
+    "MarcaId": 97,
+    "CategoriaId": 7,
+    "Precio": 3450,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "LUK",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 265,
+    "Codigo": "TRA-103",
+    "Nombre": "Kit de clutch",
+    "MarcaId": 98,
+    "CategoriaId": 7,
+    "Precio": 3950,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      10
+    ],
+    "MarcaNombre": "Exedy",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Honda Civic (2012-2015)"
+    ]
+  },
+  {
+    "Id": 266,
+    "Codigo": "TRA-104",
+    "Nombre": "Collar\u00edn de clutch",
+    "MarcaId": 97,
+    "CategoriaId": 7,
+    "Precio": 690,
+    "Stock": 8,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "LUK",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 267,
+    "Codigo": "TRA-105",
+    "Nombre": "Cilindro maestro de clutch",
+    "MarcaId": 96,
+    "CategoriaId": 7,
+    "Precio": 980,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      6
+    ],
+    "MarcaNombre": "Sachs",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Volkswagen Jetta (2011-2018)"
+    ]
+  },
+  {
+    "Id": 268,
+    "Codigo": "TRA-106",
+    "Nombre": "Cable de clutch",
+    "MarcaId": 51,
+    "CategoriaId": 7,
+    "Precio": 320,
+    "Stock": 10,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 269,
+    "Codigo": "TRA-107",
+    "Nombre": "Flecha homocin\u00e9tica delantera izquierda",
+    "MarcaId": 99,
+    "CategoriaId": 7,
+    "Precio": 2850,
+    "Stock": 3,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      2
+    ],
+    "MarcaNombre": "GKN",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Versa (2012-2019)"
+    ]
+  },
+  {
+    "Id": 270,
+    "Codigo": "TRA-108",
+    "Nombre": "Junta homocin\u00e9tica lado rueda",
+    "MarcaId": 99,
+    "CategoriaId": 7,
+    "Precio": 1150,
+    "Stock": 6,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "GKN",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
+  },
+  {
+    "Id": 271,
+    "Codigo": "TRA-109",
+    "Nombre": "Kit de cubrepolvo de homocin\u00e9tica",
+    "MarcaId": 99,
+    "CategoriaId": 7,
+    "Precio": 210,
+    "Stock": 15,
+    "StockBajo": false,
+    "Activo": true,
+    "EsUniversal": true,
+    "AutosCompatibles": [],
+    "MarcaNombre": "GKN",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": []
+  },
+  {
+    "Id": 272,
+    "Codigo": "TRA-110",
+    "Nombre": "Chicote selector de velocidades",
+    "MarcaId": 51,
+    "CategoriaId": 7,
+    "Precio": 780,
+    "Stock": 4,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      15
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Chevrolet Aveo (2012-2017)"
+    ]
+  },
+  {
+    "Id": 273,
+    "Codigo": "TRA-111",
+    "Nombre": "Flecha card\u00e1n",
+    "MarcaId": 100,
+    "CategoriaId": 7,
+    "Precio": 5900,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      19
+    ],
+    "MarcaNombre": "Spicer",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan NP300 (2015-2022)"
+    ]
+  },
+  {
+    "Id": 274,
+    "Codigo": "TRA-112",
+    "Nombre": "Volante motor bimasa",
+    "MarcaId": 97,
+    "CategoriaId": 7,
+    "Precio": 7800,
+    "Stock": 1,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      20
+    ],
+    "MarcaNombre": "LUK",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Bmw Serie 3 (2012-2018)"
+    ]
+  },
+  {
+    "Id": 275,
+    "Codigo": "TRA-113",
+    "Nombre": "Palanca de velocidades con perilla",
+    "MarcaId": 51,
+    "CategoriaId": 7,
+    "Precio": 560,
+    "Stock": 5,
+    "StockBajo": true,
+    "Activo": true,
+    "EsUniversal": false,
+    "AutosCompatibles": [
+      14
+    ],
+    "MarcaNombre": "Dorman",
+    "CategoriaNombre": "Transmisi\u00f3n",
+    "AutosDescripciones": [
+      "Nissan Tsuru (2005-2017)"
+    ]
   }
 ]

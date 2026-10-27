@@ -248,6 +248,9 @@ def respuesta_social(pregunta: str) -> str | None:
         # "mot001", "bal_002": es un código, no un teclazo.
         if re.fullmatch(r"[a-z]{2,5}[_-]?\d{2,5}", p):
             return False
+        # "b4l4t4s", "fr3nos": números en lugar de vocales.
+        if re.search(r"\d", p) and re.search(r"[a-z]", p):
+            p = p.translate(str.maketrans({"4": "a", "3": "e", "1": "i", "0": "o"}))
         vocales = len(re.findall(r"[aeiouy]", p))
         # Siglas cortas como "NGK", "LTH", "BMW" son marcas, no teclazos.
         if vocales == 0 and len(p) <= 4:
@@ -268,11 +271,5 @@ def respuesta_social(pregunta: str) -> str | None:
         )
 
     return None
-
-
-
-
-
-
 
 

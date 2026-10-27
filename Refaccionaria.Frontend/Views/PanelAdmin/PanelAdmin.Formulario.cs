@@ -234,6 +234,13 @@ public sealed partial class PanelAdmin : Page
         }
 
 
+        // Código repetido: se bloquea. Nombre y marca repetidos: se avisa.
+        if (!await RevisarRepetidosAsync(nombre, codigo, marca, null))
+        {
+            return;
+        }
+
+
         if (!decimal.TryParse(
                 TxtFormPrecio.Text.Trim(),
                 out decimal precio)
@@ -461,6 +468,14 @@ public sealed partial class PanelAdmin : Page
         }
 
 
+        // Código repetido: se bloquea. Nombre y marca repetidos: se avisa.
+        // La pieza que se está editando no se compara consigo misma.
+        if (!await RevisarRepetidosAsync(nombre, codigo, marca, refaccionEditando))
+        {
+            return;
+        }
+
+
         if (!decimal.TryParse(
                 TxtFormPrecio.Text.Trim(),
                 out decimal precio)
@@ -632,5 +647,104 @@ public sealed partial class PanelAdmin : Page
                 ex.Message
             );
         }
+    }
+
+    // =========================================================
+    // REVISAR PIEZAS REPETIDAS
+    // =========================================================
+    // - Mismo código que otra pieza (activa o retirada): no se
+    //   permite, porque la venta y el asistente se confunden.
+    // - Mismo nombre y misma marca: se avisa y el administrador
+    //   decide si la guarda (puede ser intencional).
+    // Devuelve true si se puede continuar con el guardado.
+
+    private static string NormalizarTexto(string texto) =>
+        string.Join(
+            " ",
+            texto.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        ).ToUpperInvariant();
+
+    private async Task<bool> RevisarRepetidosAsync(
+        string nombre,
+        string codigo,
+        Marca marca,
+        Refaccion? excluir)
+    {
+        IEnumerable<Refaccion> otras =
+            todasLasRefacciones.Where(
+                r => excluir == null || r.Id != excluir.Id
+            );
+
+
+        // ----- CÓDIGO REPETIDO -----
+
+        Refaccion? mismoCodigo =
+            otras.FirstOrDefault(
+                r => NormalizarTexto(r.Codigo ?? string.Empty) ==
+                     NormalizarTexto(codigo)
+            );
+
+        if (mismoCodigo != null)
+        {
+            string estado =
+                mismoCodigo.Activo ? "" : " (está en Productos retirados)";
+
+            await MostrarMensaje(
+                "Código repetido",
+                $"El código {mismoCodigo.Codigo} ya lo tiene " +
+                $"\"{mismoCodigo.Nombre}\"{estado}.\n\n" +
+                "Cada pieza debe tener un código diferente."
+            );
+
+            TxtFormCodigo.Focus(FocusState.Programmatic);
+
+            return false;
+        }
+
+
+        // ----- NOMBRE Y MARCA REPETIDOS -----
+
+        Refaccion? mismoNombre =
+            otras.FirstOrDefault(
+                r => r.MarcaId == marca.Id &&
+                     NormalizarTexto(r.Nombre ?? string.Empty) ==
+                     NormalizarTexto(nombre)
+            );
+
+        if (mismoNombre == null)
+        {
+            return true;
+        }
+
+        string retirada =
+            mismoNombre.Activo ? "" : "\n(Esa pieza está en Productos retirados.)";
+
+        ContentDialog dialogo = new()
+        {
+            Title = "Pieza posiblemente repetida",
+
+            Content =
+                "Ya existe una pieza con el mismo nombre y marca:\n\n" +
+                $"{mismoNombre.Codigo}  {mismoNombre.Nombre} ({marca.Nombre})" +
+                retirada +
+                "\n\n¿Deseas guardarla de todos modos?",
+
+            PrimaryButtonText = "Guardar de todos modos",
+            CloseButtonText = "Cancelar",
+            DefaultButton = ContentDialogButton.Close,
+
+            XamlRoot = XamlRoot
+        };
+
+        ContentDialogResult resultado =
+            await dialogo.ShowAsync();
+
+        if (resultado != ContentDialogResult.Primary)
+        {
+            TxtFormNombre.Focus(FocusState.Programmatic);
+            return false;
+        }
+
+        return true;
     }
 }

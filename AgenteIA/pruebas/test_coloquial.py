@@ -131,3 +131,24 @@ def test_registrar_no_entendida():
     assert len(lineas) == 2
     assert "sin respuesta\t¿tienes la cosa esa?" in lineas[0]
     assert lineas[1].endswith("-> siguientes productos")
+
+
+@pytest.mark.parametrize("texto, esperado", [
+    ("tr4nsmision", "transmision"),
+    ("b4l4t4s", "balatas"),
+    ("fr3nos", "frenos"),
+    ("t3rmost4to", "termostato"),
+    ("b0mba de agu4", "bomba de agua"),
+])
+def test_numeros_en_lugar_de_letras(texto, esperado):
+    assert corregir_ortografia(texto, INVENTARIO) == esperado
+
+
+@pytest.mark.parametrize("texto", [
+    "ace001", "precio ace001", "aceite 5w30", "bal002", "4 balatas",
+    "205/55 r16", "h4", "llanta r15", "sensor o2", "versa 2015",
+])
+def test_codigos_y_medidas_no_se_tocan(texto):
+    assert corregir_ortografia(texto, INVENTARIO) == texto
+
+

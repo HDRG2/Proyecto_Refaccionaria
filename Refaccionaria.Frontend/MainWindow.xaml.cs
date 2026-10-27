@@ -747,6 +747,12 @@ namespace Refaccionaria.Frontend
         private const string AvisoBusqueda =
             "Solo se aceptan letras y números. No se aceptan caracteres especiales.";
 
+        private const string AvisoNombrePieza =
+            "Solo se aceptan letras, números, espacios y los signos - / . ( ) ,";
+
+        private const string AvisoModeloAuto =
+            "Solo se aceptan letras, números, espacios, guion (-) y punto (.)";
+
         private const string AvisoPrecio =
             "Solo se aceptan números y un punto decimal (máximo 2 decimales).";
 
@@ -775,6 +781,24 @@ namespace Refaccionaria.Frontend
         public static bool EsBusqueda(string texto) =>
             texto.All(c => char.IsLetter(c) || (c >= '0' && c <= '9') || c == ' ');
 
+        // Nombre de una pieza: letras, números, espacios y los signos
+        // que se usan en refacciones (ej. "Llanta 205/55 R16",
+        // "Aceite 5W-30", "Bujía (iridio)", "Foco H4 12V, 55W").
+        public static bool EsNombrePieza(string texto) =>
+            texto.All(c =>
+                char.IsLetter(c) ||
+                (c >= '0' && c <= '9') ||
+                c == ' ' || c == '-' || c == '/' ||
+                c == '.' || c == '(' || c == ')' || c == ',');
+
+        // Modelo de auto: letras, números, espacios, guion y punto
+        // (ej. "X-Trail", "CR-V", "CX-5", "F-150", "Serie 3").
+        public static bool EsModeloAuto(string texto) =>
+            texto.All(c =>
+                char.IsLetter(c) ||
+                (c >= '0' && c <= '9') ||
+                c == ' ' || c == '-' || c == '.');
+
         // Números con un punto y máximo 2 decimales (ej. 159.50)
         public static bool EsPrecio(string texto) =>
             Regex.IsMatch(texto, @"^[0-9]*(\.[0-9]{0,2})?$");
@@ -798,6 +822,12 @@ namespace Refaccionaria.Frontend
 
         public static void Busqueda(TextBox caja) =>
             Aplicar(caja, EsBusqueda, AvisoBusqueda);
+
+        public static void NombrePieza(TextBox caja) =>
+            Aplicar(caja, EsNombrePieza, AvisoNombrePieza);
+
+        public static void ModeloAuto(TextBox caja) =>
+            Aplicar(caja, EsModeloAuto, AvisoModeloAuto);
 
         public static void Precio(TextBox caja) =>
             Aplicar(caja, EsPrecio, AvisoPrecio);
@@ -917,9 +947,14 @@ namespace Refaccionaria.Frontend
             string nombre,
             string codigo)
         {
-            if (!EsLetras(nombre))
-                return "El nombre de la pieza solo puede tener letras. " +
-                       "No se aceptan números ni caracteres especiales.";
+            if (!EsNombrePieza(nombre))
+                return "El nombre de la pieza solo puede tener letras, números, " +
+                       "espacios y los signos - / . ( ) ,";
+
+            // "205/55" solo no dice qué pieza es: debe llevar alguna letra.
+            if (!nombre.Any(char.IsLetter))
+                return "El nombre de la pieza debe incluir al menos una letra " +
+                       "(por ejemplo: Llanta 205/55 R16).";
 
             if (!EsCodigo(codigo))
                 return "El código solo puede tener letras, números y guion (-).";

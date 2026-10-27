@@ -42,5 +42,361 @@
   {
     "Id": 11,
     "Nombre": "Ultra 8"
+  },
+  {
+    "Id": 12,
+    "Nombre": "Michelin"
+  },
+  {
+    "Id": 13,
+    "Nombre": "Firestone"
+  },
+  {
+    "Id": 14,
+    "Nombre": "Bridgestone"
+  },
+  {
+    "Id": 15,
+    "Nombre": "Goodyear"
+  },
+  {
+    "Id": 16,
+    "Nombre": "Hankook"
+  },
+  {
+    "Id": 17,
+    "Nombre": "Continental"
+  },
+  {
+    "Id": 18,
+    "Nombre": "BFGoodrich"
+  },
+  {
+    "Id": 19,
+    "Nombre": "Pirelli"
+  },
+  {
+    "Id": 20,
+    "Nombre": "Euzkadi"
+  },
+  {
+    "Id": 21,
+    "Nombre": "Kumho"
+  },
+  {
+    "Id": 22,
+    "Nombre": "Tornel"
+  },
+  {
+    "Id": 23,
+    "Nombre": "GeneralTire"
+  },
+  {
+    "Id": 24,
+    "Nombre": "Yokohama"
+  },
+  {
+    "Id": 25,
+    "Nombre": "McGard"
+  },
+  {
+    "Id": 26,
+    "Nombre": "Slime"
+  },
+  {
+    "Id": 27,
+    "Nombre": "Schrader"
+  },
+  {
+    "Id": 28,
+    "Nombre": "Perfect Equipment"
+  },
+  {
+    "Id": 29,
+    "Nombre": "Hayes"
+  },
+  {
+    "Id": 30,
+    "Nombre": "WeatherTech"
+  },
+  {
+    "Id": 31,
+    "Nombre": "Covercraft"
+  },
+  {
+    "Id": 32,
+    "Nombre": "Philips"
+  },
+  {
+    "Id": 33,
+    "Nombre": "Belkin"
+  },
+  {
+    "Id": 34,
+    "Nombre": "Steelmate"
+  },
+  {
+    "Id": 35,
+    "Nombre": "Viper"
+  },
+  {
+    "Id": 36,
+    "Nombre": "Rugged"
+  },
+  {
+    "Id": 37,
+    "Nombre": "Truper"
+  },
+  {
+    "Id": 38,
+    "Nombre": "Kidde"
+  },
+  {
+    "Id": 39,
+    "Nombre": "Glade"
+  },
+  {
+    "Id": 40,
+    "Nombre": "Quaker State"
+  },
+  {
+    "Id": 41,
+    "Nombre": "Shell"
+  },
+  {
+    "Id": 42,
+    "Nombre": "Pennzoil"
+  },
+  {
+    "Id": 43,
+    "Nombre": "Valvoline"
+  },
+  {
+    "Id": 44,
+    "Nombre": "Motul"
+  },
+  {
+    "Id": 45,
+    "Nombre": "Roshfrans"
+  },
+  {
+    "Id": 46,
+    "Nombre": "ACDelco"
+  },
+  {
+    "Id": 47,
+    "Nombre": "Liqui Moly"
+  },
+  {
+    "Id": 48,
+    "Nombre": "TYC"
+  },
+  {
+    "Id": 49,
+    "Nombre": "Depo"
+  },
+  {
+    "Id": 50,
+    "Nombre": "Sherman"
+  },
+  {
+    "Id": 51,
+    "Nombre": "Dorman"
+  },
+  {
+    "Id": 52,
+    "Nombre": "Stabilus"
+  },
+  {
+    "Id": 53,
+    "Nombre": "Moog"
+  },
+  {
+    "Id": 54,
+    "Nombre": "Cardone"
+  },
+  {
+    "Id": 55,
+    "Nombre": "TRW"
+  },
+  {
+    "Id": 56,
+    "Nombre": "Syd"
+  },
+  {
+    "Id": 57,
+    "Nombre": "Prestone"
+  },
+  {
+    "Id": 58,
+    "Nombre": "Sparco"
+  },
+  {
+    "Id": 59,
+    "Nombre": "Delphi"
+  },
+  {
+    "Id": 60,
+    "Nombre": "Hitachi"
+  },
+  {
+    "Id": 61,
+    "Nombre": "Motorcraft"
+  },
+  {
+    "Id": 62,
+    "Nombre": "Nissens"
+  },
+  {
+    "Id": 63,
+    "Nombre": "GMB"
+  },
+  {
+    "Id": 64,
+    "Nombre": "Aisin"
+  },
+  {
+    "Id": 65,
+    "Nombre": "Motorad"
+  },
+  {
+    "Id": 66,
+    "Nombre": "Stant"
+  },
+  {
+    "Id": 67,
+    "Nombre": "Gates"
+  },
+  {
+    "Id": 68,
+    "Nombre": "Valeo"
+  },
+  {
+    "Id": 69,
+    "Nombre": "Walker"
+  },
+  {
+    "Id": 70,
+    "Nombre": "Flowmaster"
+  },
+  {
+    "Id": 71,
+    "Nombre": "Bosal"
+  },
+  {
+    "Id": 72,
+    "Nombre": "Victor Reinz"
+  },
+  {
+    "Id": 73,
+    "Nombre": "FMF"
+  },
+  {
+    "Id": 74,
+    "Nombre": "Mann"
+  },
+  {
+    "Id": 75,
+    "Nombre": "Wix"
+  },
+  {
+    "Id": 76,
+    "Nombre": "Spectre"
+  },
+  {
+    "Id": 77,
+    "Nombre": "Fleetguard"
+  },
+  {
+    "Id": 78,
+    "Nombre": "Interfil"
+  },
+  {
+    "Id": 79,
+    "Nombre": "Mahle"
+  },
+  {
+    "Id": 80,
+    "Nombre": "Wagner"
+  },
+  {
+    "Id": 81,
+    "Nombre": "Bendix"
+  },
+  {
+    "Id": 82,
+    "Nombre": "Raybestos"
+  },
+  {
+    "Id": 83,
+    "Nombre": "Bardahl"
+  },
+  {
+    "Id": 84,
+    "Nombre": "Osram"
+  },
+  {
+    "Id": 85,
+    "Nombre": "Sylvania"
+  },
+  {
+    "Id": 86,
+    "Nombre": "Spidan"
+  },
+  {
+    "Id": 87,
+    "Nombre": "Dayco"
+  },
+  {
+    "Id": 88,
+    "Nombre": "National"
+  },
+  {
+    "Id": 89,
+    "Nombre": "Bussmann"
+  },
+  {
+    "Id": 90,
+    "Nombre": "Trico"
+  },
+  {
+    "Id": 91,
+    "Nombre": "KYB"
+  },
+  {
+    "Id": 92,
+    "Nombre": "Gabriel"
+  },
+  {
+    "Id": 93,
+    "Nombre": "Rassini"
+  },
+  {
+    "Id": 94,
+    "Nombre": "SKF"
+  },
+  {
+    "Id": 95,
+    "Nombre": "Fox"
+  },
+  {
+    "Id": 96,
+    "Nombre": "Sachs"
+  },
+  {
+    "Id": 97,
+    "Nombre": "LUK"
+  },
+  {
+    "Id": 98,
+    "Nombre": "Exedy"
+  },
+  {
+    "Id": 99,
+    "Nombre": "GKN"
+  },
+  {
+    "Id": 100,
+    "Nombre": "Spicer"
   }
 ]

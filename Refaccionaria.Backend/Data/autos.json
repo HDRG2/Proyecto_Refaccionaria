@@ -79,9 +79,9 @@
   {
     "Id": 12,
     "Marca": "Mazda",
-    "Modelo": "Mazda 3",
-    "AnioInicio": 2008,
-    "AnioFin": 2027
+    "Modelo": "3",
+    "AnioInicio": 2019,
+    "AnioFin": 2025
   },
   {
     "Id": 13,
@@ -89,5 +89,68 @@
     "Modelo": "Banshee",
     "AnioInicio": 1987,
     "AnioFin": 2006
+  },
+  {
+    "Id": 14,
+    "Marca": "Nissan",
+    "Modelo": "Tsuru",
+    "AnioInicio": 2005,
+    "AnioFin": 2017
+  },
+  {
+    "Id": 15,
+    "Marca": "Chevrolet",
+    "Modelo": "Aveo",
+    "AnioInicio": 2012,
+    "AnioFin": 2017
+  },
+  {
+    "Id": 16,
+    "Marca": "Mazda",
+    "Modelo": "3",
+    "AnioInicio": 2014,
+    "AnioFin": 2018
+  },
+  {
+    "Id": 17,
+    "Marca": "Nissan",
+    "Modelo": "X-Trail",
+    "AnioInicio": 2014,
+    "AnioFin": 2020
+  },
+  {
+    "Id": 18,
+    "Marca": "Ford",
+    "Modelo": "Lobo",
+    "AnioInicio": 2015,
+    "AnioFin": 2020
+  },
+  {
+    "Id": 19,
+    "Marca": "Nissan",
+    "Modelo": "NP300",
+    "AnioInicio": 2015,
+    "AnioFin": 2022
+  },
+  {
+    "Id": 20,
+    "Marca": "Bmw",
+    "Modelo": "Serie 3",
+    "AnioInicio": 2012,
+    "AnioFin": 2018
+  },
+  {
+    "Id": 21,
+    "Marca": "Honda",
+    "Modelo": "Fit",
+    "AnioInicio": 2015,
+    "AnioFin": 2020
+  },
+  {
+    "Id": 22,
+    "Marca": "Volkswagen",
+    "Modelo": "Vento",
+    "AnioInicio": 2014,
+    "AnioFin": 2020
   }
 ]
