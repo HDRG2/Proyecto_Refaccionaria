@@ -419,6 +419,35 @@
 
                     </RadioButton>
 
+                    <Border
+                        Height="1"
+                        Background="#454545"
+                        Margin="16,16,16,13"/>
+
+
+                    <!-- MANUAL DE USUARIO -->
+
+                    <RadioButton
+                        x:Name="MenuManual"
+                        Style="{StaticResource BotonMenuAdmin}"
+                        Checked="Menu_Checked">
+
+                        <StackPanel
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="❓"
+                                FontSize="16"
+                                Width="30"/>
+
+                            <TextBlock
+                                Text="Manual de usuario"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </RadioButton>
+
                 </StackPanel>
 
 
@@ -2741,6 +2770,15 @@
                         </ScrollViewer>
 
                     </Grid> 
+
+
+                    <!-- ================================================= -->
+                    <!-- MANUAL DE USUARIO (se llena desde PanelAdmin.Manual.cs) -->
+                    <!-- ================================================= -->
+
+                    <Grid
+                        x:Name="VistaManual"
+                        Visibility="Collapsed"/>
 
                 </Grid>
 

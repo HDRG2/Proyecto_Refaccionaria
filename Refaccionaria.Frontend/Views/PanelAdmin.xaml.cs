@@ -752,6 +752,16 @@ public sealed partial class PanelAdmin : Page
         if (sender is not RadioButton opcion)
             return;
 
+        // Al cambiar de opción se oculta el manual
+        VistaManual.Visibility = Visibility.Collapsed;
+
+        // MANUAL DE USUARIO
+        if (ReferenceEquals(opcion, MenuManual))
+        {
+            MostrarManual();
+            return;
+        }
+
         // INVENTARIO
         if (ReferenceEquals(opcion, MenuInventario))
         {
