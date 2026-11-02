@@ -793,6 +793,27 @@
                     VerticalAlignment="Center"
                     Spacing="8">
 
+                    <!-- MANUAL DE USUARIO -->
+                    <Button
+                        x:Name="BtnManual"
+                        Width="42"
+                        Height="42"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="AbrirManual_Click"
+                        ToolTipService.ToolTip="Manual de usuario">
+
+                        <TextBlock
+                            Text="?"
+                            FontSize="22"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+
+                    </Button>
+
                     <!-- CERRAR SESIÓN -->
                     <Button
                         x:Name="BtnCerrarSesion"
